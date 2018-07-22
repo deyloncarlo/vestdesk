@@ -1,0 +1,81 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myMaterialLabel" jhiTranslate="vestdeskApp.material.home.createOrEditLabel">Create or edit a Material</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!material.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="material.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.nome" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome"
+                [(ngModel)]="material.nome" required/>
+            <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.preco" for="field_preco">Preco</label>
+            <input type="number" class="form-control" name="preco" id="field_preco"
+                [(ngModel)]="material.preco" required/>
+            <div [hidden]="!(editForm.controls.preco?.dirty && editForm.controls.preco?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeMinima" for="field_quantidadeMinima">Quantidade Minima</label>
+            <input type="number" class="form-control" name="quantidadeMinima" id="field_quantidadeMinima"
+                [(ngModel)]="material.quantidadeMinima" required/>
+            <div [hidden]="!(editForm.controls.quantidadeMinima?.dirty && editForm.controls.quantidadeMinima?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.quantidadeMinima?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantidadeMinima?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeMaxima" for="field_quantidadeMaxima">Quantidade Maxima</label>
+            <input type="number" class="form-control" name="quantidadeMaxima" id="field_quantidadeMaxima"
+                [(ngModel)]="material.quantidadeMaxima" required/>
+            <div [hidden]="!(editForm.controls.quantidadeMaxima?.dirty && editForm.controls.quantidadeMaxima?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.quantidadeMaxima?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.quantidadeMaxima?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

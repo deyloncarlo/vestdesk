@@ -1,0 +1,42 @@
+
+<div *ngIf="cliente">
+    <h2><span jhiTranslate="vestdeskApp.cliente.detail.title">Cliente</span> {{cliente.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.cliente.nome">Nome</span></dt>
+        <dd>
+            <span>{{cliente.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.cliente.endereco">Endereco</span></dt>
+        <dd>
+            <span>{{cliente.endereco}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.cliente.telefone">Telefone</span></dt>
+        <dd>
+            <span>{{cliente.telefone}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.cliente.observacao">Observacao</span></dt>
+        <dd>
+            <span>{{cliente.observacao}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.cliente.email">Email</span></dt>
+        <dd>
+            <span>{{cliente.email}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'cliente/'+ cliente.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

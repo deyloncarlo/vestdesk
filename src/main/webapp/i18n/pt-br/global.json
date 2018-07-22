@@ -7,6 +7,16 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Entidades",
+                "modelo": "Modelo",
+                "material": "Material",
+                "quantidadeTamanho": "Quantidade Tamanho",
+                "modeloVestuario": "Modelo Vestuario",
+                "formaPagamento": "Forma Pagamento",
+                "cliente": "Cliente",
+                "etapaProducao": "Etapa Producao",
+                "layout": "Layout",
+                "produto": "Produto",
+                "adiantamento": "Adiantamento",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -1,0 +1,25 @@
+
+{
+    "vestdeskApp": {
+        "material" : {
+            "home": {
+                "title": "Materials",
+                "createLabel": "Criar novo Material",
+                "createOrEditLabel": "Criar ou editar Material"
+            },
+            "created": "Um novo Material foi criado com o identificador {{ param }}",
+            "updated": "Um Material foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Material foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Material {{ id }}?"
+            },
+            "detail": {
+                "title": "Material"
+            },
+            "nome": "Nome",
+            "preco": "Preco",
+            "quantidadeMinima": "Quantidade Minima",
+            "quantidadeMaxima": "Quantidade Maxima"
+        }
+    }
+}

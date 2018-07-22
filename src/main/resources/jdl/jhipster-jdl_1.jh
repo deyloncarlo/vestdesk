@@ -1,0 +1,75 @@
+entity Modelo {
+	nome String required,
+}
+
+entity Material {
+	nome String required,
+    preco BigDecimal required,
+    quantidadeMinima Float required,
+    quantidadeMaxima Float required
+}
+
+entity QuantidadeTamanho {
+	tamanho String required,
+    quantidadeMaterial Float required
+}
+
+entity ModeloVestuario {
+    preco BigDecimal required
+}
+
+entity FormaPagamento {
+	nome String required
+}
+
+entity Cliente {
+  nome String required,
+  endereco String,
+  telefone String,
+  observacao String,
+  email String
+}
+
+entity EtapaProducao {
+	nome String required,
+    prazoExecucao Integer required
+}
+
+entity Layout {
+	nome String required,
+    imagem Blob required
+}
+
+entity Produto {
+	cor String required,
+    tamanho String required
+}
+
+entity Adiantamento {
+	valor BigDecimal required
+}
+
+relationship ManyToOne {
+	QuantidadeTamanho{modeloVestuario} to ModeloVestuario
+}
+
+relationship ManyToOne {
+	ModeloVestuario{material} to Material,
+    ModeloVestuario{modelo} to Modelo
+}
+
+relationship ManyToOne {
+	Produto{modeloVestuario} to ModeloVestuario
+}
+
+relationship ManyToOne {
+	Adiantamento{formaPagemento} to FormaPagamento
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl

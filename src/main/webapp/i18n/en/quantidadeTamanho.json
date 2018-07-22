@@ -1,0 +1,24 @@
+
+{
+    "vestdeskApp": {
+        "quantidadeTamanho" : {
+            "home": {
+                "title": "Quantidade Tamanhos",
+                "createLabel": "Create a new Quantidade Tamanho",
+                "createOrEditLabel": "Create or edit a Quantidade Tamanho"
+            },
+            "created": "A new Quantidade Tamanho is created with identifier {{ param }}",
+            "updated": "A Quantidade Tamanho is updated with identifier {{ param }}",
+            "deleted": "A Quantidade Tamanho is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Quantidade Tamanho {{ id }}?"
+            },
+            "detail": {
+                "title": "Quantidade Tamanho"
+            },
+            "tamanho": "Tamanho",
+            "quantidadeMaterial": "Quantidade Material",
+            "modeloVestuario": "Modelo Vestuario"
+        }
+    }
+}

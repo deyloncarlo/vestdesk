@@ -1,0 +1,36 @@
+
+<div *ngIf="quantidadeTamanho">
+    <h2><span jhiTranslate="vestdeskApp.quantidadeTamanho.detail.title">Quantidade Tamanho</span> {{quantidadeTamanho.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.quantidadeTamanho.tamanho">Tamanho</span></dt>
+        <dd>
+            <span>{{quantidadeTamanho.tamanho}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.quantidadeTamanho.quantidadeMaterial">Quantidade Material</span></dt>
+        <dd>
+            <span>{{quantidadeTamanho.quantidadeMaterial}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.quantidadeTamanho.modeloVestuario">Modelo Vestuario</span></dt>
+        <dd>
+            <div *ngIf="quantidadeTamanho.modeloVestuarioId">
+                <a [routerLink]="['/modelo-vestuario', quantidadeTamanho.modeloVestuarioId]">{{quantidadeTamanho.modeloVestuarioId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'quantidade-tamanho/'+ quantidadeTamanho.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

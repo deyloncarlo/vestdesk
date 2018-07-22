@@ -1,0 +1,23 @@
+
+{
+    "vestdeskApp": {
+        "adiantamento" : {
+            "home": {
+                "title": "Adiantamentos",
+                "createLabel": "Create a new Adiantamento",
+                "createOrEditLabel": "Create or edit a Adiantamento"
+            },
+            "created": "A new Adiantamento is created with identifier {{ param }}",
+            "updated": "A Adiantamento is updated with identifier {{ param }}",
+            "deleted": "A Adiantamento is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Adiantamento {{ id }}?"
+            },
+            "detail": {
+                "title": "Adiantamento"
+            },
+            "valor": "Valor",
+            "formaPagemento": "Forma Pagemento"
+        }
+    }
+}

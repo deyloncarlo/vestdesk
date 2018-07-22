@@ -1,0 +1,54 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myProdutoLabel" jhiTranslate="vestdeskApp.produto.home.createOrEditLabel">Create or edit a Produto</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!produto.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="produto.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.cor" for="field_cor">Cor</label>
+            <input type="text" class="form-control" name="cor" id="field_cor"
+                [(ngModel)]="produto.cor" required/>
+            <div [hidden]="!(editForm.controls.cor?.dirty && editForm.controls.cor?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.cor?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.tamanho" for="field_tamanho">Tamanho</label>
+            <input type="text" class="form-control" name="tamanho" id="field_tamanho"
+                [(ngModel)]="produto.tamanho" required/>
+            <div [hidden]="!(editForm.controls.tamanho?.dirty && editForm.controls.tamanho?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.tamanho?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modeloVestuario" for="field_modeloVestuario">Modelo Vestuario</label>
+            <select class="form-control" id="field_modeloVestuario" name="modeloVestuario" [(ngModel)]="produto.modeloVestuarioId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="modeloVestuarioOption.id" *ngFor="let modeloVestuarioOption of modelovestuarios; trackBy: trackModeloVestuarioById">{{modeloVestuarioOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

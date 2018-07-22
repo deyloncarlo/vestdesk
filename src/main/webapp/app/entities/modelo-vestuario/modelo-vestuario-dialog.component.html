@@ -1,0 +1,54 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myModeloVestuarioLabel" jhiTranslate="vestdeskApp.modeloVestuario.home.createOrEditLabel">Create or edit a Modelo Vestuario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!modeloVestuario.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="modeloVestuario.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.preco" for="field_preco">Preco</label>
+            <input type="number" class="form-control" name="preco" id="field_preco"
+                [(ngModel)]="modeloVestuario.preco" required/>
+            <div [hidden]="!(editForm.controls.preco?.dirty && editForm.controls.preco?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.material" for="field_material">Material</label>
+            <select class="form-control" id="field_material" name="material" [(ngModel)]="modeloVestuario.materialId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="materialOption.id" *ngFor="let materialOption of materials; trackBy: trackMaterialById">{{materialOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.modelo" for="field_modelo">Modelo</label>
+            <select class="form-control" id="field_modelo" name="modelo" [(ngModel)]="modeloVestuario.modeloId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="modeloOption.id" *ngFor="let modeloOption of modelos; trackBy: trackModeloById">{{modeloOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

@@ -1,0 +1,265 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Deylon (generated)" id="1532280695787-1">
+        <createTable tableName="adiantamento">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="adiantamentoPK"/>
+            </column>
+            <column name="valor" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="forma_pagemento_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-2">
+        <createTable tableName="cliente">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="clientePK"/>
+            </column>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="endereco" type="VARCHAR(255)"/>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="observacao" type="VARCHAR(255)"/>
+            <column name="telefone" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-3">
+        <createTable tableName="etapa_producao">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="etapa_producaoPK"/>
+            </column>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="prazo_execucao" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-4">
+        <createTable tableName="forma_pagamento">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="forma_pagamentoPK"/>
+            </column>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-5">
+        <createTable tableName="jhi_authority">
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-6">
+        <createTable tableName="jhi_persistent_audit_event">
+            <column autoIncrement="true" name="event_id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_persistent_audit_eventPK"/>
+            </column>
+            <column name="event_date" type="datetime"/>
+            <column name="event_type" type="VARCHAR(255)"/>
+            <column name="principal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-7">
+        <createTable tableName="jhi_persistent_audit_evt_data">
+            <column name="event_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-8">
+        <createTable tableName="jhi_persistent_token">
+            <column name="series" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ip_address" type="VARCHAR(39)"/>
+            <column name="token_date" type="date"/>
+            <column name="token_value" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_agent" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-9">
+        <createTable tableName="jhi_user">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_userPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="activated" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="activation_key" type="VARCHAR(20)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="first_name" type="VARCHAR(50)"/>
+            <column name="image_url" type="VARCHAR(256)"/>
+            <column name="lang_key" type="VARCHAR(6)"/>
+            <column name="last_name" type="VARCHAR(50)"/>
+            <column name="login" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(60)"/>
+            <column name="reset_date" type="datetime"/>
+            <column name="reset_key" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-10">
+        <createTable tableName="jhi_user_authority">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="authority_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-11">
+        <createTable tableName="layout">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="layoutPK"/>
+            </column>
+            <column name="imagem" type="LONGBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="imagem_content_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-12">
+        <createTable tableName="material">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="materialPK"/>
+            </column>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="preco" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantidade_maxima" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantidade_minima" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-13">
+        <createTable tableName="modelo">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="modeloPK"/>
+            </column>
+            <column name="nome" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-14">
+        <createTable tableName="modelo_vestuario">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="modelo_vestuarioPK"/>
+            </column>
+            <column name="preco" type="DECIMAL(10, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material_id" type="BIGINT"/>
+            <column name="modelo_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-15">
+        <createTable tableName="produto">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="produtoPK"/>
+            </column>
+            <column name="cor" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tamanho" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modelo_vestuario_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-16">
+        <createTable tableName="quantidade_tamanho">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="quantidade_tamanhoPK"/>
+            </column>
+            <column name="quantidade_material" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tamanho" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modelo_vestuario_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-17">
+        <addPrimaryKey columnNames="event_id, name" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-18">
+        <addPrimaryKey columnNames="user_id, authority_name" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-19">
+        <addPrimaryKey columnNames="name" constraintName="jhi_authorityPK" tableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-20">
+        <addPrimaryKey columnNames="series" constraintName="jhi_persistent_tokenPK" tableName="jhi_persistent_token"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-21">
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-22">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-23">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-24">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-25">
+        <addForeignKeyConstraint baseColumnNames="modelo_id" baseTableName="modelo_vestuario" constraintName="FK2hcl3perxpf5yrokh3keda4iy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="modelo"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-26">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-27">
+        <addForeignKeyConstraint baseColumnNames="material_id" baseTableName="modelo_vestuario" constraintName="FK75b961l75kyf002b0bxycvhsv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="material"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-28">
+        <addForeignKeyConstraint baseColumnNames="modelo_vestuario_id" baseTableName="produto" constraintName="FKenw57o56vhqi6s3d2rwugxd99" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="modelo_vestuario"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-29">
+        <addForeignKeyConstraint baseColumnNames="forma_pagemento_id" baseTableName="adiantamento" constraintName="FKkh66hiba7ij7equ2y3ukq321a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="forma_pagamento"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-30">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_persistent_token" constraintName="FKmogh0vmv89yg5kofe6n3t77ud" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Deylon (generated)" id="1532280695787-31">
+        <addForeignKeyConstraint baseColumnNames="modelo_vestuario_id" baseTableName="quantidade_tamanho" constraintName="FKodp3kk4qf724fvvw1do1jx1u0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="modelo_vestuario"/>
+    </changeSet>
+</databaseChangeLog>

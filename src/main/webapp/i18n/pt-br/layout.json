@@ -1,0 +1,23 @@
+
+{
+    "vestdeskApp": {
+        "layout" : {
+            "home": {
+                "title": "Layouts",
+                "createLabel": "Criar novo Layout",
+                "createOrEditLabel": "Criar ou editar Layout"
+            },
+            "created": "Um novo Layout foi criado com o identificador {{ param }}",
+            "updated": "Um Layout foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Layout foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Layout {{ id }}?"
+            },
+            "detail": {
+                "title": "Layout"
+            },
+            "nome": "Nome",
+            "imagem": "Imagem"
+        }
+    }
+}

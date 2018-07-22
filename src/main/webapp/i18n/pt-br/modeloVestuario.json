@@ -1,0 +1,24 @@
+
+{
+    "vestdeskApp": {
+        "modeloVestuario" : {
+            "home": {
+                "title": "Modelo Vestuarios",
+                "createLabel": "Criar novo Modelo Vestuario",
+                "createOrEditLabel": "Criar ou editar Modelo Vestuario"
+            },
+            "created": "Um novo Modelo Vestuario foi criado com o identificador {{ param }}",
+            "updated": "Um Modelo Vestuario foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Modelo Vestuario foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Modelo Vestuario {{ id }}?"
+            },
+            "detail": {
+                "title": "Modelo Vestuario"
+            },
+            "preco": "Preco",
+            "material": "Material",
+            "modelo": "Modelo"
+        }
+    }
+}

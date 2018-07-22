@@ -1,0 +1,30 @@
+
+<div *ngIf="etapaProducao">
+    <h2><span jhiTranslate="vestdeskApp.etapaProducao.detail.title">Etapa Producao</span> {{etapaProducao.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.etapaProducao.nome">Nome</span></dt>
+        <dd>
+            <span>{{etapaProducao.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.etapaProducao.prazoExecucao">Prazo Execucao</span></dt>
+        <dd>
+            <span>{{etapaProducao.prazoExecucao}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'etapa-producao/'+ etapaProducao.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

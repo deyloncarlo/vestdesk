@@ -1,0 +1,22 @@
+
+{
+    "vestdeskApp": {
+        "modelo" : {
+            "home": {
+                "title": "Modelos",
+                "createLabel": "Criar novo Modelo",
+                "createOrEditLabel": "Criar ou editar Modelo"
+            },
+            "created": "Um novo Modelo foi criado com o identificador {{ param }}",
+            "updated": "Um Modelo foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Modelo foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Modelo {{ id }}?"
+            },
+            "detail": {
+                "title": "Modelo"
+            },
+            "nome": "Nome"
+        }
+    }
+}

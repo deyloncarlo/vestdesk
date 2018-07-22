@@ -1,0 +1,38 @@
+
+<div *ngIf="material">
+    <h2><span jhiTranslate="vestdeskApp.material.detail.title">Material</span> {{material.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.material.nome">Nome</span></dt>
+        <dd>
+            <span>{{material.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.material.preco">Preco</span></dt>
+        <dd>
+            <span>{{material.preco}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.material.quantidadeMinima">Quantidade Minima</span></dt>
+        <dd>
+            <span>{{material.quantidadeMinima}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.material.quantidadeMaxima">Quantidade Maxima</span></dt>
+        <dd>
+            <span>{{material.quantidadeMaxima}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'material/'+ material.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
