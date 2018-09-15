@@ -2,22 +2,39 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "modeloVestuario",
-            "otherEntityName": "modeloVestuario",
-            "otherEntityField": "id"
+            "relationshipType": "one-to-one",
+            "relationshipName": "configuracaoProduto",
+            "otherEntityName": "configuracaoProduto",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "produto"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "listaProduto",
+            "relationshipName": "listaCor",
+            "otherEntityName": "cor",
+            "otherEntityField": "id",
+            "ownerSide": true
         }
     ],
     "fields": [
         {
-            "fieldName": "cor",
-            "fieldType": "String",
+            "fieldName": "oid",
+            "fieldType": "Long",
             "fieldValidateRules": [
                 "required"
             ]
         },
         {
-            "fieldName": "tamanho",
+            "fieldName": "quantidadeEstoque",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "descricao",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"

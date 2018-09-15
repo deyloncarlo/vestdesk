@@ -16,9 +16,9 @@
             "detail": {
                 "title": "Modelo Vestuario"
             },
-            "preco": "Preco",
-            "material": "Material",
-            "modelo": "Modelo"
+            "oid": "Oid",
+            "modelo": "Modelo",
+            "listaConfiguracaoProduto": "Lista Configuracao Produto"
         }
     }
 }

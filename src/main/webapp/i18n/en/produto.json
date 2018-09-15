@@ -16,9 +16,11 @@
             "detail": {
                 "title": "Produto"
             },
-            "cor": "Cor",
-            "tamanho": "Tamanho",
-            "modeloVestuario": "Modelo Vestuario"
+            "oid": "Oid",
+            "quantidadeEstoque": "Quantidade Estoque",
+            "descricao": "Descricao",
+            "configuracaoProduto": "Configuracao Produto",
+            "listaCor": "Lista Cor"
         }
     }
 }

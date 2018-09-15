@@ -1,13 +1,19 @@
 package br.com.vestdesk.web.rest;
 
-import br.com.vestdesk.VestdeskApp;
+import static br.com.vestdesk.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import br.com.vestdesk.domain.EtapaProducao;
-import br.com.vestdesk.repository.EtapaProducaoRepository;
-import br.com.vestdesk.service.EtapaProducaoService;
-import br.com.vestdesk.service.dto.EtapaProducaoDTO;
-import br.com.vestdesk.service.mapper.EtapaProducaoMapper;
-import br.com.vestdesk.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,14 +29,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.List;
-
-import static br.com.vestdesk.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.vestdesk.VestdeskApp;
+import br.com.vestdesk.domain.EtapaProducao;
+import br.com.vestdesk.repository.EtapaProducaoRepository;
+import br.com.vestdesk.service.EtapaProducaoService;
+import br.com.vestdesk.service.dto.EtapaProducaoDTO;
+import br.com.vestdesk.service.mapper.EtapaProducaoMapper;
+import br.com.vestdesk.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the EtapaProducaoResource REST controller.
@@ -39,284 +44,315 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = VestdeskApp.class)
-public class EtapaProducaoResourceIntTest {
+public class EtapaProducaoResourceIntTest
+{
 
-    private static final String DEFAULT_NOME = "AAAAAAAAAA";
-    private static final String UPDATED_NOME = "BBBBBBBBBB";
+	private static final Long DEFAULT_OID = 1L;
+	private static final Long UPDATED_OID = 2L;
 
-    private static final Integer DEFAULT_PRAZO_EXECUCAO = 1;
-    private static final Integer UPDATED_PRAZO_EXECUCAO = 2;
+	private static final String DEFAULT_NOME = "AAAAAAAAAA";
+	private static final String UPDATED_NOME = "BBBBBBBBBB";
 
-    @Autowired
-    private EtapaProducaoRepository etapaProducaoRepository;
+	private static final Integer DEFAULT_PRAZO_EXECUCAO = 1;
+	private static final Integer UPDATED_PRAZO_EXECUCAO = 2;
 
-    @Autowired
-    private EtapaProducaoMapper etapaProducaoMapper;
+	@Autowired
+	private EtapaProducaoRepository etapaProducaoRepository;
 
-    @Autowired
-    private EtapaProducaoService etapaProducaoService;
+	@Autowired
+	private EtapaProducaoMapper etapaProducaoMapper;
 
-    @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+	@Autowired
+	private EtapaProducaoService etapaProducaoService;
 
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+	@Autowired
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Autowired
-    private EntityManager em;
+	@Autowired
+	private ExceptionTranslator exceptionTranslator;
 
-    private MockMvc restEtapaProducaoMockMvc;
+	@Autowired
+	private EntityManager em;
 
-    private EtapaProducao etapaProducao;
+	private MockMvc restEtapaProducaoMockMvc;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final EtapaProducaoResource etapaProducaoResource = new EtapaProducaoResource(etapaProducaoService);
-        this.restEtapaProducaoMockMvc = MockMvcBuilders.standaloneSetup(etapaProducaoResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-    }
+	private EtapaProducao etapaProducao;
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static EtapaProducao createEntity(EntityManager em) {
-        EtapaProducao etapaProducao = new EtapaProducao()
-            .nome(DEFAULT_NOME)
-            .prazoExecucao(DEFAULT_PRAZO_EXECUCAO);
-        return etapaProducao;
-    }
+	@Before
+	public void setup()
+	{
+		MockitoAnnotations.initMocks(this);
+		final EtapaProducaoResource etapaProducaoResource = new EtapaProducaoResource(this.etapaProducaoService);
+		this.restEtapaProducaoMockMvc = MockMvcBuilders.standaloneSetup(etapaProducaoResource)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
+				.setConversionService(createFormattingConversionService())
+				.setMessageConverters(this.jacksonMessageConverter).build();
+	}
 
-    @Before
-    public void initTest() {
-        etapaProducao = createEntity(em);
-    }
+	/**
+	 * Create an entity for this test.
+	 *
+	 * This is a static method, as tests for other entities might also need it,
+	 * if they test an entity which requires the current entity.
+	 */
+	public static EtapaProducao createEntity(EntityManager em)
+	{
+		EtapaProducao etapaProducao = new EtapaProducao().nome(DEFAULT_NOME).prazoExecucao(DEFAULT_PRAZO_EXECUCAO);
+		return etapaProducao;
+	}
 
-    @Test
-    @Transactional
-    public void createEtapaProducao() throws Exception {
-        int databaseSizeBeforeCreate = etapaProducaoRepository.findAll().size();
+	@Before
+	public void initTest()
+	{
+		this.etapaProducao = createEntity(this.em);
+	}
 
-        // Create the EtapaProducao
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(etapaProducao);
-        restEtapaProducaoMockMvc.perform(post("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isCreated());
+	@Test
+	@Transactional
+	public void createEtapaProducao() throws Exception
+	{
+		int databaseSizeBeforeCreate = this.etapaProducaoRepository.findAll().size();
 
-        // Validate the EtapaProducao in the database
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeCreate + 1);
-        EtapaProducao testEtapaProducao = etapaProducaoList.get(etapaProducaoList.size() - 1);
-        assertThat(testEtapaProducao.getNome()).isEqualTo(DEFAULT_NOME);
-        assertThat(testEtapaProducao.getPrazoExecucao()).isEqualTo(DEFAULT_PRAZO_EXECUCAO);
-    }
+		// Create the EtapaProducao
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
+		this.restEtapaProducaoMockMvc.perform(post("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO))).andExpect(status().isCreated());
 
-    @Test
-    @Transactional
-    public void createEtapaProducaoWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = etapaProducaoRepository.findAll().size();
+		// Validate the EtapaProducao in the database
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeCreate + 1);
+		EtapaProducao testEtapaProducao = etapaProducaoList.get(etapaProducaoList.size() - 1);
+		assertThat(testEtapaProducao.getNome()).isEqualTo(DEFAULT_NOME);
+		assertThat(testEtapaProducao.getPrazoExecucao()).isEqualTo(DEFAULT_PRAZO_EXECUCAO);
+	}
 
-        // Create the EtapaProducao with an existing ID
-        etapaProducao.setId(1L);
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(etapaProducao);
+	@Test
+	@Transactional
+	public void createEtapaProducaoWithExistingId() throws Exception
+	{
+		int databaseSizeBeforeCreate = this.etapaProducaoRepository.findAll().size();
 
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restEtapaProducaoMockMvc.perform(post("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the EtapaProducao with an existing ID
+		this.etapaProducao.setId(1L);
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
 
-        // Validate the EtapaProducao in the database
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeCreate);
-    }
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
+		this.restEtapaProducaoMockMvc
+				.perform(post("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void checkNomeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = etapaProducaoRepository.findAll().size();
-        // set the field null
-        etapaProducao.setNome(null);
+		// Validate the EtapaProducao in the database
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeCreate);
+	}
 
-        // Create the EtapaProducao, which fails.
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(etapaProducao);
+	@Test
+	@Transactional
+	public void checkOidIsRequired() throws Exception
+	{
+		int databaseSizeBeforeTest = this.etapaProducaoRepository.findAll().size();
+		// set the field null
 
-        restEtapaProducaoMockMvc.perform(post("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the EtapaProducao, which fails.
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
 
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeTest);
-    }
+		this.restEtapaProducaoMockMvc
+				.perform(post("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void checkPrazoExecucaoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = etapaProducaoRepository.findAll().size();
-        // set the field null
-        etapaProducao.setPrazoExecucao(null);
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeTest);
+	}
 
-        // Create the EtapaProducao, which fails.
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(etapaProducao);
+	@Test
+	@Transactional
+	public void checkNomeIsRequired() throws Exception
+	{
+		int databaseSizeBeforeTest = this.etapaProducaoRepository.findAll().size();
+		// set the field null
+		this.etapaProducao.setNome(null);
 
-        restEtapaProducaoMockMvc.perform(post("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the EtapaProducao, which fails.
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
 
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeTest);
-    }
+		this.restEtapaProducaoMockMvc
+				.perform(post("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void getAllEtapaProducaos() throws Exception {
-        // Initialize the database
-        etapaProducaoRepository.saveAndFlush(etapaProducao);
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeTest);
+	}
 
-        // Get all the etapaProducaoList
-        restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(etapaProducao.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
-            .andExpect(jsonPath("$.[*].prazoExecucao").value(hasItem(DEFAULT_PRAZO_EXECUCAO)));
-    }
+	@Test
+	@Transactional
+	public void checkPrazoExecucaoIsRequired() throws Exception
+	{
+		int databaseSizeBeforeTest = this.etapaProducaoRepository.findAll().size();
+		// set the field null
+		this.etapaProducao.setPrazoExecucao(null);
 
-    @Test
-    @Transactional
-    public void getEtapaProducao() throws Exception {
-        // Initialize the database
-        etapaProducaoRepository.saveAndFlush(etapaProducao);
+		// Create the EtapaProducao, which fails.
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
 
-        // Get the etapaProducao
-        restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos/{id}", etapaProducao.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(etapaProducao.getId().intValue()))
-            .andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
-            .andExpect(jsonPath("$.prazoExecucao").value(DEFAULT_PRAZO_EXECUCAO));
-    }
+		this.restEtapaProducaoMockMvc
+				.perform(post("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void getNonExistingEtapaProducao() throws Exception {
-        // Get the etapaProducao
-        restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeTest);
+	}
 
-    @Test
-    @Transactional
-    public void updateEtapaProducao() throws Exception {
-        // Initialize the database
-        etapaProducaoRepository.saveAndFlush(etapaProducao);
-        int databaseSizeBeforeUpdate = etapaProducaoRepository.findAll().size();
+	@Test
+	@Transactional
+	public void getAllEtapaProducaos() throws Exception
+	{
+		// Initialize the database
+		this.etapaProducaoRepository.saveAndFlush(this.etapaProducao);
 
-        // Update the etapaProducao
-        EtapaProducao updatedEtapaProducao = etapaProducaoRepository.findOne(etapaProducao.getId());
-        // Disconnect from session so that the updates on updatedEtapaProducao are not directly saved in db
-        em.detach(updatedEtapaProducao);
-        updatedEtapaProducao
-            .nome(UPDATED_NOME)
-            .prazoExecucao(UPDATED_PRAZO_EXECUCAO);
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(updatedEtapaProducao);
+		// Get all the etapaProducaoList
+		this.restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos?sort=id,desc")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(jsonPath("$.[*].id").value(hasItem(this.etapaProducao.getId().intValue())))
+				.andExpect(jsonPath("$.[*].oid").value(hasItem(DEFAULT_OID.intValue())))
+				.andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME.toString())))
+				.andExpect(jsonPath("$.[*].prazoExecucao").value(hasItem(DEFAULT_PRAZO_EXECUCAO)));
+	}
 
-        restEtapaProducaoMockMvc.perform(put("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isOk());
+	@Test
+	@Transactional
+	public void getEtapaProducao() throws Exception
+	{
+		// Initialize the database
+		this.etapaProducaoRepository.saveAndFlush(this.etapaProducao);
 
-        // Validate the EtapaProducao in the database
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeUpdate);
-        EtapaProducao testEtapaProducao = etapaProducaoList.get(etapaProducaoList.size() - 1);
-        assertThat(testEtapaProducao.getNome()).isEqualTo(UPDATED_NOME);
-        assertThat(testEtapaProducao.getPrazoExecucao()).isEqualTo(UPDATED_PRAZO_EXECUCAO);
-    }
+		// Get the etapaProducao
+		this.restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos/{id}", this.etapaProducao.getId()))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(jsonPath("$.id").value(this.etapaProducao.getId().intValue()))
+				.andExpect(jsonPath("$.oid").value(DEFAULT_OID.intValue()))
+				.andExpect(jsonPath("$.nome").value(DEFAULT_NOME.toString()))
+				.andExpect(jsonPath("$.prazoExecucao").value(DEFAULT_PRAZO_EXECUCAO));
+	}
 
-    @Test
-    @Transactional
-    public void updateNonExistingEtapaProducao() throws Exception {
-        int databaseSizeBeforeUpdate = etapaProducaoRepository.findAll().size();
+	@Test
+	@Transactional
+	public void getNonExistingEtapaProducao() throws Exception
+	{
+		// Get the etapaProducao
+		this.restEtapaProducaoMockMvc.perform(get("/api/etapa-producaos/{id}", Long.MAX_VALUE))
+				.andExpect(status().isNotFound());
+	}
 
-        // Create the EtapaProducao
-        EtapaProducaoDTO etapaProducaoDTO = etapaProducaoMapper.toDto(etapaProducao);
+	@Test
+	@Transactional
+	public void updateEtapaProducao() throws Exception
+	{
+		// Initialize the database
+		this.etapaProducaoRepository.saveAndFlush(this.etapaProducao);
+		int databaseSizeBeforeUpdate = this.etapaProducaoRepository.findAll().size();
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restEtapaProducaoMockMvc.perform(put("/api/etapa-producaos")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO)))
-            .andExpect(status().isCreated());
+		// Update the etapaProducao
+		EtapaProducao updatedEtapaProducao = this.etapaProducaoRepository.findOne(this.etapaProducao.getId());
+		// Disconnect from session so that the updates on updatedEtapaProducao
+		// are not directly saved in db
+		this.em.detach(updatedEtapaProducao);
+		updatedEtapaProducao.nome(UPDATED_NOME).prazoExecucao(UPDATED_PRAZO_EXECUCAO);
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(updatedEtapaProducao);
 
-        // Validate the EtapaProducao in the database
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
+		this.restEtapaProducaoMockMvc.perform(put("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO))).andExpect(status().isOk());
 
-    @Test
-    @Transactional
-    public void deleteEtapaProducao() throws Exception {
-        // Initialize the database
-        etapaProducaoRepository.saveAndFlush(etapaProducao);
-        int databaseSizeBeforeDelete = etapaProducaoRepository.findAll().size();
+		// Validate the EtapaProducao in the database
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeUpdate);
+		EtapaProducao testEtapaProducao = etapaProducaoList.get(etapaProducaoList.size() - 1);
+		assertThat(testEtapaProducao.getNome()).isEqualTo(UPDATED_NOME);
+		assertThat(testEtapaProducao.getPrazoExecucao()).isEqualTo(UPDATED_PRAZO_EXECUCAO);
+	}
 
-        // Get the etapaProducao
-        restEtapaProducaoMockMvc.perform(delete("/api/etapa-producaos/{id}", etapaProducao.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+	@Test
+	@Transactional
+	public void updateNonExistingEtapaProducao() throws Exception
+	{
+		int databaseSizeBeforeUpdate = this.etapaProducaoRepository.findAll().size();
 
-        // Validate the database is empty
-        List<EtapaProducao> etapaProducaoList = etapaProducaoRepository.findAll();
-        assertThat(etapaProducaoList).hasSize(databaseSizeBeforeDelete - 1);
-    }
+		// Create the EtapaProducao
+		EtapaProducaoDTO etapaProducaoDTO = this.etapaProducaoMapper.toDto(this.etapaProducao);
 
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(EtapaProducao.class);
-        EtapaProducao etapaProducao1 = new EtapaProducao();
-        etapaProducao1.setId(1L);
-        EtapaProducao etapaProducao2 = new EtapaProducao();
-        etapaProducao2.setId(etapaProducao1.getId());
-        assertThat(etapaProducao1).isEqualTo(etapaProducao2);
-        etapaProducao2.setId(2L);
-        assertThat(etapaProducao1).isNotEqualTo(etapaProducao2);
-        etapaProducao1.setId(null);
-        assertThat(etapaProducao1).isNotEqualTo(etapaProducao2);
-    }
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
+		this.restEtapaProducaoMockMvc.perform(put("/api/etapa-producaos").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(etapaProducaoDTO))).andExpect(status().isCreated());
 
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(EtapaProducaoDTO.class);
-        EtapaProducaoDTO etapaProducaoDTO1 = new EtapaProducaoDTO();
-        etapaProducaoDTO1.setId(1L);
-        EtapaProducaoDTO etapaProducaoDTO2 = new EtapaProducaoDTO();
-        assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
-        etapaProducaoDTO2.setId(etapaProducaoDTO1.getId());
-        assertThat(etapaProducaoDTO1).isEqualTo(etapaProducaoDTO2);
-        etapaProducaoDTO2.setId(2L);
-        assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
-        etapaProducaoDTO1.setId(null);
-        assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
-    }
+		// Validate the EtapaProducao in the database
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeUpdate + 1);
+	}
 
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(etapaProducaoMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(etapaProducaoMapper.fromId(null)).isNull();
-    }
+	@Test
+	@Transactional
+	public void deleteEtapaProducao() throws Exception
+	{
+		// Initialize the database
+		this.etapaProducaoRepository.saveAndFlush(this.etapaProducao);
+		int databaseSizeBeforeDelete = this.etapaProducaoRepository.findAll().size();
+
+		// Get the etapaProducao
+		this.restEtapaProducaoMockMvc.perform(
+				delete("/api/etapa-producaos/{id}", this.etapaProducao.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(status().isOk());
+
+		// Validate the database is empty
+		List<EtapaProducao> etapaProducaoList = this.etapaProducaoRepository.findAll();
+		assertThat(etapaProducaoList).hasSize(databaseSizeBeforeDelete - 1);
+	}
+
+	@Test
+	@Transactional
+	public void equalsVerifier() throws Exception
+	{
+		TestUtil.equalsVerifier(EtapaProducao.class);
+		EtapaProducao etapaProducao1 = new EtapaProducao();
+		etapaProducao1.setId(1L);
+		EtapaProducao etapaProducao2 = new EtapaProducao();
+		etapaProducao2.setId(etapaProducao1.getId());
+		assertThat(etapaProducao1).isEqualTo(etapaProducao2);
+		etapaProducao2.setId(2L);
+		assertThat(etapaProducao1).isNotEqualTo(etapaProducao2);
+		etapaProducao1.setId(null);
+		assertThat(etapaProducao1).isNotEqualTo(etapaProducao2);
+	}
+
+	@Test
+	@Transactional
+	public void dtoEqualsVerifier() throws Exception
+	{
+		TestUtil.equalsVerifier(EtapaProducaoDTO.class);
+		EtapaProducaoDTO etapaProducaoDTO1 = new EtapaProducaoDTO();
+		etapaProducaoDTO1.setId(1L);
+		EtapaProducaoDTO etapaProducaoDTO2 = new EtapaProducaoDTO();
+		assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
+		etapaProducaoDTO2.setId(etapaProducaoDTO1.getId());
+		assertThat(etapaProducaoDTO1).isEqualTo(etapaProducaoDTO2);
+		etapaProducaoDTO2.setId(2L);
+		assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
+		etapaProducaoDTO1.setId(null);
+		assertThat(etapaProducaoDTO1).isNotEqualTo(etapaProducaoDTO2);
+	}
+
+	@Test
+	@Transactional
+	public void testEntityFromId()
+	{
+		assertThat(this.etapaProducaoMapper.fromId(42L).getId()).isEqualTo(42);
+		assertThat(this.etapaProducaoMapper.fromId(null)).isNull();
+	}
 }

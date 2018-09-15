@@ -1,0 +1,91 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myUsuarioLabel" jhiTranslate="vestdeskApp.usuario.home.createOrEditLabel">Create or edit a Usuario</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!usuario.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="usuario.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.oid" for="field_oid">Oid</label>
+            <input type="number" class="form-control" name="oid" id="field_oid"
+                [(ngModel)]="usuario.oid" required/>
+            <div [hidden]="!(editForm.controls.oid?.dirty && editForm.controls.oid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.oid?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.oid?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.nome" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome"
+                [(ngModel)]="usuario.nome" required/>
+            <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.sigla" for="field_sigla">Sigla</label>
+            <input type="text" class="form-control" name="sigla" id="field_sigla"
+                [(ngModel)]="usuario.sigla" required/>
+            <div [hidden]="!(editForm.controls.sigla?.dirty && editForm.controls.sigla?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.sigla?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                [(ngModel)]="usuario.email" />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.senha" for="field_senha">Senha</label>
+            <input type="text" class="form-control" name="senha" id="field_senha"
+                [(ngModel)]="usuario.senha" required/>
+            <div [hidden]="!(editForm.controls.senha?.dirty && editForm.controls.senha?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.senha?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.usuario.perfil" for="field_perfil">Perfil</label>
+            <select class="form-control" name="perfil" [(ngModel)]="usuario.perfil" id="field_perfil"  required>
+                <option value="ADMINISTRADOR">{{'vestdeskApp.Perfil.ADMINISTRADOR' | translate}}</option>
+                <option value="VENDEDOR">{{'vestdeskApp.Perfil.VENDEDOR' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.perfil?.dirty && editForm.controls.perfil?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.perfil?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

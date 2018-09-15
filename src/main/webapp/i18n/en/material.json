@@ -16,10 +16,12 @@
             "detail": {
                 "title": "Material"
             },
+            "oid": "Oid",
             "nome": "Nome",
             "preco": "Preco",
+            "quantidadeEstoque": "Quantidade Estoque",
             "quantidadeMinima": "Quantidade Minima",
-            "quantidadeMaxima": "Quantidade Maxima"
+            "listaMaterialTamanho": "Lista Material Tamanho"
         }
     }
 }

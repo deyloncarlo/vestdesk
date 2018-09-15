@@ -1,13 +1,19 @@
 package br.com.vestdesk.web.rest;
 
-import br.com.vestdesk.VestdeskApp;
+import static br.com.vestdesk.web.rest.TestUtil.createFormattingConversionService;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import br.com.vestdesk.domain.ModeloVestuario;
-import br.com.vestdesk.repository.ModeloVestuarioRepository;
-import br.com.vestdesk.service.ModeloVestuarioService;
-import br.com.vestdesk.service.dto.ModeloVestuarioDTO;
-import br.com.vestdesk.service.mapper.ModeloVestuarioMapper;
-import br.com.vestdesk.web.rest.errors.ExceptionTranslator;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,15 +29,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.math.BigDecimal;
-import java.util.List;
-
-import static br.com.vestdesk.web.rest.TestUtil.createFormattingConversionService;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import br.com.vestdesk.VestdeskApp;
+import br.com.vestdesk.domain.ModeloVestuario;
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.repository.ModeloVestuarioRepository;
+import br.com.vestdesk.service.ModeloVestuarioService;
+import br.com.vestdesk.service.dto.ModeloVestuarioDTO;
+import br.com.vestdesk.service.mapper.ModeloVestuarioMapper;
+import br.com.vestdesk.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the ModeloVestuarioResource REST controller.
@@ -40,256 +45,294 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = VestdeskApp.class)
-public class ModeloVestuarioResourceIntTest {
+public class ModeloVestuarioResourceIntTest
+{
 
-    private static final BigDecimal DEFAULT_PRECO = new BigDecimal(1);
-    private static final BigDecimal UPDATED_PRECO = new BigDecimal(2);
+	private static final Long DEFAULT_OID = 1L;
+	private static final Long UPDATED_OID = 2L;
 
-    @Autowired
-    private ModeloVestuarioRepository modeloVestuarioRepository;
+	private static final Modelo DEFAULT_MODELO = Modelo.MOLETOM;
+	private static final Modelo UPDATED_MODELO = Modelo.POLO;
 
-    @Autowired
-    private ModeloVestuarioMapper modeloVestuarioMapper;
+	@Autowired
+	private ModeloVestuarioRepository modeloVestuarioRepository;
 
-    @Autowired
-    private ModeloVestuarioService modeloVestuarioService;
+	@Autowired
+	private ModeloVestuarioMapper modeloVestuarioMapper;
 
-    @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+	@Autowired
+	private ModeloVestuarioService modeloVestuarioService;
 
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+	@Autowired
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
+	@Autowired
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
-    @Autowired
-    private EntityManager em;
+	@Autowired
+	private ExceptionTranslator exceptionTranslator;
 
-    private MockMvc restModeloVestuarioMockMvc;
+	@Autowired
+	private EntityManager em;
 
-    private ModeloVestuario modeloVestuario;
+	private MockMvc restModeloVestuarioMockMvc;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final ModeloVestuarioResource modeloVestuarioResource = new ModeloVestuarioResource(modeloVestuarioService);
-        this.restModeloVestuarioMockMvc = MockMvcBuilders.standaloneSetup(modeloVestuarioResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setConversionService(createFormattingConversionService())
-            .setMessageConverters(jacksonMessageConverter).build();
-    }
+	private ModeloVestuario modeloVestuario;
 
-    /**
-     * Create an entity for this test.
-     *
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     */
-    public static ModeloVestuario createEntity(EntityManager em) {
-        ModeloVestuario modeloVestuario = new ModeloVestuario()
-            .preco(DEFAULT_PRECO);
-        return modeloVestuario;
-    }
+	@Before
+	public void setup()
+	{
+		MockitoAnnotations.initMocks(this);
+		final ModeloVestuarioResource modeloVestuarioResource = new ModeloVestuarioResource(
+				this.modeloVestuarioService);
+		this.restModeloVestuarioMockMvc = MockMvcBuilders.standaloneSetup(modeloVestuarioResource)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
+				.setConversionService(createFormattingConversionService())
+				.setMessageConverters(this.jacksonMessageConverter).build();
+	}
 
-    @Before
-    public void initTest() {
-        modeloVestuario = createEntity(em);
-    }
+	/**
+	 * Create an entity for this test.
+	 *
+	 * This is a static method, as tests for other entities might also need it,
+	 * if they test an entity which requires the current entity.
+	 */
+	public static ModeloVestuario createEntity(EntityManager em)
+	{
+		ModeloVestuario modeloVestuario = new ModeloVestuario().modelo(DEFAULT_MODELO);
+		return modeloVestuario;
+	}
 
-    @Test
-    @Transactional
-    public void createModeloVestuario() throws Exception {
-        int databaseSizeBeforeCreate = modeloVestuarioRepository.findAll().size();
+	@Before
+	public void initTest()
+	{
+		this.modeloVestuario = createEntity(this.em);
+	}
 
-        // Create the ModeloVestuario
-        ModeloVestuarioDTO modeloVestuarioDTO = modeloVestuarioMapper.toDto(modeloVestuario);
-        restModeloVestuarioMockMvc.perform(post("/api/modelo-vestuarios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
-            .andExpect(status().isCreated());
+	@Test
+	@Transactional
+	public void createModeloVestuario() throws Exception
+	{
+		int databaseSizeBeforeCreate = this.modeloVestuarioRepository.findAll().size();
 
-        // Validate the ModeloVestuario in the database
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeCreate + 1);
-        ModeloVestuario testModeloVestuario = modeloVestuarioList.get(modeloVestuarioList.size() - 1);
-        assertThat(testModeloVestuario.getPreco()).isEqualTo(DEFAULT_PRECO);
-    }
+		// Create the ModeloVestuario
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(this.modeloVestuario);
+		this.restModeloVestuarioMockMvc
+				.perform(post("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isCreated());
 
-    @Test
-    @Transactional
-    public void createModeloVestuarioWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = modeloVestuarioRepository.findAll().size();
+		// Validate the ModeloVestuario in the database
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeCreate + 1);
+		ModeloVestuario testModeloVestuario = modeloVestuarioList.get(modeloVestuarioList.size() - 1);
+		assertThat(testModeloVestuario.getModelo()).isEqualTo(DEFAULT_MODELO);
+	}
 
-        // Create the ModeloVestuario with an existing ID
-        modeloVestuario.setId(1L);
-        ModeloVestuarioDTO modeloVestuarioDTO = modeloVestuarioMapper.toDto(modeloVestuario);
+	@Test
+	@Transactional
+	public void createModeloVestuarioWithExistingId() throws Exception
+	{
+		int databaseSizeBeforeCreate = this.modeloVestuarioRepository.findAll().size();
 
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restModeloVestuarioMockMvc.perform(post("/api/modelo-vestuarios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the ModeloVestuario with an existing ID
+		this.modeloVestuario.setId(1L);
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(this.modeloVestuario);
 
-        // Validate the ModeloVestuario in the database
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeCreate);
-    }
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
+		this.restModeloVestuarioMockMvc
+				.perform(post("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void checkPrecoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = modeloVestuarioRepository.findAll().size();
-        // set the field null
-        modeloVestuario.setPreco(null);
+		// Validate the ModeloVestuario in the database
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeCreate);
+	}
 
-        // Create the ModeloVestuario, which fails.
-        ModeloVestuarioDTO modeloVestuarioDTO = modeloVestuarioMapper.toDto(modeloVestuario);
+	@Test
+	@Transactional
+	public void checkOidIsRequired() throws Exception
+	{
+		int databaseSizeBeforeTest = this.modeloVestuarioRepository.findAll().size();
+		// set the field null
 
-        restModeloVestuarioMockMvc.perform(post("/api/modelo-vestuarios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the ModeloVestuario, which fails.
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(this.modeloVestuario);
 
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeTest);
-    }
+		this.restModeloVestuarioMockMvc
+				.perform(post("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void getAllModeloVestuarios() throws Exception {
-        // Initialize the database
-        modeloVestuarioRepository.saveAndFlush(modeloVestuario);
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeTest);
+	}
 
-        // Get all the modeloVestuarioList
-        restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(modeloVestuario.getId().intValue())))
-            .andExpect(jsonPath("$.[*].preco").value(hasItem(DEFAULT_PRECO.intValue())));
-    }
+	@Test
+	@Transactional
+	public void checkModeloIsRequired() throws Exception
+	{
+		int databaseSizeBeforeTest = this.modeloVestuarioRepository.findAll().size();
+		// set the field null
+		this.modeloVestuario.setModelo(null);
 
-    @Test
-    @Transactional
-    public void getModeloVestuario() throws Exception {
-        // Initialize the database
-        modeloVestuarioRepository.saveAndFlush(modeloVestuario);
+		// Create the ModeloVestuario, which fails.
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(this.modeloVestuario);
 
-        // Get the modeloVestuario
-        restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios/{id}", modeloVestuario.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(modeloVestuario.getId().intValue()))
-            .andExpect(jsonPath("$.preco").value(DEFAULT_PRECO.intValue()));
-    }
+		this.restModeloVestuarioMockMvc
+				.perform(post("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isBadRequest());
 
-    @Test
-    @Transactional
-    public void getNonExistingModeloVestuario() throws Exception {
-        // Get the modeloVestuario
-        restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeTest);
+	}
 
-    @Test
-    @Transactional
-    public void updateModeloVestuario() throws Exception {
-        // Initialize the database
-        modeloVestuarioRepository.saveAndFlush(modeloVestuario);
-        int databaseSizeBeforeUpdate = modeloVestuarioRepository.findAll().size();
+	@Test
+	@Transactional
+	public void getAllModeloVestuarios() throws Exception
+	{
+		// Initialize the database
+		this.modeloVestuarioRepository.saveAndFlush(this.modeloVestuario);
 
-        // Update the modeloVestuario
-        ModeloVestuario updatedModeloVestuario = modeloVestuarioRepository.findOne(modeloVestuario.getId());
-        // Disconnect from session so that the updates on updatedModeloVestuario are not directly saved in db
-        em.detach(updatedModeloVestuario);
-        updatedModeloVestuario
-            .preco(UPDATED_PRECO);
-        ModeloVestuarioDTO modeloVestuarioDTO = modeloVestuarioMapper.toDto(updatedModeloVestuario);
+		// Get all the modeloVestuarioList
+		this.restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios?sort=id,desc")).andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(jsonPath("$.[*].id").value(hasItem(this.modeloVestuario.getId().intValue())))
+				.andExpect(jsonPath("$.[*].oid").value(hasItem(DEFAULT_OID.intValue())))
+				.andExpect(jsonPath("$.[*].modelo").value(hasItem(DEFAULT_MODELO.toString())));
+	}
 
-        restModeloVestuarioMockMvc.perform(put("/api/modelo-vestuarios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
-            .andExpect(status().isOk());
+	@Test
+	@Transactional
+	public void getModeloVestuario() throws Exception
+	{
+		// Initialize the database
+		this.modeloVestuarioRepository.saveAndFlush(this.modeloVestuario);
 
-        // Validate the ModeloVestuario in the database
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeUpdate);
-        ModeloVestuario testModeloVestuario = modeloVestuarioList.get(modeloVestuarioList.size() - 1);
-        assertThat(testModeloVestuario.getPreco()).isEqualTo(UPDATED_PRECO);
-    }
+		// Get the modeloVestuario
+		this.restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios/{id}", this.modeloVestuario.getId()))
+				.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(jsonPath("$.id").value(this.modeloVestuario.getId().intValue()))
+				.andExpect(jsonPath("$.oid").value(DEFAULT_OID.intValue()))
+				.andExpect(jsonPath("$.modelo").value(DEFAULT_MODELO.toString()));
+	}
 
-    @Test
-    @Transactional
-    public void updateNonExistingModeloVestuario() throws Exception {
-        int databaseSizeBeforeUpdate = modeloVestuarioRepository.findAll().size();
+	@Test
+	@Transactional
+	public void getNonExistingModeloVestuario() throws Exception
+	{
+		// Get the modeloVestuario
+		this.restModeloVestuarioMockMvc.perform(get("/api/modelo-vestuarios/{id}", Long.MAX_VALUE))
+				.andExpect(status().isNotFound());
+	}
 
-        // Create the ModeloVestuario
-        ModeloVestuarioDTO modeloVestuarioDTO = modeloVestuarioMapper.toDto(modeloVestuario);
+	@Test
+	@Transactional
+	public void updateModeloVestuario() throws Exception
+	{
+		// Initialize the database
+		this.modeloVestuarioRepository.saveAndFlush(this.modeloVestuario);
+		int databaseSizeBeforeUpdate = this.modeloVestuarioRepository.findAll().size();
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restModeloVestuarioMockMvc.perform(put("/api/modelo-vestuarios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
-            .andExpect(status().isCreated());
+		// Update the modeloVestuario
+		ModeloVestuario updatedModeloVestuario = this.modeloVestuarioRepository.findOne(this.modeloVestuario.getId());
+		// Disconnect from session so that the updates on updatedModeloVestuario
+		// are not directly saved in db
+		this.em.detach(updatedModeloVestuario);
+		updatedModeloVestuario.modelo(UPDATED_MODELO);
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(updatedModeloVestuario);
 
-        // Validate the ModeloVestuario in the database
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
+		this.restModeloVestuarioMockMvc
+				.perform(put("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isOk());
 
-    @Test
-    @Transactional
-    public void deleteModeloVestuario() throws Exception {
-        // Initialize the database
-        modeloVestuarioRepository.saveAndFlush(modeloVestuario);
-        int databaseSizeBeforeDelete = modeloVestuarioRepository.findAll().size();
+		// Validate the ModeloVestuario in the database
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeUpdate);
+		ModeloVestuario testModeloVestuario = modeloVestuarioList.get(modeloVestuarioList.size() - 1);
+		assertThat(testModeloVestuario.getModelo()).isEqualTo(UPDATED_MODELO);
+	}
 
-        // Get the modeloVestuario
-        restModeloVestuarioMockMvc.perform(delete("/api/modelo-vestuarios/{id}", modeloVestuario.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+	@Test
+	@Transactional
+	public void updateNonExistingModeloVestuario() throws Exception
+	{
+		int databaseSizeBeforeUpdate = this.modeloVestuarioRepository.findAll().size();
 
-        // Validate the database is empty
-        List<ModeloVestuario> modeloVestuarioList = modeloVestuarioRepository.findAll();
-        assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeDelete - 1);
-    }
+		// Create the ModeloVestuario
+		ModeloVestuarioDTO modeloVestuarioDTO = this.modeloVestuarioMapper.toDto(this.modeloVestuario);
 
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ModeloVestuario.class);
-        ModeloVestuario modeloVestuario1 = new ModeloVestuario();
-        modeloVestuario1.setId(1L);
-        ModeloVestuario modeloVestuario2 = new ModeloVestuario();
-        modeloVestuario2.setId(modeloVestuario1.getId());
-        assertThat(modeloVestuario1).isEqualTo(modeloVestuario2);
-        modeloVestuario2.setId(2L);
-        assertThat(modeloVestuario1).isNotEqualTo(modeloVestuario2);
-        modeloVestuario1.setId(null);
-        assertThat(modeloVestuario1).isNotEqualTo(modeloVestuario2);
-    }
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
+		this.restModeloVestuarioMockMvc
+				.perform(put("/api/modelo-vestuarios").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(modeloVestuarioDTO)))
+				.andExpect(status().isCreated());
 
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ModeloVestuarioDTO.class);
-        ModeloVestuarioDTO modeloVestuarioDTO1 = new ModeloVestuarioDTO();
-        modeloVestuarioDTO1.setId(1L);
-        ModeloVestuarioDTO modeloVestuarioDTO2 = new ModeloVestuarioDTO();
-        assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
-        modeloVestuarioDTO2.setId(modeloVestuarioDTO1.getId());
-        assertThat(modeloVestuarioDTO1).isEqualTo(modeloVestuarioDTO2);
-        modeloVestuarioDTO2.setId(2L);
-        assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
-        modeloVestuarioDTO1.setId(null);
-        assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
-    }
+		// Validate the ModeloVestuario in the database
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeUpdate + 1);
+	}
 
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(modeloVestuarioMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(modeloVestuarioMapper.fromId(null)).isNull();
-    }
+	@Test
+	@Transactional
+	public void deleteModeloVestuario() throws Exception
+	{
+		// Initialize the database
+		this.modeloVestuarioRepository.saveAndFlush(this.modeloVestuario);
+		int databaseSizeBeforeDelete = this.modeloVestuarioRepository.findAll().size();
+
+		// Get the modeloVestuario
+		this.restModeloVestuarioMockMvc.perform(delete("/api/modelo-vestuarios/{id}", this.modeloVestuario.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(status().isOk());
+
+		// Validate the database is empty
+		List<ModeloVestuario> modeloVestuarioList = this.modeloVestuarioRepository.findAll();
+		assertThat(modeloVestuarioList).hasSize(databaseSizeBeforeDelete - 1);
+	}
+
+	@Test
+	@Transactional
+	public void equalsVerifier() throws Exception
+	{
+		TestUtil.equalsVerifier(ModeloVestuario.class);
+		ModeloVestuario modeloVestuario1 = new ModeloVestuario();
+		modeloVestuario1.setId(1L);
+		ModeloVestuario modeloVestuario2 = new ModeloVestuario();
+		modeloVestuario2.setId(modeloVestuario1.getId());
+		assertThat(modeloVestuario1).isEqualTo(modeloVestuario2);
+		modeloVestuario2.setId(2L);
+		assertThat(modeloVestuario1).isNotEqualTo(modeloVestuario2);
+		modeloVestuario1.setId(null);
+		assertThat(modeloVestuario1).isNotEqualTo(modeloVestuario2);
+	}
+
+	@Test
+	@Transactional
+	public void dtoEqualsVerifier() throws Exception
+	{
+		TestUtil.equalsVerifier(ModeloVestuarioDTO.class);
+		ModeloVestuarioDTO modeloVestuarioDTO1 = new ModeloVestuarioDTO();
+		modeloVestuarioDTO1.setId(1L);
+		ModeloVestuarioDTO modeloVestuarioDTO2 = new ModeloVestuarioDTO();
+		assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
+		modeloVestuarioDTO2.setId(modeloVestuarioDTO1.getId());
+		assertThat(modeloVestuarioDTO1).isEqualTo(modeloVestuarioDTO2);
+		modeloVestuarioDTO2.setId(2L);
+		assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
+		modeloVestuarioDTO1.setId(null);
+		assertThat(modeloVestuarioDTO1).isNotEqualTo(modeloVestuarioDTO2);
+	}
+
+	@Test
+	@Transactional
+	public void testEntityFromId()
+	{
+		assertThat(this.modeloVestuarioMapper.fromId(42L).getId()).isEqualTo(42);
+		assertThat(this.modeloVestuarioMapper.fromId(null)).isNull();
+	}
 }

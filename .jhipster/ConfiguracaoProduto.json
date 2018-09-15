@@ -1,0 +1,47 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "listaMaterialTamanho",
+            "otherEntityName": "materialTamanho",
+            "otherEntityRelationshipName": "configuracaoProduto"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "modeloVestuario",
+            "otherEntityName": "modeloVestuario",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "oid",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tamanho",
+            "fieldType": "Tamanho",
+            "fieldValues": "P,M,G",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "preco",
+            "fieldType": "BigDecimal",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20180914015410",
+    "entityTableName": "configuracao_produto",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false
+}

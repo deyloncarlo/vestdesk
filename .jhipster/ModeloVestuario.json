@@ -2,22 +2,24 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "material",
-            "otherEntityName": "material",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "modelo",
-            "otherEntityName": "modelo",
-            "otherEntityField": "id"
+            "relationshipType": "one-to-many",
+            "relationshipName": "listaConfiguracaoProduto",
+            "otherEntityName": "configuracaoProduto",
+            "otherEntityRelationshipName": "modeloVestuario"
         }
     ],
     "fields": [
         {
-            "fieldName": "preco",
-            "fieldType": "BigDecimal",
+            "fieldName": "oid",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "modelo",
+            "fieldType": "Modelo",
+            "fieldValues": "MOLETOM,POLO,BLUSA",
             "fieldValidateRules": [
                 "required"
             ]

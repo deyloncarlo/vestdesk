@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span jhiTranslate="vestdeskApp.materialTamanho.home.title">Material Tamanhos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-material-tamanho" [routerLink]="['/', { outlets: { popup: ['material-tamanho-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="vestdeskApp.materialTamanho.home.createLabel">
+            Create new Material Tamanho
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="materialTamanhos">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="quantidadeMaterial"><span jhiTranslate="vestdeskApp.materialTamanho.quantidadeMaterial">Quantidade Material</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="configuracaoProdutoId"><span jhiTranslate="vestdeskApp.materialTamanho.configuracaoProduto">Configuracao Produto</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="materialId"><span jhiTranslate="vestdeskApp.materialTamanho.material">Material</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let materialTamanho of materialTamanhos ;trackBy: trackId">
+                <td><a [routerLink]="['../material-tamanho', materialTamanho.id ]">{{materialTamanho.id}}</a></td>
+                <td>{{materialTamanho.quantidadeMaterial}}</td>
+                <td>
+                    <div *ngIf="materialTamanho.configuracaoProdutoId">
+                        <a [routerLink]="['../configuracao-produto', materialTamanho.configuracaoProdutoId  ]" >{{materialTamanho.configuracaoProdutoId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="materialTamanho.materialId">
+                        <a [routerLink]="['../material', materialTamanho.materialId  ]" >{{materialTamanho.materialId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../material-tamanho', materialTamanho.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'material-tamanho/'+ materialTamanho.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'material-tamanho/'+ materialTamanho.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

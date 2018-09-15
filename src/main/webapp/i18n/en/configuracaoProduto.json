@@ -1,0 +1,26 @@
+
+{
+    "vestdeskApp": {
+        "configuracaoProduto" : {
+            "home": {
+                "title": "Configuracao Produtos",
+                "createLabel": "Create a new Configuracao Produto",
+                "createOrEditLabel": "Create or edit a Configuracao Produto"
+            },
+            "created": "A new Configuracao Produto is created with identifier {{ param }}",
+            "updated": "A Configuracao Produto is updated with identifier {{ param }}",
+            "deleted": "A Configuracao Produto is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Configuracao Produto {{ id }}?"
+            },
+            "detail": {
+                "title": "Configuracao Produto"
+            },
+            "oid": "Oid",
+            "tamanho": "Tamanho",
+            "preco": "Preco",
+            "listaMaterialTamanho": "Lista Material Tamanho",
+            "modeloVestuario": "Modelo Vestuario"
+        }
+    }
+}

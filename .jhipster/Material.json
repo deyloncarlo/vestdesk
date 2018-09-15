@@ -1,7 +1,21 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "listaMaterialTamanho",
+            "otherEntityName": "materialTamanho",
+            "otherEntityRelationshipName": "material"
+        }
+    ],
     "fields": [
+        {
+            "fieldName": "oid",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
         {
             "fieldName": "nome",
             "fieldType": "String",
@@ -17,18 +31,12 @@
             ]
         },
         {
-            "fieldName": "quantidadeMinima",
-            "fieldType": "Float",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "quantidadeEstoque",
+            "fieldType": "Float"
         },
         {
-            "fieldName": "quantidadeMaxima",
-            "fieldType": "Float",
-            "fieldValidateRules": [
-                "required"
-            ]
+            "fieldName": "quantidadeMinima",
+            "fieldType": "Float"
         }
     ],
     "changelogDate": "20180722172708",

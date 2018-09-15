@@ -17,6 +17,10 @@
                 "layout": "Layout",
                 "produto": "Produto",
                 "adiantamento": "Adiantamento",
+                "configuracaoProduto": "Configuracao Produto",
+                "materialTamanho": "Material Tamanho",
+                "cor": "Cor",
+                "usuario": "Usuario",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

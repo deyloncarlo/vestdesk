@@ -1,0 +1,24 @@
+
+{
+    "vestdeskApp": {
+        "materialTamanho" : {
+            "home": {
+                "title": "Material Tamanhos",
+                "createLabel": "Criar novo Material Tamanho",
+                "createOrEditLabel": "Criar ou editar Material Tamanho"
+            },
+            "created": "Um novo Material Tamanho foi criado com o identificador {{ param }}",
+            "updated": "Um Material Tamanho foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Material Tamanho foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Material Tamanho {{ id }}?"
+            },
+            "detail": {
+                "title": "Material Tamanho"
+            },
+            "quantidadeMaterial": "Quantidade Material",
+            "configuracaoProduto": "Configuracao Produto",
+            "material": "Material"
+        }
+    }
+}

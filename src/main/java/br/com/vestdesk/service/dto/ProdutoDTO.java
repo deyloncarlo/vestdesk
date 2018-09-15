@@ -15,12 +15,17 @@ public class ProdutoDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String cor;
+    private Long oid;
 
     @NotNull
-    private String tamanho;
+    private Integer quantidadeEstoque;
 
-    private Long modeloVestuarioId;
+    @NotNull
+    private String descricao;
+
+    private Long configuracaoProdutoId;
+
+    private Set<CorDTO> listaCors = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -30,28 +35,44 @@ public class ProdutoDTO implements Serializable {
         this.id = id;
     }
 
-    public String getCor() {
-        return cor;
+    public Long getOid() {
+        return oid;
     }
 
-    public void setCor(String cor) {
-        this.cor = cor;
+    public void setOid(Long oid) {
+        this.oid = oid;
     }
 
-    public String getTamanho() {
-        return tamanho;
+    public Integer getQuantidadeEstoque() {
+        return quantidadeEstoque;
     }
 
-    public void setTamanho(String tamanho) {
-        this.tamanho = tamanho;
+    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+        this.quantidadeEstoque = quantidadeEstoque;
     }
 
-    public Long getModeloVestuarioId() {
-        return modeloVestuarioId;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setModeloVestuarioId(Long modeloVestuarioId) {
-        this.modeloVestuarioId = modeloVestuarioId;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public Long getConfiguracaoProdutoId() {
+        return configuracaoProdutoId;
+    }
+
+    public void setConfiguracaoProdutoId(Long configuracaoProdutoId) {
+        this.configuracaoProdutoId = configuracaoProdutoId;
+    }
+
+    public Set<CorDTO> getListaCors() {
+        return listaCors;
+    }
+
+    public void setListaCors(Set<CorDTO> cors) {
+        this.listaCors = cors;
     }
 
     @Override
@@ -79,8 +100,9 @@ public class ProdutoDTO implements Serializable {
     public String toString() {
         return "ProdutoDTO{" +
             "id=" + getId() +
-            ", cor='" + getCor() + "'" +
-            ", tamanho='" + getTamanho() + "'" +
+            ", oid=" + getOid() +
+            ", quantidadeEstoque=" + getQuantidadeEstoque() +
+            ", descricao='" + getDescricao() + "'" +
             "}";
     }
 }

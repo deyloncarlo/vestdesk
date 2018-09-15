@@ -4,21 +4,13 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="vestdeskApp.modeloVestuario.preco">Preco</span></dt>
+        <dt><span jhiTranslate="vestdeskApp.modeloVestuario.oid">Oid</span></dt>
         <dd>
-            <span>{{modeloVestuario.preco}}</span>
-        </dd>
-        <dt><span jhiTranslate="vestdeskApp.modeloVestuario.material">Material</span></dt>
-        <dd>
-            <div *ngIf="modeloVestuario.materialId">
-                <a [routerLink]="['/material', modeloVestuario.materialId]">{{modeloVestuario.materialId}}</a>
-            </div>
+            <span>{{modeloVestuario.oid}}</span>
         </dd>
         <dt><span jhiTranslate="vestdeskApp.modeloVestuario.modelo">Modelo</span></dt>
         <dd>
-            <div *ngIf="modeloVestuario.modeloId">
-                <a [routerLink]="['/modelo', modeloVestuario.modeloId]">{{modeloVestuario.modeloId}}</a>
-            </div>
+            <span jhiTranslate="{{'vestdeskApp.Modelo.' + modeloVestuario.modelo}}">{{modeloVestuario.modelo}}</span>
         </dd>
     </dl>
 

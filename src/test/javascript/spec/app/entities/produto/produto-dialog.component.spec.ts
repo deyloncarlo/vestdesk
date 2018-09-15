@@ -9,7 +9,8 @@ import { VestdeskTestModule } from '../../../test.module';
 import { ProdutoDialogComponent } from '../../../../../../main/webapp/app/entities/produto/produto-dialog.component';
 import { ProdutoService } from '../../../../../../main/webapp/app/entities/produto/produto.service';
 import { Produto } from '../../../../../../main/webapp/app/entities/produto/produto.model';
-import { ModeloVestuarioService } from '../../../../../../main/webapp/app/entities/modelo-vestuario';
+import { ConfiguracaoProdutoService } from '../../../../../../main/webapp/app/entities/configuracao-produto';
+import { CorService } from '../../../../../../main/webapp/app/entities/cor';
 
 describe('Component Tests', () => {
 
@@ -25,7 +26,8 @@ describe('Component Tests', () => {
                 imports: [VestdeskTestModule],
                 declarations: [ProdutoDialogComponent],
                 providers: [
-                    ModeloVestuarioService,
+                    ConfiguracaoProdutoService,
+                    CorService,
                     ProdutoService
                 ]
             })

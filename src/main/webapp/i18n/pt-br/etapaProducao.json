@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Etapa Producao"
             },
+            "oid": "Oid",
             "nome": "Nome",
             "prazoExecucao": "Prazo Execucao"
         }

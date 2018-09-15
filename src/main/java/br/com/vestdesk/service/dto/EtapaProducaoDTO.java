@@ -13,6 +13,9 @@ public class EtapaProducaoDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private Long oid;
+
+    @NotNull
     private String nome;
 
     @NotNull
@@ -24,6 +27,14 @@ public class EtapaProducaoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getOid() {
+        return oid;
+    }
+
+    public void setOid(Long oid) {
+        this.oid = oid;
     }
 
     public String getNome() {
@@ -67,6 +78,7 @@ public class EtapaProducaoDTO implements Serializable {
     public String toString() {
         return "EtapaProducaoDTO{" +
             "id=" + getId() +
+            ", oid=" + getOid() +
             ", nome='" + getNome() + "'" +
             ", prazoExecucao=" + getPrazoExecucao() +
             "}";

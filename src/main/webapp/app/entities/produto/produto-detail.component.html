@@ -4,19 +4,29 @@
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="row-md jh-entity-details">
-        <dt><span jhiTranslate="vestdeskApp.produto.cor">Cor</span></dt>
+        <dt><span jhiTranslate="vestdeskApp.produto.oid">Oid</span></dt>
         <dd>
-            <span>{{produto.cor}}</span>
+            <span>{{produto.oid}}</span>
         </dd>
-        <dt><span jhiTranslate="vestdeskApp.produto.tamanho">Tamanho</span></dt>
+        <dt><span jhiTranslate="vestdeskApp.produto.quantidadeEstoque">Quantidade Estoque</span></dt>
         <dd>
-            <span>{{produto.tamanho}}</span>
+            <span>{{produto.quantidadeEstoque}}</span>
         </dd>
-        <dt><span jhiTranslate="vestdeskApp.produto.modeloVestuario">Modelo Vestuario</span></dt>
+        <dt><span jhiTranslate="vestdeskApp.produto.descricao">Descricao</span></dt>
         <dd>
-            <div *ngIf="produto.modeloVestuarioId">
-                <a [routerLink]="['/modelo-vestuario', produto.modeloVestuarioId]">{{produto.modeloVestuarioId}}</a>
+            <span>{{produto.descricao}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.produto.configuracaoProduto">Configuracao Produto</span></dt>
+        <dd>
+            <div *ngIf="produto.configuracaoProdutoId">
+                <a [routerLink]="['/configuracao-produto', produto.configuracaoProdutoId]">{{produto.configuracaoProdutoId}}</a>
             </div>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.produto.listaCor">Lista Cor</span></dt>
+        <dd>
+            <span *ngFor="let listaCor of produto.listaCors; let last = last">
+                <a [routerLink]="['/cor', listaCor?.id ]">{{listaCor.id}}</a>{{last ? '' : ', '}}
+            </span>
         </dd>
     </dl>
 

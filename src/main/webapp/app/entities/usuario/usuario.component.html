@@ -1,0 +1,68 @@
+<div>
+    <h2>
+        <span jhiTranslate="vestdeskApp.usuario.home.title">Usuarios</span>
+        <button class="btn btn-primary float-right jh-create-entity create-usuario" [routerLink]="['/', { outlets: { popup: ['usuario-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="vestdeskApp.usuario.home.createLabel">
+            Create new Usuario
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="usuarios">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.usuario.oid">Oid</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.usuario.nome">Nome</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="sigla"><span jhiTranslate="vestdeskApp.usuario.sigla">Sigla</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span jhiTranslate="vestdeskApp.usuario.email">Email</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="senha"><span jhiTranslate="vestdeskApp.usuario.senha">Senha</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="perfil"><span jhiTranslate="vestdeskApp.usuario.perfil">Perfil</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let usuario of usuarios ;trackBy: trackId">
+                <td><a [routerLink]="['../usuario', usuario.id ]">{{usuario.id}}</a></td>
+                <td>{{usuario.oid}}</td>
+                <td>{{usuario.nome}}</td>
+                <td>{{usuario.sigla}}</td>
+                <td>{{usuario.email}}</td>
+                <td>{{usuario.senha}}</td>
+                <td jhiTranslate="{{'vestdeskApp.Perfil.' + usuario.perfil}}">{{usuario.perfil}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../usuario', usuario.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'usuario/'+ usuario.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'usuario/'+ usuario.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

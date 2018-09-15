@@ -4,11 +4,11 @@ Navbar
 ========================================================================== */
 .navbar-version {
     font-size: 10px;
-    color: #ccc
+    color: #fff
 }
 
 .jh-navbar {
-    background-color: #353d47;
+    background-color: #fff;
     padding: .2em 1em;
     .profile-image {
         margin: -10px 0px;
@@ -17,7 +17,7 @@ Navbar
         border-radius: 50%;
     }
     .dropdown-item.active, .dropdown-item.active:focus, .dropdown-item.active:hover {
-        background-color: #353d47;
+        background-color: #fff;
     }
     .dropdown-toggle::after {
         margin-left: 0.15em;
@@ -56,6 +56,7 @@ Navbar
 .navbar-title {
     display: inline-block;
     vertical-align: middle;
+    color: #f54029;
 }
 
 /* ==========================================================================
@@ -69,7 +70,7 @@ Logo styles
             width: 70px;
             display: inline-block;
             vertical-align: middle;
-            background: url("../../../content/images/logo-jhipster.png") no-repeat center center;
+            background: url("../../../content/images/vestdesk.png") no-repeat center center;
             background-size: contain;
         }
     }

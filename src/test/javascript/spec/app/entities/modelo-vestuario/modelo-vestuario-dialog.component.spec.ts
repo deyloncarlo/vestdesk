@@ -9,8 +9,6 @@ import { VestdeskTestModule } from '../../../test.module';
 import { ModeloVestuarioDialogComponent } from '../../../../../../main/webapp/app/entities/modelo-vestuario/modelo-vestuario-dialog.component';
 import { ModeloVestuarioService } from '../../../../../../main/webapp/app/entities/modelo-vestuario/modelo-vestuario.service';
 import { ModeloVestuario } from '../../../../../../main/webapp/app/entities/modelo-vestuario/modelo-vestuario.model';
-import { MaterialService } from '../../../../../../main/webapp/app/entities/material';
-import { ModeloService } from '../../../../../../main/webapp/app/entities/modelo';
 
 describe('Component Tests', () => {
 
@@ -26,8 +24,6 @@ describe('Component Tests', () => {
                 imports: [VestdeskTestModule],
                 declarations: [ModeloVestuarioDialogComponent],
                 providers: [
-                    MaterialService,
-                    ModeloService,
                     ModeloVestuarioService
                 ]
             })

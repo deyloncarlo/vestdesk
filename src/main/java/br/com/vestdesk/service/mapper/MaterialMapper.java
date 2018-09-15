@@ -12,6 +12,8 @@ import org.mapstruct.*;
 public interface MaterialMapper extends EntityMapper<MaterialDTO, Material> {
 
 
+    @Mapping(target = "listaMaterialTamanhos", ignore = true)
+    Material toEntity(MaterialDTO materialDTO);
 
     default Material fromId(Long id) {
         if (id == null) {

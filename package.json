@@ -19,6 +19,7 @@
     "bootstrap": "4.0.0",
     "core-js": "2.4.1",
     "font-awesome": "4.7.0",
+    "gulp": "^3.9.1",
     "jquery": "3.2.1",
     "ng-jhipster": "0.4.0",
     "ngx-cookie": "2.0.1",
@@ -110,6 +111,7 @@
     "webpack:test": "yarn run test",
     "webpack-dev-server": "node --max_old_space_size=4096 node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "webpack": "node --max_old_space_size=4096 node_modules/webpack/bin/webpack.js",
-    "postinstall": "node node_modules/phantomjs-prebuilt/install.js"
+    "postinstall": "node node_modules/phantomjs-prebuilt/install.js",
+    "scss": "node-sass -o css/ css/"
   }
 }

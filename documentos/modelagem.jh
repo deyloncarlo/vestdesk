@@ -1,0 +1,112 @@
+
+entity Material {
+	oid Long required,
+	nome String required,
+    preco BigDecimal required,
+    quantidadeEstoque Float,
+    quantidadeMinima Float
+}
+
+entity ConfiguracaoProduto {
+	oid Long required,
+	tamanho Tamanho required,
+    preco BigDecimal required
+}
+
+entity ModeloVestuario {
+	oid Long required,
+    modelo Modelo required,
+}
+
+entity MaterialTamanho {
+	quantidadeMaterial Float required
+}
+
+entity Produto {
+	oid Long required,
+    quantidadeEstoque Integer required,
+    descricao String required
+}
+
+entity Cor {
+	oid Long required,
+    codigo String required
+}
+
+entity EtapaProducao {
+	oid Long required,
+	nome String required,
+    prazoExecucao Integer required
+}
+
+entity Layout {
+	oid Long required,
+	nome String required,
+    imagem Blob required
+}
+
+entity Cliente {
+  nome String required,
+  endereco String,
+  telefone String,
+  observacao String,
+  email String
+}
+
+entity Usuario {
+	oid Long required,
+    nome String required,
+    sigla String required,
+    email String,
+    senha String required,
+    perfil Perfil required
+}
+
+enum Tamanho {
+	P, M, G
+}
+
+enum Modelo {
+	MOLETOM,
+    POLO,
+    BLUSA
+}
+
+enum FormaPagamento {
+	DEBITO,
+    DINHEIRO,
+    CREDITO
+}
+
+enum Perfil {
+	ADMINISTRADOR,
+    VENDEDOR
+}
+
+relationship OneToMany {
+	ModeloVestuario{listaConfiguracaoProduto} to ConfiguracaoProduto{modeloVestuario}
+}
+
+relationship OneToMany {
+	ConfiguracaoProduto{listaMaterialTamanho} to MaterialTamanho{configuracaoProduto}
+}
+
+relationship OneToMany {
+	Material{listaMaterialTamanho} to MaterialTamanho{material}
+}
+
+relationship OneToOne {
+	Produto{configuracaoProduto} to ConfiguracaoProduto
+}
+
+relationship ManyToMany {
+	Produto{listaCor} to Cor{listaProduto}
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl

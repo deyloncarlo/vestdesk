@@ -8,15 +8,11 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity ModeloVestuario and its DTO ModeloVestuarioDTO.
  */
-@Mapper(componentModel = "spring", uses = {MaterialMapper.class, ModeloMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface ModeloVestuarioMapper extends EntityMapper<ModeloVestuarioDTO, ModeloVestuario> {
 
-    @Mapping(source = "material.id", target = "materialId")
-    @Mapping(source = "modelo.id", target = "modeloId")
-    ModeloVestuarioDTO toDto(ModeloVestuario modeloVestuario);
 
-    @Mapping(source = "materialId", target = "material")
-    @Mapping(source = "modeloId", target = "modelo")
+    @Mapping(target = "listaConfiguracaoProdutos", ignore = true)
     ModeloVestuario toEntity(ModeloVestuarioDTO modeloVestuarioDTO);
 
     default ModeloVestuario fromId(Long id) {

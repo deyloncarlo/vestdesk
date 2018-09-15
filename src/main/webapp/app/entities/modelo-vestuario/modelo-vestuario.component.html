@@ -17,26 +17,14 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="preco"><span jhiTranslate="vestdeskApp.modeloVestuario.preco">Preco</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="materialId"><span jhiTranslate="vestdeskApp.modeloVestuario.material">Material</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="modeloId"><span jhiTranslate="vestdeskApp.modeloVestuario.modelo">Modelo</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modelo"><span jhiTranslate="vestdeskApp.modeloVestuario.modelo">Modelo</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let modeloVestuario of modeloVestuarios ;trackBy: trackId">
                 <td><a [routerLink]="['../modelo-vestuario', modeloVestuario.id ]">{{modeloVestuario.id}}</a></td>
-                <td>{{modeloVestuario.preco}}</td>
-                <td>
-                    <div *ngIf="modeloVestuario.materialId">
-                        <a [routerLink]="['../material', modeloVestuario.materialId  ]" >{{modeloVestuario.materialId}}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="modeloVestuario.modeloId">
-                        <a [routerLink]="['../modelo', modeloVestuario.modeloId  ]" >{{modeloVestuario.modeloId}}</a>
-                    </div>
-                </td>
+                <td jhiTranslate="{{'vestdeskApp.Modelo.' + modeloVestuario.modelo}}">{{modeloVestuario.modelo}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

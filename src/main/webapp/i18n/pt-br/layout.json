@@ -16,6 +16,7 @@
             "detail": {
                 "title": "Layout"
             },
+            "oid": "Oid",
             "nome": "Nome",
             "imagem": "Imagem"
         }

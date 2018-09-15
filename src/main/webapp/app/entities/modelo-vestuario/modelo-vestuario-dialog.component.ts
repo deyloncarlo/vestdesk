@@ -4,13 +4,11 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import { ModeloVestuario } from './modelo-vestuario.model';
 import { ModeloVestuarioPopupService } from './modelo-vestuario-popup.service';
 import { ModeloVestuarioService } from './modelo-vestuario.service';
-import { Material, MaterialService } from '../material';
-import { Modelo, ModeloService } from '../modelo';
 
 @Component({
     selector: 'jhi-modelo-vestuario-dialog',
@@ -21,26 +19,15 @@ export class ModeloVestuarioDialogComponent implements OnInit {
     modeloVestuario: ModeloVestuario;
     isSaving: boolean;
 
-    materials: Material[];
-
-    modelos: Modelo[];
-
     constructor(
         public activeModal: NgbActiveModal,
-        private jhiAlertService: JhiAlertService,
         private modeloVestuarioService: ModeloVestuarioService,
-        private materialService: MaterialService,
-        private modeloService: ModeloService,
         private eventManager: JhiEventManager
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
-        this.materialService.query()
-            .subscribe((res: HttpResponse<Material[]>) => { this.materials = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.modeloService.query()
-            .subscribe((res: HttpResponse<Modelo[]>) => { this.modelos = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -71,18 +58,6 @@ export class ModeloVestuarioDialogComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    private onError(error: any) {
-        this.jhiAlertService.error(error.message, null, null);
-    }
-
-    trackMaterialById(index: number, item: Material) {
-        return item.id;
-    }
-
-    trackModeloById(index: number, item: Modelo) {
-        return item.id;
     }
 }
 

@@ -3,6 +3,13 @@
     "relationships": [],
     "fields": [
         {
+            "fieldName": "oid",
+            "fieldType": "Long",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
             "fieldName": "nome",
             "fieldType": "String",
             "fieldValidateRules": [

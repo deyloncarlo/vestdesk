@@ -10,6 +10,10 @@ import { VestdeskEtapaProducaoModule } from './etapa-producao/etapa-producao.mod
 import { VestdeskLayoutModule } from './layout/layout.module';
 import { VestdeskProdutoModule } from './produto/produto.module';
 import { VestdeskAdiantamentoModule } from './adiantamento/adiantamento.module';
+import { VestdeskConfiguracaoProdutoModule } from './configuracao-produto/configuracao-produto.module';
+import { VestdeskMaterialTamanhoModule } from './material-tamanho/material-tamanho.module';
+import { VestdeskCorModule } from './cor/cor.module';
+import { VestdeskUsuarioModule } from './usuario/usuario.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -24,6 +28,10 @@ import { VestdeskAdiantamentoModule } from './adiantamento/adiantamento.module';
         VestdeskLayoutModule,
         VestdeskProdutoModule,
         VestdeskAdiantamentoModule,
+        VestdeskConfiguracaoProdutoModule,
+        VestdeskMaterialTamanhoModule,
+        VestdeskCorModule,
+        VestdeskUsuarioModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

@@ -1,85 +1,72 @@
 package br.com.vestdesk.service.dto;
 
-
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
+
+import br.com.vestdesk.domain.enumeration.Modelo;
 
 /**
  * A DTO for the ModeloVestuario entity.
  */
-public class ModeloVestuarioDTO implements Serializable {
+public class ModeloVestuarioDTO implements Serializable
+{
 
-    private Long id;
+	private Long id;
 
-    @NotNull
-    private BigDecimal preco;
+	@NotNull
+	private Modelo modelo;
 
-    private Long materialId;
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    private Long modeloId;
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Modelo getModelo()
+	{
+		return this.modelo;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setModelo(Modelo modelo)
+	{
+		this.modelo = modelo;
+	}
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
+		ModeloVestuarioDTO modeloVestuarioDTO = (ModeloVestuarioDTO) o;
+		if (modeloVestuarioDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), modeloVestuarioDTO.getId());
+	}
 
-    public Long getMaterialId() {
-        return materialId;
-    }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
 
-    public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
-    }
-
-    public Long getModeloId() {
-        return modeloId;
-    }
-
-    public void setModeloId(Long modeloId) {
-        this.modeloId = modeloId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ModeloVestuarioDTO modeloVestuarioDTO = (ModeloVestuarioDTO) o;
-        if(modeloVestuarioDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), modeloVestuarioDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "ModeloVestuarioDTO{" +
-            "id=" + getId() +
-            ", preco=" + getPreco() +
-            "}";
-    }
+	@Override
+	public String toString()
+	{
+		return "ModeloVestuarioDTO{" + "id=" + getId() + ", modelo='" + getModelo() + "'" + "}";
+	}
 }

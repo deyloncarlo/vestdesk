@@ -13,6 +13,21 @@
                    [(ngModel)]="material.id" readonly />
         </div>
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.oid" for="field_oid">Oid</label>
+            <input type="number" class="form-control" name="oid" id="field_oid"
+                [(ngModel)]="material.oid" required/>
+            <div [hidden]="!(editForm.controls.oid?.dirty && editForm.controls.oid?.invalid)">
+                <small class="form-text text-danger"
+                   [hidden]="!editForm.controls.oid?.errors?.required" jhiTranslate="entity.validation.required">
+                   This field is required.
+                </small>
+                <small class="form-text text-danger"
+                    [hidden]="!editForm.controls.oid?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.material.nome" for="field_nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="field_nome"
                 [(ngModel)]="material.nome" required/>
@@ -39,34 +54,14 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeMinima" for="field_quantidadeMinima">Quantidade Minima</label>
-            <input type="number" class="form-control" name="quantidadeMinima" id="field_quantidadeMinima"
-                [(ngModel)]="material.quantidadeMinima" required/>
-            <div [hidden]="!(editForm.controls.quantidadeMinima?.dirty && editForm.controls.quantidadeMinima?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.quantidadeMinima?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.quantidadeMinima?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
+            <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque"
+                [(ngModel)]="material.quantidadeEstoque" />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeMaxima" for="field_quantidadeMaxima">Quantidade Maxima</label>
-            <input type="number" class="form-control" name="quantidadeMaxima" id="field_quantidadeMaxima"
-                [(ngModel)]="material.quantidadeMaxima" required/>
-            <div [hidden]="!(editForm.controls.quantidadeMaxima?.dirty && editForm.controls.quantidadeMaxima?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.quantidadeMaxima?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.quantidadeMaxima?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.quantidadeMinima" for="field_quantidadeMinima">Quantidade Minima</label>
+            <input type="number" class="form-control" name="quantidadeMinima" id="field_quantidadeMinima"
+                [(ngModel)]="material.quantidadeMinima" />
         </div>
 
     </div>

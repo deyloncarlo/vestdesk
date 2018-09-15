@@ -69,7 +69,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Transactional(readOnly = true)
     public ProdutoDTO findOne(Long id) {
         log.debug("Request to get Produto : {}", id);
-        Produto produto = produtoRepository.findOne(id);
+        Produto produto = produtoRepository.findOneWithEagerRelationships(id);
         return produtoMapper.toDto(produto);
     }
 

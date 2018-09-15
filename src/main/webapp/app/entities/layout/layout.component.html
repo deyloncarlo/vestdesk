@@ -17,6 +17,7 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.layout.oid">Oid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.layout.nome">Nome</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="imagem"><span jhiTranslate="vestdeskApp.layout.imagem">Imagem</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -25,6 +26,7 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let layout of layouts ;trackBy: trackId">
                 <td><a [routerLink]="['../layout', layout.id ]">{{layout.id}}</a></td>
+                <td>{{layout.oid}}</td>
                 <td>{{layout.nome}}</td>
                 <td>
                     <a *ngIf="layout.imagem" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a>

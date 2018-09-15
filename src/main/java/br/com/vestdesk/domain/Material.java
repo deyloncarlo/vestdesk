@@ -1,132 +1,191 @@
 package br.com.vestdesk.domain;
 
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Material.
  */
 @Entity
 @Table(name = "material")
-public class Material implements Serializable {
+public class Material implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Column(name = "nome", nullable = false)
-    private String nome;
+	@NotNull
+	@Column(name = "nome", nullable = false)
+	private String nome;
 
-    @NotNull
-    @Column(name = "preco", precision=10, scale=2, nullable = false)
-    private BigDecimal preco;
+	@NotNull
+	@Column(name = "preco", precision = 10, scale = 2, nullable = false)
+	private BigDecimal preco;
 
-    @NotNull
-    @Column(name = "quantidade_minima", nullable = false)
-    private Float quantidadeMinima;
+	@Column(name = "quantidade_estoque")
+	private Float quantidadeEstoque;
 
-    @NotNull
-    @Column(name = "quantidade_maxima", nullable = false)
-    private Float quantidadeMaxima;
+	@Column(name = "quantidade_minima")
+	private Float quantidadeMinima;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	@OneToMany(mappedBy = "material")
+	@JsonIgnore
+	private Set<MaterialTamanho> listaMaterialTamanhos = new HashSet<>();
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
+	// remove
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public Material nome(String nome) {
-        this.nome = nome;
-        return this;
-    }
+	public String getNome()
+	{
+		return this.nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Material nome(String nome)
+	{
+		this.nome = nome;
+		return this;
+	}
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-    public Material preco(BigDecimal preco) {
-        this.preco = preco;
-        return this;
-    }
+	public BigDecimal getPreco()
+	{
+		return this.preco;
+	}
 
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
+	public Material preco(BigDecimal preco)
+	{
+		this.preco = preco;
+		return this;
+	}
 
-    public Float getQuantidadeMinima() {
-        return quantidadeMinima;
-    }
+	public void setPreco(BigDecimal preco)
+	{
+		this.preco = preco;
+	}
 
-    public Material quantidadeMinima(Float quantidadeMinima) {
-        this.quantidadeMinima = quantidadeMinima;
-        return this;
-    }
+	public Float getQuantidadeEstoque()
+	{
+		return this.quantidadeEstoque;
+	}
 
-    public void setQuantidadeMinima(Float quantidadeMinima) {
-        this.quantidadeMinima = quantidadeMinima;
-    }
+	public Material quantidadeEstoque(Float quantidadeEstoque)
+	{
+		this.quantidadeEstoque = quantidadeEstoque;
+		return this;
+	}
 
-    public Float getQuantidadeMaxima() {
-        return quantidadeMaxima;
-    }
+	public void setQuantidadeEstoque(Float quantidadeEstoque)
+	{
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 
-    public Material quantidadeMaxima(Float quantidadeMaxima) {
-        this.quantidadeMaxima = quantidadeMaxima;
-        return this;
-    }
+	public Float getQuantidadeMinima()
+	{
+		return this.quantidadeMinima;
+	}
 
-    public void setQuantidadeMaxima(Float quantidadeMaxima) {
-        this.quantidadeMaxima = quantidadeMaxima;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+	public Material quantidadeMinima(Float quantidadeMinima)
+	{
+		this.quantidadeMinima = quantidadeMinima;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Material material = (Material) o;
-        if (material.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), material.getId());
-    }
+	public void setQuantidadeMinima(Float quantidadeMinima)
+	{
+		this.quantidadeMinima = quantidadeMinima;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	public Set<MaterialTamanho> getListaMaterialTamanhos()
+	{
+		return this.listaMaterialTamanhos;
+	}
 
-    @Override
-    public String toString() {
-        return "Material{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
-            ", preco=" + getPreco() +
-            ", quantidadeMinima=" + getQuantidadeMinima() +
-            ", quantidadeMaxima=" + getQuantidadeMaxima() +
-            "}";
-    }
+	public Material listaMaterialTamanhos(Set<MaterialTamanho> materialTamanhos)
+	{
+		this.listaMaterialTamanhos = materialTamanhos;
+		return this;
+	}
+
+	public Material addListaMaterialTamanho(MaterialTamanho materialTamanho)
+	{
+		this.listaMaterialTamanhos.add(materialTamanho);
+		materialTamanho.setMaterial(this);
+		return this;
+	}
+
+	public Material removeListaMaterialTamanho(MaterialTamanho materialTamanho)
+	{
+		this.listaMaterialTamanhos.remove(materialTamanho);
+		materialTamanho.setMaterial(null);
+		return this;
+	}
+
+	public void setListaMaterialTamanhos(Set<MaterialTamanho> materialTamanhos)
+	{
+		this.listaMaterialTamanhos = materialTamanhos;
+	}
+	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
+	// and setters here, do not remove
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
+		Material material = (Material) o;
+		if (material.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), material.getId());
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Material{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", preco=" + getPreco()
+				+ ", quantidadeEstoque=" + getQuantidadeEstoque() + ", quantidadeMinima=" + getQuantidadeMinima() + "}";
+	}
 }

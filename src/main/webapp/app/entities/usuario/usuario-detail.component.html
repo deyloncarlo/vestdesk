@@ -1,0 +1,46 @@
+
+<div *ngIf="usuario">
+    <h2><span jhiTranslate="vestdeskApp.usuario.detail.title">Usuario</span> {{usuario.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.usuario.oid">Oid</span></dt>
+        <dd>
+            <span>{{usuario.oid}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.usuario.nome">Nome</span></dt>
+        <dd>
+            <span>{{usuario.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.usuario.sigla">Sigla</span></dt>
+        <dd>
+            <span>{{usuario.sigla}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.usuario.email">Email</span></dt>
+        <dd>
+            <span>{{usuario.email}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.usuario.senha">Senha</span></dt>
+        <dd>
+            <span>{{usuario.senha}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.usuario.perfil">Perfil</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.Perfil.' + usuario.perfil}}">{{usuario.perfil}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'usuario/'+ usuario.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,9 @@
+{
+    "vestdeskApp": {
+        "Perfil" : {
+            "null": "",
+            "ADMINISTRADOR": "ADMINISTRADOR",
+            "VENDEDOR": "VENDEDOR"
+        }
+    }
+}

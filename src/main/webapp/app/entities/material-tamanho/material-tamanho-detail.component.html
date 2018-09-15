@@ -1,0 +1,38 @@
+
+<div *ngIf="materialTamanho">
+    <h2><span jhiTranslate="vestdeskApp.materialTamanho.detail.title">Material Tamanho</span> {{materialTamanho.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.materialTamanho.quantidadeMaterial">Quantidade Material</span></dt>
+        <dd>
+            <span>{{materialTamanho.quantidadeMaterial}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.materialTamanho.configuracaoProduto">Configuracao Produto</span></dt>
+        <dd>
+            <div *ngIf="materialTamanho.configuracaoProdutoId">
+                <a [routerLink]="['/configuracao-produto', materialTamanho.configuracaoProdutoId]">{{materialTamanho.configuracaoProdutoId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.materialTamanho.material">Material</span></dt>
+        <dd>
+            <div *ngIf="materialTamanho.materialId">
+                <a [routerLink]="['/material', materialTamanho.materialId]">{{materialTamanho.materialId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'material-tamanho/'+ materialTamanho.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>
