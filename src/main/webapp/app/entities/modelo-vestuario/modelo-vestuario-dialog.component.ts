@@ -9,6 +9,8 @@ import { JhiEventManager } from 'ng-jhipster';
 import { ModeloVestuario } from './modelo-vestuario.model';
 import { ModeloVestuarioPopupService } from './modelo-vestuario-popup.service';
 import { ModeloVestuarioService } from './modelo-vestuario.service';
+import { ConfiguracaoProdutoDialogComponent } from '../configuracao-produto/configuracao-produto-dialog.component';
+import { ConfiguracaoProdutoPopupService } from '../configuracao-produto/configuracao-produto-popup.service';
 
 @Component({
     selector: 'jhi-modelo-vestuario-dialog',
@@ -22,7 +24,8 @@ export class ModeloVestuarioDialogComponent implements OnInit {
     constructor(
         public activeModal: NgbActiveModal,
         private modeloVestuarioService: ModeloVestuarioService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private configuracaoProdutoPopupService: ConfiguracaoProdutoPopupService
     ) {
     }
 
@@ -51,13 +54,26 @@ export class ModeloVestuarioDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: ModeloVestuario) {
-        this.eventManager.broadcast({ name: 'modeloVestuarioListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'modeloVestuarioListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
 
     private onSaveError() {
         this.isSaving = false;
+    }
+
+    criarConfiguracaoProduto() {
+        this.configuracaoProdutoPopupService.newOrUpdate(ConfiguracaoProdutoDialogComponent as Component).then((result) => {
+            result.result.then((p_result) => {
+                // this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
+                console.log(p_result);
+            }, (p_reason) => {
+                console.log(p_reason);
+                // this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
+                // this.ngbModalRef = null;
+            });
+        });
     }
 }
 
@@ -72,11 +88,11 @@ export class ModeloVestuarioPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private modeloVestuarioPopupService: ModeloVestuarioPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.modeloVestuarioPopupService
                     .open(ModeloVestuarioDialogComponent as Component, params['id']);
             } else {

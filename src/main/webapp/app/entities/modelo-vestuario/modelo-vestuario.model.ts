@@ -9,7 +9,6 @@ export const enum Modelo {
 export class ModeloVestuario implements BaseEntity {
     constructor(
         public id?: number,
-        public oid?: number,
         public modelo?: Modelo,
         public listaConfiguracaoProdutos?: BaseEntity[],
     ) {

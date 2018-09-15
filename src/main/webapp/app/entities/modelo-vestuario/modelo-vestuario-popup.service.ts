@@ -43,7 +43,7 @@ export class ModeloVestuarioPopupService {
     }
 
     modeloVestuarioModalRef(component: Component, modeloVestuario: ModeloVestuario): NgbModalRef {
-        const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
+        const modalRef = this.modalService.open(component, { size: 'lg', backdrop: false});
         modalRef.componentInstance.modeloVestuario = modeloVestuario;
         modalRef.result.then((result) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });

@@ -42,14 +42,15 @@ export class ConfiguracaoProdutoDialogComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
-        if (this.configuracaoProduto.id !== undefined) {
-            this.subscribeToSaveResponse(
-                this.configuracaoProdutoService.update(this.configuracaoProduto));
-        } else {
-            this.subscribeToSaveResponse(
-                this.configuracaoProdutoService.create(this.configuracaoProduto));
-        }
+        this.activeModal.dismiss(this.configuracaoProduto);
+        // this.isSaving = true;
+        // if (this.configuracaoProduto.id !== undefined) {
+        //     this.subscribeToSaveResponse(
+        //         this.configuracaoProdutoService.update(this.configuracaoProduto));
+        // } else {
+        //     this.subscribeToSaveResponse(
+        //         this.configuracaoProdutoService.create(this.configuracaoProduto));
+        // }
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<ConfiguracaoProduto>>) {
