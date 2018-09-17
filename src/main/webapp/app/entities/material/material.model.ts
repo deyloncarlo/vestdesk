@@ -3,7 +3,6 @@ import { BaseEntity } from './../../shared';
 export class Material implements BaseEntity {
     constructor(
         public id?: number,
-        public oid?: number,
         public nome?: string,
         public preco?: number,
         public quantidadeEstoque?: number,

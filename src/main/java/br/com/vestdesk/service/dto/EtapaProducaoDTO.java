@@ -1,86 +1,84 @@
 package br.com.vestdesk.service.dto;
 
-
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the EtapaProducao entity.
  */
-public class EtapaProducaoDTO implements Serializable {
+public class EtapaProducaoDTO implements Serializable
+{
 
-    private Long id;
+	private Long id;
 
-    @NotNull
-    private Long oid;
+	@NotNull
+	private String nome;
 
-    @NotNull
-    private String nome;
+	@NotNull
+	private Integer prazoExecucao;
 
-    @NotNull
-    private Integer prazoExecucao;
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public String getNome()
+	{
+		return this.nome;
+	}
 
-    public Long getOid() {
-        return oid;
-    }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-    public void setOid(Long oid) {
-        this.oid = oid;
-    }
+	public Integer getPrazoExecucao()
+	{
+		return this.prazoExecucao;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setPrazoExecucao(Integer prazoExecucao)
+	{
+		this.prazoExecucao = prazoExecucao;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-    public Integer getPrazoExecucao() {
-        return prazoExecucao;
-    }
+		EtapaProducaoDTO etapaProducaoDTO = (EtapaProducaoDTO) o;
+		if (etapaProducaoDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), etapaProducaoDTO.getId());
+	}
 
-    public void setPrazoExecucao(Integer prazoExecucao) {
-        this.prazoExecucao = prazoExecucao;
-    }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        EtapaProducaoDTO etapaProducaoDTO = (EtapaProducaoDTO) o;
-        if(etapaProducaoDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), etapaProducaoDTO.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "EtapaProducaoDTO{" +
-            "id=" + getId() +
-            ", oid=" + getOid() +
-            ", nome='" + getNome() + "'" +
-            ", prazoExecucao=" + getPrazoExecucao() +
-            "}";
-    }
+	@Override
+	public String toString()
+	{
+		return "EtapaProducaoDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", prazoExecucao="
+				+ getPrazoExecucao() + "}";
+	}
 }

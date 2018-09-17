@@ -3,7 +3,7 @@
     "vestdeskApp": {
         "produto" : {
             "home": {
-                "title": "Produtos",
+                "title": "Produto",
                 "createLabel": "Criar novo Produto",
                 "createOrEditLabel": "Criar ou editar Produto"
             },
@@ -20,7 +20,8 @@
             "quantidadeEstoque": "Quantidade Estoque",
             "descricao": "Descricao",
             "configuracaoProduto": "Configuracao Produto",
-            "listaCor": "Lista Cor"
+            "listaCor": "Lista Cor",
+            "modeloVestuario": "Modelo Vestuário"
         }
     }
 }

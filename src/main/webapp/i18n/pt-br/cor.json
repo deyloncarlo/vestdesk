@@ -3,8 +3,8 @@
     "vestdeskApp": {
         "cor" : {
             "home": {
-                "title": "Cors",
-                "createLabel": "Criar novo Cor",
+                "title": "Cor",
+                "createLabel": "Criar nova Cor",
                 "createOrEditLabel": "Criar ou editar Cor"
             },
             "created": "Um novo Cor foi criado com o identificador {{ param }}",

@@ -3,9 +3,9 @@
     "vestdeskApp": {
         "etapaProducao" : {
             "home": {
-                "title": "Etapa Producaos",
-                "createLabel": "Criar novo Etapa Producao",
-                "createOrEditLabel": "Criar ou editar Etapa Producao"
+                "title": "Etapa Produção",
+                "createLabel": "Criar novo Etapa Produção",
+                "createOrEditLabel": "Criar ou editar Etapa Produção"
             },
             "created": "Um novo Etapa Producao foi criado com o identificador {{ param }}",
             "updated": "Um Etapa Producao foi atualizado com o identificador {{ param }}",
@@ -14,11 +14,11 @@
                 "question": "Tem certeza de que deseja excluir Etapa Producao {{ id }}?"
             },
             "detail": {
-                "title": "Etapa Producao"
+                "title": "Etapa Produção"
             },
             "oid": "Oid",
             "nome": "Nome",
-            "prazoExecucao": "Prazo Execucao"
+            "prazoExecucao": "Prazo Execução"
         }
     }
 }

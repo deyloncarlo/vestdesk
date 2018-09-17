@@ -11,6 +11,7 @@ import { ProdutoPopupService } from './produto-popup.service';
 import { ProdutoService } from './produto.service';
 import { ConfiguracaoProduto, ConfiguracaoProdutoService } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
+import { ModeloVestuarioService, ModeloVestuario } from '../modelo-vestuario';
 
 @Component({
     selector: 'jhi-produto-dialog',
@@ -24,6 +25,7 @@ export class ProdutoDialogComponent implements OnInit {
     configuracaoprodutos: ConfiguracaoProduto[];
 
     cors: Cor[];
+    listaModeloVestuario: ModeloVestuario[];
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -31,12 +33,15 @@ export class ProdutoDialogComponent implements OnInit {
         private produtoService: ProdutoService,
         private configuracaoProdutoService: ConfiguracaoProdutoService,
         private corService: CorService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private modeloVestuario: ModeloVestuarioService
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.modeloVestuario.query()
+            .subscribe((res: HttpResponse<ModeloVestuario[]>) => { this.listaModeloVestuario = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         this.configuracaoProdutoService
             .query({filter: 'produto-is-null'})
             .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
@@ -66,6 +71,24 @@ export class ProdutoDialogComponent implements OnInit {
         } else {
             this.subscribeToSaveResponse(
                 this.produtoService.create(this.produto));
+        }
+    }
+
+    changedModeloVestuario(modeloVestuario) {
+        if (modeloVestuario) {
+            this.configuracaoProdutoService
+            .query({filter: 'produto-is-null', modeloVestuario: modeloVestuario.id})
+            .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
+                if (!this.produto.configuracaoProdutoId) {
+                    this.configuracaoprodutos = res.body;
+                } else {
+                    this.configuracaoProdutoService
+                        .find(this.produto.configuracaoProdutoId)
+                        .subscribe((subRes: HttpResponse<ConfiguracaoProduto>) => {
+                            this.configuracaoprodutos = [subRes.body].concat(res.body);
+                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+                }
+            }, (res: HttpErrorResponse) => this.onError(res.message));
         }
     }
 

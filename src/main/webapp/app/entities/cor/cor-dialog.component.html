@@ -13,21 +13,6 @@
                    [(ngModel)]="cor.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.cor.oid" for="field_oid">Oid</label>
-            <input type="number" class="form-control" name="oid" id="field_oid"
-                [(ngModel)]="cor.oid" required/>
-            <div [hidden]="!(editForm.controls.oid?.dirty && editForm.controls.oid?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.oid?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.oid?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.cor.codigo" for="field_codigo">Codigo</label>
             <input type="text" class="form-control" name="codigo" id="field_codigo"
                 [(ngModel)]="cor.codigo" required/>

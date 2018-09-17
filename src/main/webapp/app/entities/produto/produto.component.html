@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.produto.oid">Oid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="quantidadeEstoque"><span jhiTranslate="vestdeskApp.produto.quantidadeEstoque">Quantidade Estoque</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="descricao"><span jhiTranslate="vestdeskApp.produto.descricao">Descricao</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="configuracaoProdutoId"><span jhiTranslate="vestdeskApp.produto.configuracaoProduto">Configuracao Produto</span> <span class="fa fa-sort"></span></th>
@@ -27,14 +26,9 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let produto of produtos ;trackBy: trackId">
                 <td><a [routerLink]="['../produto', produto.id ]">{{produto.id}}</a></td>
-                <td>{{produto.oid}}</td>
                 <td>{{produto.quantidadeEstoque}}</td>
                 <td>{{produto.descricao}}</td>
-                <td>
-                    <div *ngIf="produto.configuracaoProdutoId">
-                        <a [routerLink]="['../configuracao-produto', produto.configuracaoProdutoId  ]" >{{produto.configuracaoProdutoId}}</a>
-                    </div>
-                </td>
+                <td>{{produto.configuracaoProduto.tamanho}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

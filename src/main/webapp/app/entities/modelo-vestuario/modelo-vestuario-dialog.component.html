@@ -11,6 +11,15 @@
             <input type="text" class="form-control" id="id" name="id" [(ngModel)]="modeloVestuario.id" readonly />
         </div>
         <div class="form-group">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.nome" for="field_nome">Nome</label>
+                <input type="text" class="form-control" name="nome" [(ngModel)]="modeloVestuario.nome" id="field_nome" required>
+                <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.modelo" for="field_modelo">Modelo</label>
             <select class="form-control" name="modelo" [(ngModel)]="modeloVestuario.modelo" id="field_modelo" required>
                 <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
@@ -26,45 +35,40 @@
         <div class="form-group">
             <button type="button" class="btn btn-primary float-right jh-create-entity create-modelo-vestuario" (click)="criarConfiguracaoProduto()">
                 <span class="fa fa-plus"></span>
-                <span jhiTranslate="vestdeskApp.modeloVestuario.home.createLabel">
+                <span jhiTranslate="vestdeskApp.modeloVestuario.criarNovaConfiguracaoProduto">
                     Cria nova Configuração Produto
                 </span>
             </button>
-            <label class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.configuracaoProduto" for="field_configuracaoProduto">Configuração Produto</label>
+            <span class="form-control-label" jhiTranslate="vestdeskApp.modeloVestuario.listaConfiguracaoProduto" for="field_configuracaoProduto">Configuração Produto</span>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>
-                                <span jhiTranslate="global.field.tamanho">Tamanho</span>
+                                <span jhiTranslate="vestdeskApp.configuracaoProduto.tamanho">Tamanho</span>
                                 <span class="fa fa-sort"></span>
                             </th>
                             <th>
-                                <span jhiTranslate="vestdeskApp.modeloVestuario.preco">Preço</span>
+                                <span jhiTranslate="vestdeskApp.configuracaoProduto.preco">Preço</span>
                                 <span class="fa fa-sort"></span>
                             </th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let configuracaoProduto of modeloVestuario.listaConfiguracaoProdutos ;">
+                        <tr *ngFor="let configuracaoProduto of modeloVestuario.listaConfiguracaoProdutos ; index as indice">
                             <td jhiTranslate="{{'vestdeskApp.Tamanho.' + configuracaoProduto.tamanho}}">{{configuracaoProduto.tamanho}}</td>
+                            <td>{{configuracaoProduto.preco}}</td>
                             <td class="text-right">
                                 <div class="btn-group flex-btn-group-container">
-                                    <!-- <button type="submit" [routerLink]="['../modelo-vestuario', modeloVestuario.id ]" class="btn btn-info btn-sm">
-                                        <span class="fa fa-eye"></span>
-                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                                    </button>
-                                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'modelo-vestuario/'+ modeloVestuario.id + '/edit'} }]" replaceUrl="true"
-                                        queryParamsHandling="merge" class="btn btn-primary btn-sm">
+                                    <button type="button" class="btn btn-primary btn-sm" (click)="editarConfiguracaoProduto(indice)">
                                         <span class="fa fa-pencil"></span>
                                         <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                                     </button>
-                                    <button type="submit" [routerLink]="['/', { outlets: { popup: 'modelo-vestuario/'+ modeloVestuario.id + '/delete'} }]" replaceUrl="true"
-                                        queryParamsHandling="merge" class="btn btn-danger btn-sm">
+                                    <button type="button" class="btn btn-danger btn-sm" (click)="removerConfiguracaoProduto(indice)">
                                         <span class="fa fa-remove"></span>
                                         <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                    </button> -->
+                                    </button>
                                 </div>
                             </td>
                         </tr>

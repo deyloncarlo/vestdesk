@@ -11,6 +11,7 @@ import { ModeloVestuarioPopupService } from './modelo-vestuario-popup.service';
 import { ModeloVestuarioService } from './modelo-vestuario.service';
 import { ConfiguracaoProdutoDialogComponent } from '../configuracao-produto/configuracao-produto-dialog.component';
 import { ConfiguracaoProdutoPopupService } from '../configuracao-produto/configuracao-produto-popup.service';
+import { ConfiguracaoProduto } from '../configuracao-produto/configuracao-produto.model';
 
 @Component({
     selector: 'jhi-modelo-vestuario-dialog',
@@ -67,13 +68,47 @@ export class ModeloVestuarioDialogComponent implements OnInit {
         this.configuracaoProdutoPopupService.newOrUpdate(ConfiguracaoProdutoDialogComponent as Component).then((result) => {
             result.result.then((p_result) => {
                 // this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
+                if (!this.modeloVestuario.listaConfiguracaoProdutos) {
+                    this.modeloVestuario.listaConfiguracaoProdutos = new Array<ConfiguracaoProduto>();
+                }
+                this.modeloVestuario.listaConfiguracaoProdutos.push(p_result);
                 console.log(p_result);
             }, (p_reason) => {
                 console.log(p_reason);
                 // this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
                 // this.ngbModalRef = null;
+                result = null;
             });
         });
+    }
+
+    editarConfiguracaoProduto(p_indice) {
+        this.configuracaoProdutoPopupService.newOrUpdate(ConfiguracaoProdutoDialogComponent as Component, this.modeloVestuario.listaConfiguracaoProdutos[p_indice])
+            .then((result) => {
+                result.result.then((p_result) => {
+                    // this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true, queryParamsHandling: 'merge' });
+                    if (!this.modeloVestuario.listaConfiguracaoProdutos) {
+                        this.modeloVestuario.listaConfiguracaoProdutos = new Array<ConfiguracaoProduto>();
+                    }
+                    let v_registroEncontrado = false;
+                    this.modeloVestuario.listaConfiguracaoProdutos.forEach((p_configuracaoProduto, p_index) => {
+                        if (p_configuracaoProduto.tamanho === p_result.tamanho) {
+                            p_configuracaoProduto = p_result;
+                            v_registroEncontrado = true;
+                        }
+                    });
+
+                    if (!v_registroEncontrado) {
+                        this.modeloVestuario.listaConfiguracaoProdutos.push(p_result);
+                    }
+                }, (p_reason) => {
+                    result = null;
+                });
+            });
+    }
+
+    removerConfiguracaoProduto(p_indice) {
+        this.modeloVestuario.listaConfiguracaoProdutos.splice(p_indice, 1);
     }
 }
 

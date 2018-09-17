@@ -2,7 +2,6 @@ package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,18 +10,13 @@ import br.com.vestdesk.domain.enumeration.Modelo;
 /**
  * A DTO for the ModeloVestuario entity.
  */
-public class ModeloVestuarioDTO implements Serializable
+public class ModeloVestuarioFullDTO implements Serializable
 {
 
 	private Long id;
 
 	@NotNull
 	private Modelo modelo;
-
-	@NotNull
-	private String nome;
-
-	private Set<ConfiguracaoProdutoDTO> listaConfiguracaoProdutos;
 
 	public Long getId()
 	{
@@ -56,7 +50,7 @@ public class ModeloVestuarioDTO implements Serializable
 			return false;
 		}
 
-		ModeloVestuarioDTO modeloVestuarioDTO = (ModeloVestuarioDTO) o;
+		ModeloVestuarioFullDTO modeloVestuarioDTO = (ModeloVestuarioFullDTO) o;
 		if (modeloVestuarioDTO.getId() == null || getId() == null)
 		{
 			return false;
@@ -74,25 +68,5 @@ public class ModeloVestuarioDTO implements Serializable
 	public String toString()
 	{
 		return "ModeloVestuarioDTO{" + "id=" + getId() + ", modelo='" + getModelo() + "'" + "}";
-	}
-
-	public Set<ConfiguracaoProdutoDTO> getListaConfiguracaoProdutos()
-	{
-		return this.listaConfiguracaoProdutos;
-	}
-
-	public void setListaConfiguracaoProdutos(Set<ConfiguracaoProdutoDTO> listaConfiguracaoProdutos)
-	{
-		this.listaConfiguracaoProdutos = listaConfiguracaoProdutos;
-	}
-
-	public String getNome()
-	{
-		return this.nome;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
 	}
 }

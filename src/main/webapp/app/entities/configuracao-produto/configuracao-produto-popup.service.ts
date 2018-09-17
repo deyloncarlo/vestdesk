@@ -42,20 +42,18 @@ export class ConfiguracaoProdutoPopupService {
         });
     }
 
-    newOrUpdate(component: Component, id?: number | any): Promise<NgbModalRef> {
+    newOrUpdate(component: Component, p_configuracaoProduto?: ConfiguracaoProduto): Promise<NgbModalRef> {
         return new Promise<NgbModalRef>((resolve, reject) => {
             const isOpen = this.ngbModalRef !== null;
             if (isOpen) {
-                resolve(this.ngbModalRef);
+                this.ngbModalRef = null;
             }
 
-            if (id) {
-                this.configuracaoProdutoService.find(id)
-                    .subscribe((configuracaoProdutoResponse: HttpResponse<ConfiguracaoProduto>) => {
-                        const configuracaoProduto: ConfiguracaoProduto = configuracaoProdutoResponse.body;
-                        this.ngbModalRef = this.configuracaoProdutoModalRef(component, configuracaoProduto);
-                        resolve(this.ngbModalRef);
-                    });
+            if (p_configuracaoProduto) {
+                setTimeout(() => {
+                    this.ngbModalRef = this.configuracaoProdutoModalRef(component, p_configuracaoProduto);
+                    resolve(this.ngbModalRef);
+                }, 0);
             } else {
                 // setTimeout used as a workaround for getting ExpressionChangedAfterItHasBeenCheckedError
                 setTimeout(() => {

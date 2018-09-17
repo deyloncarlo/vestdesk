@@ -3,7 +3,7 @@
     "vestdeskApp": {
         "modeloVestuario" : {
             "home": {
-                "title": "Modelo Vestuarios",
+                "title": "Modelo Vestuario",
                 "createLabel": "Criar novo Modelo Vestuario",
                 "createOrEditLabel": "Criar ou editar Modelo Vestuario"
             },
@@ -18,7 +18,9 @@
             },
             "oid": "Oid",
             "modelo": "Modelo",
-            "listaConfiguracaoProduto": "Lista Configuracao Produto"
+            "listaConfiguracaoProduto": "Lista Configuracao Produto",
+            "criarNovaConfiguracaoProduto": "Configuração Produto",
+            "nome": "Nome"
         }
     }
 }

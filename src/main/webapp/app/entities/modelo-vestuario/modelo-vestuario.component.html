@@ -18,6 +18,7 @@
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="modelo"><span jhiTranslate="vestdeskApp.modeloVestuario.modelo">Modelo</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.modeloVestuario.nome">Nome</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
@@ -25,6 +26,7 @@
             <tr *ngFor="let modeloVestuario of modeloVestuarios ;trackBy: trackId">
                 <td><a [routerLink]="['../modelo-vestuario', modeloVestuario.id ]">{{modeloVestuario.id}}</a></td>
                 <td jhiTranslate="{{'vestdeskApp.Modelo.' + modeloVestuario.modelo}}">{{modeloVestuario.modelo}}</td>
+                <td>{{modeloVestuario.nome}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

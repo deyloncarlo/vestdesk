@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.etapaProducao.oid">Oid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.etapaProducao.nome">Nome</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="prazoExecucao"><span jhiTranslate="vestdeskApp.etapaProducao.prazoExecucao">Prazo Execucao</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -26,7 +25,6 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let etapaProducao of etapaProducaos ;trackBy: trackId">
                 <td><a [routerLink]="['../etapa-producao', etapaProducao.id ]">{{etapaProducao.id}}</a></td>
-                <td>{{etapaProducao.oid}}</td>
                 <td>{{etapaProducao.nome}}</td>
                 <td>{{etapaProducao.prazoExecucao}}</td>
                 <td class="text-right">

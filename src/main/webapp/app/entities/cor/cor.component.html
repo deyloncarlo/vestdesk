@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.cor.oid">Oid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="codigo"><span jhiTranslate="vestdeskApp.cor.codigo">Codigo</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
@@ -25,7 +24,6 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let cor of cors ;trackBy: trackId">
                 <td><a [routerLink]="['../cor', cor.id ]">{{cor.id}}</a></td>
-                <td>{{cor.oid}}</td>
                 <td>{{cor.codigo}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

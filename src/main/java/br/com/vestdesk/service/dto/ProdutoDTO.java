@@ -1,108 +1,122 @@
 package br.com.vestdesk.service.dto;
 
-
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the Produto entity.
  */
-public class ProdutoDTO implements Serializable {
+public class ProdutoDTO implements Serializable
+{
 
-    private Long id;
+	private Long id;
 
-    @NotNull
-    private Long oid;
+	@NotNull
+	private Integer quantidadeEstoque;
 
-    @NotNull
-    private Integer quantidadeEstoque;
+	@NotNull
+	private String descricao;
 
-    @NotNull
-    private String descricao;
+	private Long configuracaoProdutoId;
 
-    private Long configuracaoProdutoId;
+	private ConfiguracaoProdutoDTO configuracaoProduto;
 
-    private Set<CorDTO> listaCors = new HashSet<>();
+	private Set<CorDTO> listaCors = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public Long getOid() {
-        return oid;
-    }
+	public Integer getQuantidadeEstoque()
+	{
+		return this.quantidadeEstoque;
+	}
 
-    public void setOid(Long oid) {
-        this.oid = oid;
-    }
+	public void setQuantidadeEstoque(Integer quantidadeEstoque)
+	{
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 
-    public Integer getQuantidadeEstoque() {
-        return quantidadeEstoque;
-    }
+	public String getDescricao()
+	{
+		return this.descricao;
+	}
 
-    public void setQuantidadeEstoque(Integer quantidadeEstoque) {
-        this.quantidadeEstoque = quantidadeEstoque;
-    }
+	public void setDescricao(String descricao)
+	{
+		this.descricao = descricao;
+	}
 
-    public String getDescricao() {
-        return descricao;
-    }
+	public Long getConfiguracaoProdutoId()
+	{
+		return this.configuracaoProdutoId;
+	}
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
+	public void setConfiguracaoProdutoId(Long configuracaoProdutoId)
+	{
+		this.configuracaoProdutoId = configuracaoProdutoId;
+	}
 
-    public Long getConfiguracaoProdutoId() {
-        return configuracaoProdutoId;
-    }
+	public Set<CorDTO> getListaCors()
+	{
+		return this.listaCors;
+	}
 
-    public void setConfiguracaoProdutoId(Long configuracaoProdutoId) {
-        this.configuracaoProdutoId = configuracaoProdutoId;
-    }
+	public void setListaCors(Set<CorDTO> cors)
+	{
+		this.listaCors = cors;
+	}
 
-    public Set<CorDTO> getListaCors() {
-        return listaCors;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-    public void setListaCors(Set<CorDTO> cors) {
-        this.listaCors = cors;
-    }
+		ProdutoDTO produtoDTO = (ProdutoDTO) o;
+		if (produtoDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), produtoDTO.getId());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
 
-        ProdutoDTO produtoDTO = (ProdutoDTO) o;
-        if(produtoDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), produtoDTO.getId());
-    }
+	@Override
+	public String toString()
+	{
+		return "ProdutoDTO{" + "id=" + getId() + ", quantidadeEstoque=" + getQuantidadeEstoque() + ", descricao='"
+				+ getDescricao() + "'" + "}";
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	public ConfiguracaoProdutoDTO getConfiguracaoProduto()
+	{
+		return this.configuracaoProduto;
+	}
 
-    @Override
-    public String toString() {
-        return "ProdutoDTO{" +
-            "id=" + getId() +
-            ", oid=" + getOid() +
-            ", quantidadeEstoque=" + getQuantidadeEstoque() +
-            ", descricao='" + getDescricao() + "'" +
-            "}";
-    }
+	public void setConfiguracaoProduto(ConfiguracaoProdutoDTO configuracaoProduto)
+	{
+		this.configuracaoProduto = configuracaoProduto;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -35,11 +36,15 @@ public class ModeloVestuario implements Serializable
 	private Long id;
 
 	@NotNull
+	@Column(name = "nome", nullable = false)
+	private String nome;
+
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "modelo", nullable = false)
 	private Modelo modelo;
 
-	@OneToMany(mappedBy = "modeloVestuario")
+	@OneToMany(mappedBy = "modeloVestuario", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<ConfiguracaoProduto> listaConfiguracaoProdutos = new HashSet<>();
 
@@ -132,5 +137,15 @@ public class ModeloVestuario implements Serializable
 	public String toString()
 	{
 		return "ModeloVestuario{" + "id=" + getId() + ", modelo='" + getModelo() + "'" + "}";
+	}
+
+	public String getNome()
+	{
+		return this.nome;
+	}
+
+	public void setNome(String nome)
+	{
+		this.nome = nome;
 	}
 }

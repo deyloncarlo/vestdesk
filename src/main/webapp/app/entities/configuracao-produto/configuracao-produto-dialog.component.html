@@ -2,52 +2,102 @@
 
     <div class="modal-header">
         <h4 class="modal-title" id="myConfiguracaoProdutoLabel" jhiTranslate="vestdeskApp.configuracaoProduto.home.createOrEditLabel">Create or edit a Configuracao Produto</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!configuracaoProduto.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="configuracaoProduto.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="configuracaoProduto.id" readonly />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.configuracaoProduto.tamanho" for="field_tamanho">Tamanho</label>
-            <select class="form-control" name="tamanho" [(ngModel)]="configuracaoProduto.tamanho" id="field_tamanho"  required>
+            <select class="form-control" name="tamanho" [(ngModel)]="configuracaoProduto.tamanho" id="field_tamanho" required>
                 <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
                 <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
                 <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.tamanho?.dirty && editForm.controls.tamanho?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.tamanho?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.tamanho?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.configuracaoProduto.preco" for="field_preco">Preco</label>
-            <input type="number" class="form-control" name="preco" id="field_preco"
-                [(ngModel)]="configuracaoProduto.preco" required/>
+            <input type="number" class="form-control" name="preco" id="field_preco" [(ngModel)]="configuracaoProduto.preco" required/>
             <div [hidden]="!(editForm.controls.preco?.dirty && editForm.controls.preco?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
                     This field should be a number.
                 </small>
             </div>
         </div>
+        <div class="form-group">
+            <button type="button" class="btn btn-primary float-right jh-create-entity create-modelo-vestuario" (click)="adicionarMaterial()">
+                <span class="fa fa-plus"></span>
+                <span jhiTranslate="vestdeskApp.configuracaoProduto.botaoCriarMaterialTamanho">
+                    Material
+                </span>
+            </button>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.configuracaoProduto.listaMaterialTamanho" for="field_configuracaoProduto">Configuração Produto</label>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span jhiTranslate="vestdeskApp.materialTamanho.material">Material</span>
+                                <span class="fa fa-sort"></span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="vestdeskApp.materialTamanho.quantidadeMaterial">Quantidade</span>
+                                <span class="fa fa-sort"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let materialTamanho of configuracaoProduto.listaMaterialTamanhos; index as indice">
+                            <td>
+                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId">
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="material.id" *ngFor="let material of listaMateriais;">{{material.nome}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="field_quantidade_material + {{indice}}" id="field_material + {{indice}}" [(ngModel)]="materialTamanho.quantidadeMaterial"/>
+                            </td>
+                            <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="button" (click)="removerMaterialTamanho(indice);" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-remove"></span>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                        </tr>
+                    </tbody> 
+                </table>
+
+                <div [hidden]="!(editForm.controls.configuracaoProduto?.dirty && editForm.controls.configuracaoProduto?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.configuracaoProduto?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

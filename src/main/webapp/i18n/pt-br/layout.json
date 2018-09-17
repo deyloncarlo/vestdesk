@@ -3,7 +3,7 @@
     "vestdeskApp": {
         "layout" : {
             "home": {
-                "title": "Layouts",
+                "title": "Layout",
                 "createLabel": "Criar novo Layout",
                 "createOrEditLabel": "Criar ou editar Layout"
             },

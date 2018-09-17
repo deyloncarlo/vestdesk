@@ -17,7 +17,6 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="oid"><span jhiTranslate="vestdeskApp.material.oid">Oid</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.material.nome">Nome</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="preco"><span jhiTranslate="vestdeskApp.material.preco">Preco</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="quantidadeEstoque"><span jhiTranslate="vestdeskApp.material.quantidadeEstoque">Quantidade Estoque</span> <span class="fa fa-sort"></span></th>
@@ -28,7 +27,6 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let material of materials ;trackBy: trackId">
                 <td><a [routerLink]="['../material', material.id ]">{{material.id}}</a></td>
-                <td>{{material.oid}}</td>
                 <td>{{material.nome}}</td>
                 <td>{{material.preco}}</td>
                 <td>{{material.quantidadeEstoque}}</td>

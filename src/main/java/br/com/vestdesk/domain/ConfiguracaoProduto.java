@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,12 +46,15 @@ public class ConfiguracaoProduto implements Serializable
 	@Column(name = "preco", precision = 10, scale = 2, nullable = false)
 	private BigDecimal preco;
 
-	@OneToMany(mappedBy = "configuracaoProduto")
+	@OneToMany(mappedBy = "configuracaoProduto", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanhos = new HashSet<>();
 
 	@ManyToOne
 	private ModeloVestuario modeloVestuario;
+
+	@OneToMany(mappedBy = "configuracaoProduto", cascade = CascadeType.ALL)
+	private Set<Produto> listaProduto = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -174,5 +178,15 @@ public class ConfiguracaoProduto implements Serializable
 	{
 		return "ConfiguracaoProduto{" + "id=" + getId() + ", tamanho='" + getTamanho() + "'" + ", preco=" + getPreco()
 				+ "}";
+	}
+
+	public Set<Produto> getListaProduto()
+	{
+		return this.listaProduto;
+	}
+
+	public void setListaProduto(Set<Produto> listaProduto)
+	{
+		this.listaProduto = listaProduto;
 	}
 }

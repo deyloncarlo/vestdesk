@@ -2,65 +2,54 @@
 
     <div class="modal-header">
         <h4 class="modal-title" id="myProdutoLabel" jhiTranslate="vestdeskApp.produto.home.createOrEditLabel">Create or edit a Produto</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" [hidden]="!produto.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="produto.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.oid" for="field_oid">Oid</label>
-            <input type="number" class="form-control" name="oid" id="field_oid"
-                [(ngModel)]="produto.oid" required/>
-            <div [hidden]="!(editForm.controls.oid?.dirty && editForm.controls.oid?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.oid?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.oid?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
-            <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque"
-                [(ngModel)]="produto.quantidadeEstoque" required/>
-            <div [hidden]="!(editForm.controls.quantidadeEstoque?.dirty && editForm.controls.quantidadeEstoque?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.quantidadeEstoque?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
-                </small>
-                <small class="form-text text-danger"
-                    [hidden]="!editForm.controls.quantidadeEstoque?.errors?.number" jhiTranslate="entity.validation.number">
-                    This field should be a number.
-                </small>
-            </div>
+            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="produto.id" readonly />
         </div>
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.descricao" for="field_descricao">Descricao</label>
-            <input type="text" class="form-control" name="descricao" id="field_descricao"
-                [(ngModel)]="produto.descricao" required/>
+            <input type="text" class="form-control" name="descricao" id="field_descricao" [(ngModel)]="produto.descricao" required/>
             <div [hidden]="!(editForm.controls.descricao?.dirty && editForm.controls.descricao?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.descricao?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.descricao?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modeloVestuario" for="modeloVestuario">Modelo Vestuário</label>
+            <select class="form-control" id="field_configuracaoProduto" name="modeloVestuario" (change)="changedModeloVestuario(produto.modeloVestuario)" [(ngModel)]="produto.modeloVestuario" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="modeloVestuario" *ngFor="let modeloVestuario of listaModeloVestuario;">{{modeloVestuario.nome}}</option>
+            </select>
         </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.configuracaoProduto" for="field_configuracaoProduto">Configuracao Produto</label>
             <select class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId">
                 <option [ngValue]="null"></option>
-                <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos; trackBy: trackConfiguracaoProdutoById">{{configuracaoProdutoOption.id}}</option>
+                <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos;">{{configuracaoProdutoOption.tamanho}}</option>
             </select>
         </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
+            <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
+                required/>
+            <div [hidden]="!(editForm.controls.quantidadeEstoque?.dirty && editForm.controls.quantidadeEstoque?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
         <div class="form-group">
             <label jhiTranslate="vestdeskApp.produto.listaCor" for="field_listaCor">Lista Cor</label>
             <select class="form-control" id="field_listaCor" multiple name="listaCor" [(ngModel)]="produto.listaCors">
@@ -70,10 +59,12 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

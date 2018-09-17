@@ -3,7 +3,7 @@
     "vestdeskApp": {
         "material" : {
             "home": {
-                "title": "Materials",
+                "title": "Material",
                 "createLabel": "Criar novo Material",
                 "createOrEditLabel": "Criar ou editar Material"
             },

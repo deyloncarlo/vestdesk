@@ -18,9 +18,10 @@
             },
             "oid": "Oid",
             "tamanho": "Tamanho",
-            "preco": "Preco",
+            "preco": "Preço",
             "listaMaterialTamanho": "Lista Material Tamanho",
-            "modeloVestuario": "Modelo Vestuario"
+            "modeloVestuario": "Modelo Vestuario",
+            "botaoCriarMaterialTamanho": "Material Tamanho"
         }
     }
 }

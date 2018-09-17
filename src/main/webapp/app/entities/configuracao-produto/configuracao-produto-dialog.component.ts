@@ -10,6 +10,9 @@ import { ConfiguracaoProduto } from './configuracao-produto.model';
 import { ConfiguracaoProdutoPopupService } from './configuracao-produto-popup.service';
 import { ConfiguracaoProdutoService } from './configuracao-produto.service';
 import { ModeloVestuario, ModeloVestuarioService } from '../modelo-vestuario';
+import { MaterialService } from '../material/material.service';
+import { Material } from '../material/material.model';
+import { MaterialTamanho } from '../material-tamanho/material-tamanho.model';
 
 @Component({
     selector: 'jhi-configuracao-produto-dialog',
@@ -21,20 +24,32 @@ export class ConfiguracaoProdutoDialogComponent implements OnInit {
     isSaving: boolean;
 
     modelovestuarios: ModeloVestuario[];
+    listaMateriais: Material[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private configuracaoProdutoService: ConfiguracaoProdutoService,
         private modeloVestuarioService: ModeloVestuarioService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private materialService: MaterialService
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
         this.modeloVestuarioService.query()
-            .subscribe((res: HttpResponse<ModeloVestuario[]>) => { this.modelovestuarios = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+            .subscribe(
+                (res: HttpResponse<ModeloVestuario[]>) => {
+                    this.modelovestuarios = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        this.materialService.query()
+            .subscribe((res: HttpResponse<Material[]>) => {
+                this.listaMateriais = res.body;
+            },
+                (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -42,15 +57,19 @@ export class ConfiguracaoProdutoDialogComponent implements OnInit {
     }
 
     save() {
-        this.activeModal.dismiss(this.configuracaoProduto);
-        // this.isSaving = true;
-        // if (this.configuracaoProduto.id !== undefined) {
-        //     this.subscribeToSaveResponse(
-        //         this.configuracaoProdutoService.update(this.configuracaoProduto));
-        // } else {
-        //     this.subscribeToSaveResponse(
-        //         this.configuracaoProdutoService.create(this.configuracaoProduto));
-        // }
+        this.activeModal.close(this.configuracaoProduto);
+    }
+
+    adicionarMaterial() {
+        if (!this.configuracaoProduto.listaMaterialTamanhos) {
+            this.configuracaoProduto.listaMaterialTamanhos = new Array<MaterialTamanho>();
+        }
+        this.configuracaoProduto.listaMaterialTamanhos.push(new MaterialTamanho());
+    }
+
+    removerMaterialTamanho(p_indice) {
+        this.configuracaoProduto.listaMaterialTamanhos.splice(p_indice, 1);
+        console.log(p_indice);
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<ConfiguracaoProduto>>) {
@@ -59,7 +78,7 @@ export class ConfiguracaoProdutoDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: ConfiguracaoProduto) {
-        this.eventManager.broadcast({ name: 'configuracaoProdutoListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'configuracaoProdutoListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -88,11 +107,11 @@ export class ConfiguracaoProdutoPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private configuracaoProdutoPopupService: ConfiguracaoProdutoPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.configuracaoProdutoPopupService
                     .open(ConfiguracaoProdutoDialogComponent as Component, params['id']);
             } else {
