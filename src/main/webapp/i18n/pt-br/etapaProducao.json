@@ -18,7 +18,7 @@
             },
             "oid": "Oid",
             "nome": "Nome",
-            "prazoExecucao": "Prazo Execução"
+            "prazoExecucao": "Prazo Execução (Dias)"
         }
     }
 }

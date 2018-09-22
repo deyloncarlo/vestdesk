@@ -76,8 +76,9 @@ export class ProdutoDialogComponent implements OnInit {
 
     changedModeloVestuario(modeloVestuario) {
         if (modeloVestuario) {
+            this.produto.configuracaoProdutoId = null;
             this.configuracaoProdutoService
-            .query({filter: 'produto-is-null', modeloVestuario: modeloVestuario.id})
+            .query({filter: 'produto-is-null', idModeloVestuario: modeloVestuario.id})
             .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
                 if (!this.produto.configuracaoProdutoId) {
                     this.configuracaoprodutos = res.body;

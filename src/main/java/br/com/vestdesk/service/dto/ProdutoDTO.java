@@ -23,6 +23,9 @@ public class ProdutoDTO implements Serializable
 
 	private Long configuracaoProdutoId;
 
+	private ModeloVestuarioDTO modeloVestuario;
+
+	@NotNull
 	private ConfiguracaoProdutoDTO configuracaoProduto;
 
 	private Set<CorDTO> listaCors = new HashSet<>();
@@ -118,5 +121,15 @@ public class ProdutoDTO implements Serializable
 	public void setConfiguracaoProduto(ConfiguracaoProdutoDTO configuracaoProduto)
 	{
 		this.configuracaoProduto = configuracaoProduto;
+	}
+
+	public ModeloVestuarioDTO getModeloVestuario()
+	{
+		return this.modeloVestuario;
+	}
+
+	public void setModeloVestuario(ModeloVestuarioDTO modeloVestuario)
+	{
+		this.modeloVestuario = modeloVestuario;
 	}
 }

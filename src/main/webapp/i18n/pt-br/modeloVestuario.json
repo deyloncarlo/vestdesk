@@ -3,22 +3,22 @@
     "vestdeskApp": {
         "modeloVestuario" : {
             "home": {
-                "title": "Modelo Vestuario",
-                "createLabel": "Criar novo Modelo Vestuario",
-                "createOrEditLabel": "Criar ou editar Modelo Vestuario"
+                "title": "Modelo Vestuário",
+                "createLabel": "Criar novo Modelo Vestuário",
+                "createOrEditLabel": "Criar ou editar Modelo Vestuário"
             },
             "created": "Um novo Modelo Vestuario foi criado com o identificador {{ param }}",
             "updated": "Um Modelo Vestuario foi atualizado com o identificador {{ param }}",
             "deleted": "Um Modelo Vestuario foi deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Tem certeza de que deseja excluir Modelo Vestuario {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Modelo Vestuário {{ id }}?"
             },
             "detail": {
-                "title": "Modelo Vestuario"
+                "title": "Modelo Vestuário"
             },
             "oid": "Oid",
             "modelo": "Modelo",
-            "listaConfiguracaoProduto": "Lista Configuracao Produto",
+            "listaConfiguracaoProduto": "Lista Configuração Produto",
             "criarNovaConfiguracaoProduto": "Configuração Produto",
             "nome": "Nome"
         }

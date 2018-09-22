@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -46,6 +47,9 @@ public class Produto implements Serializable
 	@ManyToMany
 	@JoinTable(name = "produto_lista_cor", joinColumns = @JoinColumn(name = "produtos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "lista_cors_id", referencedColumnName = "id"))
 	private Set<Cor> listaCors = new HashSet<>();
+
+	@Transient
+	private ModeloVestuario modeloVestuario;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -169,5 +173,15 @@ public class Produto implements Serializable
 	{
 		return "Produto{" + "id=" + getId() + ", quantidadeEstoque=" + getQuantidadeEstoque() + ", descricao='"
 				+ getDescricao() + "'" + "}";
+	}
+
+	public ModeloVestuario getModeloVestuario()
+	{
+		return getConfiguracaoProduto().getModeloVestuario();
+	}
+
+	public void setModeloVestuario(ModeloVestuario modeloVestuario)
+	{
+		this.modeloVestuario = modeloVestuario;
 	}
 }

@@ -114,11 +114,11 @@ public class ConfiguracaoProdutoResource
 	@GetMapping("/configuracao-produtos")
 	@Timed
 	public ResponseEntity<List<ConfiguracaoProdutoDTO>> getAllConfiguracaoProdutos(Pageable pageable,
-			@RequestParam(name = "modeloVestuario") Long p_id)
+			@RequestParam(name = "idModeloVestuario", required = false) Long idModeloVestuario)
 	{
 		this.log.debug("REST request to get a page of ConfiguracaoProdutos");
 		Page<ConfiguracaoProdutoDTO> page = new PageImpl<ConfiguracaoProdutoDTO>(
-				this.configuracaoProdutoService.filtrar(p_id));
+				this.configuracaoProdutoService.filtrar(idModeloVestuario));
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/configuracao-produtos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

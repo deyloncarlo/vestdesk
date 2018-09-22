@@ -6,10 +6,10 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" [hidden]="!produto.id">
+        <!-- <div class="form-group" [hidden]="!produto.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id" [(ngModel)]="produto.id" readonly />
-        </div>
+        </div> -->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.descricao" for="field_descricao">Descricao</label>
             <input type="text" class="form-control" name="descricao" id="field_descricao" [(ngModel)]="produto.descricao" required/>
@@ -19,18 +19,17 @@
                 </small>
             </div>
         </div>
-
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modeloVestuario" for="modeloVestuario">Modelo Vestuário</label>
-            <select class="form-control" id="field_configuracaoProduto" name="modeloVestuario" (change)="changedModeloVestuario(produto.modeloVestuario)" [(ngModel)]="produto.modeloVestuario" >
+            <select class="form-control" id="field_configuracaoProduto" name="modeloVestuario" (change)="changedModeloVestuario(produto.modeloVestuario)" [(ngModel)]="produto.modeloVestuario.id" required>
                 <option [ngValue]="null"></option>
-                <option [ngValue]="modeloVestuario" *ngFor="let modeloVestuario of listaModeloVestuario;">{{modeloVestuario.nome}}</option>
+                <option [ngValue]="modeloVestuario.id" *ngFor="let modeloVestuario of listaModeloVestuario;">{{modeloVestuario.nome}}</option>
             </select>
         </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.configuracaoProduto" for="field_configuracaoProduto">Configuracao Produto</label>
-            <select class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId">
+            <select [disabled]="produto.modeloVestuario == null" class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId" required>
                 <option [ngValue]="null"></option>
                 <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos;">{{configuracaoProdutoOption.tamanho}}</option>
             </select>
@@ -53,7 +52,7 @@
         <div class="form-group">
             <label jhiTranslate="vestdeskApp.produto.listaCor" for="field_listaCor">Lista Cor</label>
             <select class="form-control" id="field_listaCor" multiple name="listaCor" [(ngModel)]="produto.listaCors">
-                <option [ngValue]="getSelected(produto.listaCors, corOption)" *ngFor="let corOption of cors; trackBy: trackCorById">{{corOption.id}}</option>
+                <option [ngValue]="getSelected(produto.listaCors, corOption)" *ngFor="let corOption of cors; trackBy: trackCorById" [ngStyle]="{'background-color': corOption.codigo}">{{corOption.nome}}</option>
             </select>
         </div>
     </div>

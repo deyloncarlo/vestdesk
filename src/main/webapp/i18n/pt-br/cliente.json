@@ -3,7 +3,7 @@
     "vestdeskApp": {
         "cliente" : {
             "home": {
-                "title": "Clientes",
+                "title": "Cliente",
                 "createLabel": "Criar novo Cliente",
                 "createOrEditLabel": "Criar ou editar Cliente"
             },
@@ -17,10 +17,10 @@
                 "title": "Cliente"
             },
             "nome": "Nome",
-            "endereco": "Endereco",
+            "endereco": "Endereço",
             "telefone": "Telefone",
-            "observacao": "Observacao",
-            "email": "Email"
+            "observacao": "Observação",
+            "email": "E-mail"
         }
     }
 }
