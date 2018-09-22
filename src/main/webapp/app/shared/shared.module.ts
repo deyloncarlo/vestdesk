@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import {ColorPickerModule} from 'ngx-color-picker';
 
 import {
     VestdeskSharedLibsModule,
@@ -19,7 +20,8 @@ import {
 @NgModule({
     imports: [
         VestdeskSharedLibsModule,
-        VestdeskSharedCommonModule
+        VestdeskSharedCommonModule,
+        ColorPickerModule
     ],
     declarations: [
         JhiLoginModalComponent,
@@ -41,7 +43,8 @@ import {
         VestdeskSharedCommonModule,
         JhiLoginModalComponent,
         HasAnyAuthorityDirective,
-        DatePipe
+        DatePipe,
+        ColorPickerModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 

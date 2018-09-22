@@ -10,13 +10,14 @@ import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interc
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { VestdeskSharedModule, UserRouteAccessService } from './shared';
-import { VestdeskAppRoutingModule} from './app-routing.module';
+import { VestdeskAppRoutingModule } from './app-routing.module';
 import { VestdeskHomeModule } from './home/home.module';
 import { VestdeskAdminModule } from './admin/admin.module';
 import { VestdeskAccountModule } from './account/account.module';
 import { VestdeskEntityModule } from './entities/entity.module';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { StateStorageService } from './shared/auth/state-storage.service';
+import {ColorPickerModule} from 'ngx-color-picker';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
     JhiMainComponent,
@@ -32,12 +33,13 @@ import {
     imports: [
         BrowserModule,
         VestdeskAppRoutingModule,
-        Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-'}),
+        Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
         VestdeskSharedModule,
         VestdeskHomeModule,
         VestdeskAdminModule,
         VestdeskAccountModule,
         VestdeskEntityModule,
+        ColorPickerModule
         // jhipster-needle-angular-add-module JHipster will add new module here
     ],
     declarations: [
@@ -78,6 +80,12 @@ import {
             ]
         }
     ],
-    bootstrap: [ JhiMainComponent ]
+    bootstrap: [JhiMainComponent]
 })
-export class VestdeskAppModule {}
+export class VestdeskAppModule {
+    static forRoot(): VestdeskAppModule {
+        return {
+            ngModule: VestdeskAppModule
+        };
+    }
+}

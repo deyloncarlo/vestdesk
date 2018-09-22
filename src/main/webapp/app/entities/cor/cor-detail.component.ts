@@ -6,6 +6,7 @@ import { JhiEventManager } from 'ng-jhipster';
 
 import { Cor } from './cor.model';
 import { CorService } from './cor.service';
+import { BaseEntity } from '../../shared';
 
 @Component({
     selector: 'jhi-cor-detail',
@@ -16,6 +17,7 @@ export class CorDetailComponent implements OnInit, OnDestroy {
     cor: Cor;
     private subscription: Subscription;
     private eventSubscriber: Subscription;
+    color: BaseEntity;
 
     constructor(
         private eventManager: JhiEventManager,

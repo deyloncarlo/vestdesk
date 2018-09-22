@@ -17,8 +17,9 @@
                 "title": "Cor"
             },
             "oid": "Oid",
-            "codigo": "Codigo",
-            "listaProduto": "Lista Produto"
+            "codigo": "Cor",
+            "listaProduto": "Lista Produto",
+            "nome": "Nome"
         }
     }
 }

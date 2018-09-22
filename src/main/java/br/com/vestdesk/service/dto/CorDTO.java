@@ -14,6 +14,9 @@ public class CorDTO implements Serializable
 	private Long id;
 
 	@NotNull
+	private String nome;
+
+	@NotNull
 	private String codigo;
 
 	public Long getId()
@@ -66,5 +69,15 @@ public class CorDTO implements Serializable
 	public String toString()
 	{
 		return "CorDTO{" + "id=" + getId() + ", codigo='" + getCodigo() + "'" + "}";
+	}
+
+	public String getNome()
+	{
+		return this.nome;
+	}
+
+	public void setNome(String nome)
+	{
+		this.nome = nome;
 	}
 }

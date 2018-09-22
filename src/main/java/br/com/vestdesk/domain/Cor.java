@@ -31,7 +31,11 @@ public class Cor implements Serializable
 	private Long id;
 
 	@NotNull
-	@Column(name = "codigo", nullable = false)
+	@Column(name = "nome")
+	private String nome;
+
+	@NotNull
+	@Column(name = "codigo", nullable = false, length = 15)
 	private String codigo;
 
 	@ManyToMany(mappedBy = "listaCors")
@@ -127,5 +131,15 @@ public class Cor implements Serializable
 	public String toString()
 	{
 		return "Cor{" + "id=" + getId() + ", codigo='" + getCodigo() + "'" + "}";
+	}
+
+	public String getNome()
+	{
+		return this.nome;
+	}
+
+	public void setNome(String nome)
+	{
+		this.nome = nome;
 	}
 }
