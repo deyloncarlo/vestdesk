@@ -3,8 +3,8 @@
         <span jhiTranslate="vestdeskApp.layout.home.title">Layouts</span>
         <button class="btn btn-primary float-right jh-create-entity create-layout" [routerLink]="['/', { outlets: { popup: ['layout-new'] } }]">
             <span class="fa fa-plus"></span>
-            <span  jhiTranslate="vestdeskApp.layout.home.createLabel">
-            Create new Layout
+            <span jhiTranslate="vestdeskApp.layout.home.createLabel">
+                Create new Layout
             </span>
         </button>
     </h2>
@@ -12,52 +12,52 @@
     <div class="row">
     </div>
     <br/>
-    <div class="table-responsive" *ngIf="layouts">
-        <table class="table table-striped">
+    <div class="" *ngIf="layouts">
+        <div class="">
             <thead>
-            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.layout.nome">Nome</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="imagem"><span jhiTranslate="vestdeskApp.layout.imagem">Imagem</span> <span class="fa fa-sort"></span></th>
-            <th></th>
-            </tr>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <!-- <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th> -->
+                    <!-- <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.layout.nome">Nome</span> <span class="fa fa-sort"></span></th> -->
+                    <!-- <th jhiSortBy="imagem"><span jhiTranslate="vestdeskApp.layout.imagem">Imagem</span> <span class="fa fa-sort"></span></th> -->
+                    <th></th>
+                </tr>
             </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-            <tr *ngFor="let layout of layouts ;trackBy: trackId">
-                <td><a [routerLink]="['../layout', layout.id ]">{{layout.id}}</a></td>
-                <td>{{layout.nome}}</td>
-                <td>
-                    <a *ngIf="layout.imagem" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a>
-                    <span *ngIf="layout.imagem">{{layout.imagemContentType}}, {{byteSize(layout.imagem)}}</span>
-                </td>
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <!-- <button type="submit"
-                                [routerLink]="['../layout', layout.id ]"
-                                class="btn btn-info btn-sm">
-                            <span class="fa fa-eye"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                        </button> -->
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'layout/'+ layout.id + '/edit'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
-                            <span class="fa fa-pencil"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'layout/'+ layout.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <span class="fa fa-remove"></span>
-                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                        </button>
+            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+                <div class="col-md-12">
+
+                    <div style="display: inline-block" class="col-md-4" *ngFor="let layout of layouts ;trackBy: trackId">
+                        <div class="col-md-12">
+                            <img [src]="'data:image/jpg;base64,' + layout.imagem" alt="" class="img-fluid">
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <!-- <a [routerLink]="['../layout', layout.id ]">{{layout.id}}</a> -->
+                            <label for="nome"><b>Nome:</b></label>
+                            {{layout.nome}}
+                            <br>
+                            <span *ngIf="layout.imagem">{{layout.imagemContentType}}, {{byteSize(layout.imagem)}}</span>
+                            <a *ngIf="layout.imagem" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a>
+                        </div>
+                        <div class="btn-group col-md-12">
+                            <!-- <button type="submit"
+                                    [routerLink]="['../layout', layout.id ]"
+                                    class="btn btn-info btn-sm">
+                                    <span class="fa fa-eye"></span>
+                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                </button> -->
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'layout/'+ layout.id + '/edit'} }]" replaceUrl="true" queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm col-md-12">
+                                <span class="fa fa-pencil"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'layout/'+ layout.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm col-md-12">
+                                <span class="fa fa-remove"></span>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
                     </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

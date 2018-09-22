@@ -29,7 +29,7 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.configuracaoProduto" for="field_configuracaoProduto">Configuracao Produto</label>
-            <select [disabled]="produto.modeloVestuario == null" class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId" required>
+            <select [disabled]="produto.modeloVestuario.id == null" class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId" required>
                 <option [ngValue]="null"></option>
                 <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos;">{{configuracaoProdutoOption.tamanho}}</option>
             </select>

@@ -39,6 +39,9 @@ export class ProdutoDialogComponent implements OnInit {
     }
 
     ngOnInit() {
+        if (this.produto.modeloVestuario == null) {
+            this.produto.modeloVestuario = new ModeloVestuario();
+        }
         this.isSaving = false;
         this.modeloVestuario.query()
             .subscribe((res: HttpResponse<ModeloVestuario[]>) => { this.listaModeloVestuario = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));

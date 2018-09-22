@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Material implements Serializable
 	@Column(name = "quantidade_minima")
 	private Float quantidadeMinima;
 
-	@OneToMany(mappedBy = "material")
+	@OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanhos = new HashSet<>();
 

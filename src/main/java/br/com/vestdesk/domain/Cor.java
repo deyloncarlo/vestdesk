@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,7 @@ public class Cor implements Serializable
 	@Column(name = "codigo", nullable = false, length = 15)
 	private String codigo;
 
-	@ManyToMany(mappedBy = "listaCors")
+	@ManyToMany(mappedBy = "listaCors", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<Produto> listaProdutos = new HashSet<>();
 

@@ -25,7 +25,6 @@ public class ProdutoDTO implements Serializable
 
 	private ModeloVestuarioDTO modeloVestuario;
 
-	@NotNull
 	private ConfiguracaoProdutoDTO configuracaoProduto;
 
 	private Set<CorDTO> listaCors = new HashSet<>();

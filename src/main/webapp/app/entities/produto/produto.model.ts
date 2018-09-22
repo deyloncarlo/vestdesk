@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import { ModeloVestuario } from '../modelo-vestuario';
 
 export class Produto implements BaseEntity {
     constructor(
@@ -8,6 +9,7 @@ export class Produto implements BaseEntity {
         public descricao?: string,
         public configuracaoProdutoId?: number,
         public listaCors?: BaseEntity[],
+        public modeloVestuario?: ModeloVestuario
     ) {
     }
 }
