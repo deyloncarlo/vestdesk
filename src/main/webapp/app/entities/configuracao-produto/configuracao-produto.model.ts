@@ -14,7 +14,7 @@ export class ConfiguracaoProduto implements BaseEntity {
         public tamanho?: Tamanho,
         public preco?: number,
         public listaMaterialTamanhos?: MaterialTamanho[],
-        public modeloVestuarioId?: number,
+        public modeloVestuarioId?: number
     ) {
     }
 }

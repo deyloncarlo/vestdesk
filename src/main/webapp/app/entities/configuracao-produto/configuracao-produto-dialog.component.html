@@ -61,7 +61,7 @@
                     <tbody>
                         <tr *ngFor="let materialTamanho of configuracaoProduto.listaMaterialTamanhos; index as indice">
                             <td>
-                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId">
+                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId" required>
                                     <option [ngValue]="null"></option>
                                     <option [ngValue]="material.id" *ngFor="let material of listaMateriais;">{{material.nome}}</option>
                                 </select>

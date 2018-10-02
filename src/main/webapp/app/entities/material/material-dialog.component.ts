@@ -4,11 +4,12 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Material } from './material.model';
 import { MaterialPopupService } from './material-popup.service';
 import { MaterialService } from './material.service';
+import { Cor, CorService } from './../cor';
 
 @Component({
     selector: 'jhi-material-dialog',
@@ -18,16 +19,24 @@ export class MaterialDialogComponent implements OnInit {
 
     material: Material;
     isSaving: boolean;
+    listaCor: Cor[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private materialService: MaterialService,
-        private eventManager: JhiEventManager
+        private eventManager: JhiEventManager,
+        private corService: CorService,
+        private jhiAlertService: JhiAlertService
     ) {
     }
 
     ngOnInit() {
+        if (!this.material.cor || !this.material.cor.id) {
+            this.material.cor = new Cor();
+        }
         this.isSaving = false;
+        this.corService.query()
+            .subscribe((res: HttpResponse<Cor[]>) => { this.listaCor = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
@@ -45,13 +54,17 @@ export class MaterialDialogComponent implements OnInit {
         }
     }
 
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
     private subscribeToSaveResponse(result: Observable<HttpResponse<Material>>) {
         result.subscribe((res: HttpResponse<Material>) =>
             this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess(result: Material) {
-        this.eventManager.broadcast({ name: 'materialListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'materialListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -72,11 +85,11 @@ export class MaterialPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private materialPopupService: MaterialPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.materialPopupService
                     .open(MaterialDialogComponent as Component, params['id']);
             } else {

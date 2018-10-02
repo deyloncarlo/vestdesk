@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import br.com.vestdesk.domain.enumeration.UnidadeMedida;
+
 /**
  * A DTO for the Material entity.
  */
@@ -23,6 +25,14 @@ public class MaterialDTO implements Serializable
 	private Float quantidadeEstoque;
 
 	private Float quantidadeMinima;
+
+	@NotNull
+	private String codigo;
+
+	@NotNull
+	private UnidadeMedida unidadeMedida;
+
+	private CorDTO cor;
 
 	public Long getId()
 	{
@@ -105,5 +115,35 @@ public class MaterialDTO implements Serializable
 	{
 		return "MaterialDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", preco=" + getPreco()
 				+ ", quantidadeEstoque=" + getQuantidadeEstoque() + ", quantidadeMinima=" + getQuantidadeMinima() + "}";
+	}
+
+	public String getCodigo()
+	{
+		return this.codigo;
+	}
+
+	public void setCodigo(String codigo)
+	{
+		this.codigo = codigo;
+	}
+
+	public UnidadeMedida getUnidadeMedida()
+	{
+		return this.unidadeMedida;
+	}
+
+	public void setUnidadeMedida(UnidadeMedida unidadeMedida)
+	{
+		this.unidadeMedida = unidadeMedida;
+	}
+
+	public CorDTO getCor()
+	{
+		return this.cor;
+	}
+
+	public void setCor(CorDTO cor)
+	{
+		this.cor = cor;
 	}
 }

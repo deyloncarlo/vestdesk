@@ -1,26 +1,39 @@
 package br.com.vestdesk.service.mapper;
 
-import br.com.vestdesk.domain.*;
-import br.com.vestdesk.service.dto.CorDTO;
+import java.util.List;
 
-import org.mapstruct.*;
+import org.mapstruct.Mapper;
+
+import br.com.vestdesk.domain.Cor;
+import br.com.vestdesk.service.dto.CorDTO;
 
 /**
  * Mapper for the entity Cor and its DTO CorDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
-public interface CorMapper extends EntityMapper<CorDTO, Cor> {
+@Mapper(componentModel = "spring", uses = { ProdutoMapper.class })
+public interface CorMapper
+{
 
+	Cor toEntity(CorDTO corDTO);
 
-    @Mapping(target = "listaProdutos", ignore = true)
-    Cor toEntity(CorDTO corDTO);
+	List<Cor> toEntity(List<CorDTO> listaCorDTO);
 
-    default Cor fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Cor cor = new Cor();
-        cor.setId(id);
-        return cor;
-    }
+	// Cor toEntityMin(CorMinDTO corMinDto);
+
+	CorDTO toDto(Cor cor);
+
+	List<CorDTO> toListDto(List<Cor> listaCor);
+
+	// CorMinDTO toMinDto(Cor cor);
+
+	default Cor fromId(Long id)
+	{
+		if (id == null)
+		{
+			return null;
+		}
+		Cor cor = new Cor();
+		cor.setId(id);
+		return cor;
+	}
 }

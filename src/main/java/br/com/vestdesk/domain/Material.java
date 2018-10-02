@@ -12,11 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.vestdesk.domain.enumeration.UnidadeMedida;
 
 /**
  * A Material.
@@ -31,6 +34,10 @@ public class Material implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@NotNull
+	@Column(name = "codigo")
+	private String codigo;
 
 	@NotNull
 	@Column(name = "nome", nullable = false)
@@ -49,6 +56,13 @@ public class Material implements Serializable
 	@OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanhos = new HashSet<>();
+
+	@NotNull
+	@Column(name = "unidadeMedida")
+	private UnidadeMedida unidadeMedida;
+
+	@ManyToOne
+	private Cor cor;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -188,5 +202,35 @@ public class Material implements Serializable
 	{
 		return "Material{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", preco=" + getPreco()
 				+ ", quantidadeEstoque=" + getQuantidadeEstoque() + ", quantidadeMinima=" + getQuantidadeMinima() + "}";
+	}
+
+	public String getCodigo()
+	{
+		return this.codigo;
+	}
+
+	public void setCodigo(String codigo)
+	{
+		this.codigo = codigo;
+	}
+
+	public UnidadeMedida getUnidadeMedida()
+	{
+		return this.unidadeMedida;
+	}
+
+	public void setUnidadeMedida(UnidadeMedida unidadeMedida)
+	{
+		this.unidadeMedida = unidadeMedida;
+	}
+
+	public Cor getCor()
+	{
+		return this.cor;
+	}
+
+	public void setCor(Cor cor)
+	{
+		this.cor = cor;
 	}
 }

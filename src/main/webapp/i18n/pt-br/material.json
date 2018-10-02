@@ -16,12 +16,14 @@
             "detail": {
                 "title": "Material"
             },
-            "oid": "Oid",
+            "codigo": "Código",
             "nome": "Nome",
-            "preco": "Preco",
+            "preco": "Preço",
             "quantidadeEstoque": "Quantidade Estoque",
-            "quantidadeMinima": "Quantidade Minima",
-            "listaMaterialTamanho": "Lista Material Tamanho"
+            "quantidadeMinima": "Quantidade Mínima",
+            "listaMaterialTamanho": "Lista Material Tamanho",
+            "unidadeMedida": "Unidade Medida",
+            "cor": "Cor"
         }
     }
 }

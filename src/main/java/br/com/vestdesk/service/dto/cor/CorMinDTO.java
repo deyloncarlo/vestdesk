@@ -1,23 +1,35 @@
-package br.com.vestdesk.service.dto;
+package br.com.vestdesk.service.dto.cor;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
+import br.com.vestdesk.service.dto.EntityDTO;
 
 /**
  * A DTO for the Cor entity.
  */
-public class CorDTO implements Serializable
+public class CorMinDTO implements Serializable
 {
 
-	@NotNull
 	private String nome;
 
-	@NotNull
-	private String codigo;
-
 	protected Long id;
+
+	@Override
+	public String toString()
+	{
+		return "CorMinDTO{" + "id=" + getId() + "}";
+	}
+
+	public String getNome()
+	{
+		return this.nome;
+	}
+
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
 	public Long getId()
 	{
@@ -53,31 +65,5 @@ public class CorDTO implements Serializable
 	public int hashCode()
 	{
 		return Objects.hashCode(getId());
-	}
-
-	public String getCodigo()
-	{
-		return this.codigo;
-	}
-
-	public void setCodigo(String codigo)
-	{
-		this.codigo = codigo;
-	}
-
-	@Override
-	public String toString()
-	{
-		return "CorDTO{" + "id=" + getId() + ", codigo='" + getCodigo() + "'" + "}";
-	}
-
-	public String getNome()
-	{
-		return this.nome;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
 	}
 }

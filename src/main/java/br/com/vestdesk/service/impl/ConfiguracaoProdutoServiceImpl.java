@@ -155,6 +155,6 @@ public class ConfiguracaoProdutoServiceImpl implements ConfiguracaoProdutoServic
 		List<ConfiguracaoProduto> listaConfiguracaoProduto = this.configuracaoProdutoRepository
 				.findByModeloVestuario(idModeloVestuario);
 
-		return this.configuracaoProdutoMapper.toDto(listaConfiguracaoProduto);
+		return this.configuracaoProdutoMapper.toListDto(listaConfiguracaoProduto);
 	}
 }
