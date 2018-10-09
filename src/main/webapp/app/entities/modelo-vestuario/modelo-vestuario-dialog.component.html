@@ -24,7 +24,7 @@
             <select class="form-control" name="modelo" [(ngModel)]="modeloVestuario.modelo" id="field_modelo" required>
                 <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
                 <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
-                <option value="BLUSA">{{'vestdeskApp.Modelo.BLUSA' | translate}}</option>
+                <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.modelo?.dirty && editForm.controls.modelo?.invalid)">
                 <small class="form-text text-danger" [hidden]="!editForm.controls.modelo?.errors?.required" jhiTranslate="entity.validation.required">

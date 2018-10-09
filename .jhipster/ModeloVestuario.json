@@ -19,7 +19,7 @@
         {
             "fieldName": "modelo",
             "fieldType": "Modelo",
-            "fieldValues": "MOLETOM,POLO,BLUSA",
+            "fieldValues": "MOLETOM,POLO,CAMISA",
             "fieldValidateRules": [
                 "required"
             ]
