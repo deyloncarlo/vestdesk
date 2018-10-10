@@ -6,10 +6,16 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <!-- <div class="form-group" [hidden]="!produto.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id" [(ngModel)]="produto.id" readonly />
-        </div> -->
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.codigo" for="field_codigo">Código</label>
+            <input type="text" class="form-control" name="codigo" id="field_codigo" [(ngModel)]="produto.codigo" required/>
+            <div [hidden]="!(editForm.controls.codigo?.dirty && editForm.controls.codigo?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.codigo?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.descricao" for="field_descricao">Descricao</label>
             <input type="text" class="form-control" name="descricao" id="field_descricao" [(ngModel)]="produto.descricao" required/>
@@ -19,20 +25,33 @@
                 </small>
             </div>
         </div>
+
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modeloVestuario" for="modeloVestuario">Modelo Vestuário</label>
-            <select class="form-control" id="field_configuracaoProduto" name="modeloVestuario" (change)="changedModeloVestuario(produto.modeloVestuario)" [(ngModel)]="produto.modeloVestuario.id" required>
-                <option [ngValue]="null"></option>
-                <option [ngValue]="modeloVestuario.id" *ngFor="let modeloVestuario of listaModeloVestuario;">{{modeloVestuario.nome}}</option>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modelo" for="field_modelo">Modelo</label>
+            <select class="form-control" name="modelo" [(ngModel)]="produto.modelo" id="field_modelo" required>
+                <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
+                <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
+                <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
             </select>
+            <div [hidden]="!(editForm.controls.modelo?.dirty && editForm.controls.modelo?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.modelo?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.configuracaoProduto" for="field_configuracaoProduto">Configuracao Produto</label>
-            <select [disabled]="produto.modeloVestuario.id == null" class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="produto.configuracaoProdutoId" required>
-                <option [ngValue]="null"></option>
-                <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos;">{{configuracaoProdutoOption.tamanho}}</option>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.tamanho" for="field_tamanho">Tamanho</label>
+            <select class="form-control" name="tamanho" [(ngModel)]="produto.tamanho" id="field_tamanho" required>
+                <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
+                <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
+                <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
             </select>
+            <div [hidden]="!(editForm.controls.tamanho?.dirty && editForm.controls.tamanho?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.tamanho?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
         </div>
 
         <div class="form-group">
@@ -50,9 +69,37 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeInicial" for="field_quantidadeInicial">Quantidade Inicial</label>
+            <input type="number" class="form-control" name="quantidadeInicial" id="field_quantidadeInicial" [(ngModel)]="produto.quantidadeInicial"
+                required/>
+            <div [hidden]="!(editForm.controls.quantidadeInicial?.dirty && editForm.controls.quantidadeInicial?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeInicial?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeInicial?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeMinima" for="field_quantidadeMinima">Quantidade Mínima</label>
+            <input type="number" class="form-control" name="quantidadeMinima" id="field_quantidadeMinima" [(ngModel)]="produto.quantidadeMinima"
+                required/>
+            <div [hidden]="!(editForm.controls.quantidadeMinima?.dirty && editForm.controls.quantidadeMinima?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeMinima?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+                <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeMinima?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label jhiTranslate="vestdeskApp.produto.listaCor" for="field_listaCor">Lista Cor</label>
-            <select class="form-control" id="field_listaCor" multiple name="listaCor" [(ngModel)]="produto.listaCors">
-                <option [ngValue]="getSelected(produto.listaCors, corOption)" *ngFor="let corOption of cors; trackBy: trackCorById" [ngStyle]="{'background-color': corOption.codigo}">{{corOption.nome}}</option>
+            <select class="form-control" id="field_listaCor" multiple name="listaCor" [(ngModel)]="produto.listaCor">
+                <option [ngValue]="getSelected(produto.listaCor, corOption)" *ngFor="let corOption of cors; trackBy: trackCorById" [ngStyle]="{'background-color': corOption.codigo}">{{corOption.nome}}</option>
             </select>
         </div>
     </div>

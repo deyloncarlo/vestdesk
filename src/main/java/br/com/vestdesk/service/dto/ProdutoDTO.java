@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.validation.constraints.NotNull;
+import br.com.vestdesk.domain.Cor;
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.domain.enumeration.Tamanho;
 
 /**
  * A DTO for the Produto entity.
@@ -15,19 +17,29 @@ public class ProdutoDTO implements Serializable
 
 	private Long id;
 
-	@NotNull
-	private Integer quantidadeEstoque;
+	private String codigo;
 
-	@NotNull
 	private String descricao;
 
-	private Long configuracaoProdutoId;
+	private Integer quantidadeInicial;
 
-	private ModeloVestuarioDTO modeloVestuario;
+	private Integer totalEntrada;
 
-	private ConfiguracaoProdutoDTO configuracaoProduto;
+	private Integer quantidadeMinima;
 
-	private Set<CorDTO> listaCors = new HashSet<>();
+	private Integer totalSaida;
+
+	private Integer quantidadeAtualizada;
+
+	private Tamanho tamanho;
+
+	private Modelo modelo;
+
+	private Integer quantidadeEstoque;
+
+	private Set<Cor> listaMaterial = new HashSet<>();
+
+	private Set<Cor> listaCor = new HashSet<>();
 
 	public Long getId()
 	{
@@ -57,26 +69,6 @@ public class ProdutoDTO implements Serializable
 	public void setDescricao(String descricao)
 	{
 		this.descricao = descricao;
-	}
-
-	public Long getConfiguracaoProdutoId()
-	{
-		return this.configuracaoProdutoId;
-	}
-
-	public void setConfiguracaoProdutoId(Long configuracaoProdutoId)
-	{
-		this.configuracaoProdutoId = configuracaoProdutoId;
-	}
-
-	public Set<CorDTO> getListaCors()
-	{
-		return this.listaCors;
-	}
-
-	public void setListaCors(Set<CorDTO> cors)
-	{
-		this.listaCors = cors;
 	}
 
 	@Override
@@ -112,23 +104,104 @@ public class ProdutoDTO implements Serializable
 				+ getDescricao() + "'" + "}";
 	}
 
-	public ConfiguracaoProdutoDTO getConfiguracaoProduto()
+	public String getCodigo()
 	{
-		return this.configuracaoProduto;
+		return this.codigo;
 	}
 
-	public void setConfiguracaoProduto(ConfiguracaoProdutoDTO configuracaoProduto)
+	public void setCodigo(String codigo)
 	{
-		this.configuracaoProduto = configuracaoProduto;
+		this.codigo = codigo;
 	}
 
-	public ModeloVestuarioDTO getModeloVestuario()
+	public Integer getQuantidadeInicial()
 	{
-		return this.modeloVestuario;
+		return this.quantidadeInicial;
 	}
 
-	public void setModeloVestuario(ModeloVestuarioDTO modeloVestuario)
+	public void setQuantidadeInicial(Integer quantidadeInicial)
 	{
-		this.modeloVestuario = modeloVestuario;
+		this.quantidadeInicial = quantidadeInicial;
 	}
+
+	public Integer getTotalEntrada()
+	{
+		return this.totalEntrada;
+	}
+
+	public void setTotalEntrada(Integer totalEntrada)
+	{
+		this.totalEntrada = totalEntrada;
+	}
+
+	public Integer getQuantidadeMinima()
+	{
+		return this.quantidadeMinima;
+	}
+
+	public void setQuantidadeMinima(Integer quantidadeMinima)
+	{
+		this.quantidadeMinima = quantidadeMinima;
+	}
+
+	public Integer getTotalSaida()
+	{
+		return this.totalSaida;
+	}
+
+	public void setTotalSaida(Integer totalSaida)
+	{
+		this.totalSaida = totalSaida;
+	}
+
+	public Integer getQuantidadeAtualizada()
+	{
+		return this.quantidadeAtualizada;
+	}
+
+	public void setQuantidadeAtualizada(Integer quantidadeAtualizada)
+	{
+		this.quantidadeAtualizada = quantidadeAtualizada;
+	}
+
+	public Tamanho getTamanho()
+	{
+		return this.tamanho;
+	}
+
+	public void setTamanho(Tamanho tamanho)
+	{
+		this.tamanho = tamanho;
+	}
+
+	public Modelo getModelo()
+	{
+		return this.modelo;
+	}
+
+	public void setModelo(Modelo modelo)
+	{
+		this.modelo = modelo;
+	}
+
+	public Set<Cor> getListaMaterial()
+	{
+		return this.listaMaterial;
+	}
+
+	public void setListaMaterial(Set<Cor> listaMaterial)
+	{
+		this.listaMaterial = listaMaterial;
+	}
+
+	public Set<Cor> getListaCor()
+	{
+		return this.listaCor;
+	}
+
+	public void setListaCor(Set<Cor> listaCor)
+	{
+		this.listaCor = listaCor;
+	}
+
 }

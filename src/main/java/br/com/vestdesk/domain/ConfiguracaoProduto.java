@@ -53,9 +53,6 @@ public class ConfiguracaoProduto implements Serializable
 	@ManyToOne
 	private ModeloVestuario modeloVestuario;
 
-	@OneToMany(mappedBy = "configuracaoProduto", cascade = CascadeType.ALL)
-	private Set<Produto> listaProduto = new HashSet<>();
-
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId()
@@ -180,13 +177,4 @@ public class ConfiguracaoProduto implements Serializable
 				+ "}";
 	}
 
-	public Set<Produto> getListaProduto()
-	{
-		return this.listaProduto;
-	}
-
-	public void setListaProduto(Set<Produto> listaProduto)
-	{
-		this.listaProduto = listaProduto;
-	}
 }

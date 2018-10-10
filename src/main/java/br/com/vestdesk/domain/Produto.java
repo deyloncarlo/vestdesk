@@ -13,10 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.domain.enumeration.Tamanho;
 
 /**
  * A Produto.
@@ -33,23 +34,45 @@ public class Produto implements Serializable
 	private Long id;
 
 	@NotNull
+	@Column(name = "codigo")
+	private String codigo;
+
+	@NotNull
+	@Column(name = "descricao")
+	private String descricao;
+
+	@Column(name = "quantidadeInicial")
+	private Integer quantidadeInicial;
+
+	@Column(name = "totalEntrada")
+	private Integer totalEntrada;
+
+	@Column(name = "quantidadeMinima")
+	private Integer quantidadeMinima;
+
+	@Column(name = "totalSaida")
+	private Integer totalSaida;
+
+	@Column(name = "quantidadeAtualizada")
+	private Integer quantidadeAtualizada;
+
+	@NotNull
+	@Column(name = "tamanho")
+	private Tamanho tamanho;
+
+	@NotNull
+	@Column(name = "modelo")
+	private Modelo modelo;
+
 	@Column(name = "quantidade_estoque", nullable = false)
 	private Integer quantidadeEstoque;
 
-	@NotNull
-	@Column(name = "descricao", nullable = false)
-	private String descricao;
-
-	@OneToOne
-	@JoinColumn(unique = true)
-	private ConfiguracaoProduto configuracaoProduto;
+	@ManyToMany
+	private Set<Cor> listaMaterial = new HashSet<>();
 
 	@ManyToMany
 	@JoinTable(name = "produto_lista_cor", joinColumns = @JoinColumn(name = "produtos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "lista_cors_id", referencedColumnName = "id"))
-	private Set<Cor> listaCors = new HashSet<>();
-
-	@Transient
-	private ModeloVestuario modeloVestuario;
+	private Set<Cor> listaCor = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -95,51 +118,6 @@ public class Produto implements Serializable
 		this.descricao = descricao;
 	}
 
-	public ConfiguracaoProduto getConfiguracaoProduto()
-	{
-		return this.configuracaoProduto;
-	}
-
-	public Produto configuracaoProduto(ConfiguracaoProduto configuracaoProduto)
-	{
-		this.configuracaoProduto = configuracaoProduto;
-		return this;
-	}
-
-	public void setConfiguracaoProduto(ConfiguracaoProduto configuracaoProduto)
-	{
-		this.configuracaoProduto = configuracaoProduto;
-	}
-
-	public Set<Cor> getListaCors()
-	{
-		return this.listaCors;
-	}
-
-	public Produto listaCors(Set<Cor> cors)
-	{
-		this.listaCors = cors;
-		return this;
-	}
-
-	public Produto addListaCor(Cor cor)
-	{
-		this.listaCors.add(cor);
-		cor.getListaProdutos().add(this);
-		return this;
-	}
-
-	public Produto removeListaCor(Cor cor)
-	{
-		this.listaCors.remove(cor);
-		cor.getListaProdutos().remove(this);
-		return this;
-	}
-
-	public void setListaCors(Set<Cor> cors)
-	{
-		this.listaCors = cors;
-	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
 
@@ -175,13 +153,104 @@ public class Produto implements Serializable
 				+ getDescricao() + "'" + "}";
 	}
 
-	public ModeloVestuario getModeloVestuario()
+	public String getCodigo()
 	{
-		return getConfiguracaoProduto().getModeloVestuario();
+		return this.codigo;
 	}
 
-	public void setModeloVestuario(ModeloVestuario modeloVestuario)
+	public void setCodigo(String codigo)
 	{
-		this.modeloVestuario = modeloVestuario;
+		this.codigo = codigo;
 	}
+
+	public Integer getQuantidadeInicial()
+	{
+		return this.quantidadeInicial;
+	}
+
+	public void setQuantidadeInicial(Integer quantidadeInicial)
+	{
+		this.quantidadeInicial = quantidadeInicial;
+	}
+
+	public Integer getTotalEntrada()
+	{
+		return this.totalEntrada;
+	}
+
+	public void setTotalEntrada(Integer totalEntrada)
+	{
+		this.totalEntrada = totalEntrada;
+	}
+
+	public Integer getQuantidadeMinima()
+	{
+		return this.quantidadeMinima;
+	}
+
+	public void setQuantidadeMinima(Integer quantidadeMinima)
+	{
+		this.quantidadeMinima = quantidadeMinima;
+	}
+
+	public Integer getTotalSaida()
+	{
+		return this.totalSaida;
+	}
+
+	public void setTotalSaida(Integer totalSaida)
+	{
+		this.totalSaida = totalSaida;
+	}
+
+	public Integer getQuantidadeAtualizada()
+	{
+		return this.quantidadeAtualizada;
+	}
+
+	public void setQuantidadeAtualizada(Integer quantidadeAtualizada)
+	{
+		this.quantidadeAtualizada = quantidadeAtualizada;
+	}
+
+	public Tamanho getTamanho()
+	{
+		return this.tamanho;
+	}
+
+	public void setTamanho(Tamanho tamanho)
+	{
+		this.tamanho = tamanho;
+	}
+
+	public Modelo getModelo()
+	{
+		return this.modelo;
+	}
+
+	public void setModelo(Modelo modelo)
+	{
+		this.modelo = modelo;
+	}
+
+	public Set<Cor> getListaCor()
+	{
+		return this.listaCor;
+	}
+
+	public void setListaCor(Set<Cor> listaCor)
+	{
+		this.listaCor = listaCor;
+	}
+
+	public Set<Cor> getListaMaterial()
+	{
+		return this.listaMaterial;
+	}
+
+	public void setListaMaterial(Set<Cor> litaMaterial)
+	{
+		this.listaMaterial = litaMaterial;
+	}
+
 }

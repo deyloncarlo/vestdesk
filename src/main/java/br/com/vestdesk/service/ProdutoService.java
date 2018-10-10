@@ -1,42 +1,86 @@
 package br.com.vestdesk.service;
 
-import br.com.vestdesk.service.dto.ProdutoDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.repository.ProdutoRepository;
+import br.com.vestdesk.service.dto.ProdutoDTO;
+import br.com.vestdesk.service.mapper.ProdutoMapper;
 
 /**
  * Service Interface for managing Produto.
  */
-public interface ProdutoService {
+@Service
+@Transactional
+public class ProdutoService
+{
 
-    /**
-     * Save a produto.
-     *
-     * @param produtoDTO the entity to save
-     * @return the persisted entity
-     */
-    ProdutoDTO save(ProdutoDTO produtoDTO);
+	private final Logger log = LoggerFactory.getLogger(ProdutoService.class);
 
-    /**
-     * Get all the produtos.
-     *
-     * @param pageable the pagination information
-     * @return the list of entities
-     */
-    Page<ProdutoDTO> findAll(Pageable pageable);
+	private final ProdutoRepository produtoRepository;
 
-    /**
-     * Get the "id" produto.
-     *
-     * @param id the id of the entity
-     * @return the entity
-     */
-    ProdutoDTO findOne(Long id);
+	private final ProdutoMapper produtoMapper;
 
-    /**
-     * Delete the "id" produto.
-     *
-     * @param id the id of the entity
-     */
-    void delete(Long id);
+	public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper)
+	{
+		this.produtoRepository = produtoRepository;
+		this.produtoMapper = produtoMapper;
+	}
+
+	/**
+	 * Save a produto.
+	 *
+	 * @param produtoDTO the entity to save
+	 * @return the persisted entity
+	 */
+	public ProdutoDTO save(ProdutoDTO produtoDTO)
+	{
+		this.log.debug("Request to save Produto : {}", produtoDTO);
+		Produto produto = this.produtoMapper.toEntity(produtoDTO);
+		produto = this.produtoRepository.save(produto);
+		return this.produtoMapper.toDto(produto);
+	}
+
+	/**
+	 * Get all the produtos.
+	 *
+	 * @param pageable the pagination information
+	 * @return the list of entities
+	 */
+	@Transactional(readOnly = true)
+	public Page<ProdutoDTO> findAll(Pageable pageable)
+	{
+		this.log.debug("Request to get all Produtos");
+		return this.produtoRepository.findAll(pageable).map(this.produtoMapper::toDto);
+	}
+
+	/**
+	 * Get one produto by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Transactional(readOnly = true)
+	public ProdutoDTO findOne(Long id)
+	{
+		this.log.debug("Request to get Produto : {}", id);
+		Produto produto = this.produtoRepository.findOneWithEagerRelationships(id);
+		return this.produtoMapper.toDto(produto);
+	}
+
+	/**
+	 * Delete the produto by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	public void delete(Long id)
+	{
+		this.log.debug("Request to delete Produto : {}", id);
+		this.produtoRepository.delete(id);
+	}
 }

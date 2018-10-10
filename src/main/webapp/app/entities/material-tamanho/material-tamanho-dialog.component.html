@@ -29,13 +29,6 @@
         </div>
 
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.materialTamanho.configuracaoProduto" for="field_configuracaoProduto">Configuracao Produto</label>
-            <select class="form-control" id="field_configuracaoProduto" name="configuracaoProduto" [(ngModel)]="materialTamanho.configuracaoProdutoId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="configuracaoProdutoOption.id" *ngFor="let configuracaoProdutoOption of configuracaoprodutos; trackBy: trackConfiguracaoProdutoById">{{configuracaoProdutoOption.id}}</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.materialTamanho.material" for="field_material">Material</label>
             <select class="form-control" id="field_material" name="material" [(ngModel)]="materialTamanho.materialId" >
                 <option [ngValue]="null"></option>

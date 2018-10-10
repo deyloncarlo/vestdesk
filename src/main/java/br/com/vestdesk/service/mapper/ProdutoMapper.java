@@ -1,7 +1,6 @@
 package br.com.vestdesk.service.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import br.com.vestdesk.domain.Produto;
 import br.com.vestdesk.service.dto.ProdutoDTO;
@@ -13,10 +12,8 @@ import br.com.vestdesk.service.dto.ProdutoDTO;
 public interface ProdutoMapper
 {
 
-	@Mapping(source = "configuracaoProduto.id", target = "configuracaoProdutoId")
 	ProdutoDTO toDto(Produto produto);
 
-	@Mapping(source = "configuracaoProdutoId", target = "configuracaoProduto")
 	Produto toEntity(ProdutoDTO produtoDTO);
 
 	default Produto fromId(Long id)

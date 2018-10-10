@@ -17,11 +17,16 @@
                 "title": "Produto"
             },
             "oid": "Oid",
+            "codigo": "Código",
+            "modelo": "Modelo",
+            "tamanho": "Tamanho",
+            "quantidadeInicial": "Quantidade Inicial",
+            "descricao": "Descrição",
             "quantidadeEstoque": "Quantidade Estoque",
-            "descricao": "Descricao",
             "configuracaoProduto": "Configuracao Produto",
             "listaCor": "Lista Cor",
-            "modeloVestuario": "Modelo Vestuário"
+            "modeloVestuario": "Modelo Vestuário",
+            "quantidadeMinima": "Quantidade Mínima"
         }
     }
 }

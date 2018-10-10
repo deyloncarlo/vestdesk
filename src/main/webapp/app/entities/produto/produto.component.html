@@ -16,21 +16,21 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="quantidadeEstoque"><span jhiTranslate="vestdeskApp.produto.quantidadeEstoque">Quantidade Estoque</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="descricao"><span jhiTranslate="vestdeskApp.produto.descricao">Descricao</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="modeloVestuario"><span jhiTranslate="vestdeskApp.produto.modeloVestuario">Modelo Vestuário</span> <span class="fa fa-sort"></span></th>
-            <th jhiSortBy="configuracaoProdutoId"><span jhiTranslate="vestdeskApp.produto.configuracaoProduto">Configuracao Produto</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="codigo"><span jhiTranslate="vestdeskApp.produto.codigo">Código</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="descricao"><span jhiTranslate="vestdeskApp.produto.descricao">Descrição</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="modelo"><span jhiTranslate="vestdeskApp.produto.modelo">Modelo</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tamanho"><span jhiTranslate="vestdeskApp.produto.tamanho">Tamanho</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="quantidadeInicial"><span jhiTranslate="vestdeskApp.produto.quantidadeInicial">Quantidade Inicial</span> <span class="fa fa-sort"></span></th>
             <th></th>
             </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let produto of produtos ;trackBy: trackId">
-                <td><a [routerLink]="['../produto', produto.id ]">{{produto.id}}</a></td>
+                <td>{{produto.codigo}}</td>
                 <td>{{produto.descricao}}</td>
-                <td>{{produto.quantidadeEstoque}}</td>
-                <td>{{produto.modeloVestuario.nome}}</td>
-                <td>{{produto.configuracaoProduto.tamanho}}</td>
+                <td>{{produto.modelo}}</td>
+                <td>{{produto.tamanho}}</td>
+                <td>{{produto.quantidadeInicial}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <!-- <button type="submit"

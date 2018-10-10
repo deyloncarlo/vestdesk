@@ -1,21 +1,15 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A Cor.
@@ -38,10 +32,6 @@ public class Cor implements Serializable
 	@NotNull
 	@Column(name = "codigo", nullable = false, length = 15)
 	private String codigo;
-
-	@ManyToMany(mappedBy = "listaCors", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<Produto> listaProdutos = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -71,35 +61,6 @@ public class Cor implements Serializable
 		this.codigo = codigo;
 	}
 
-	public Set<Produto> getListaProdutos()
-	{
-		return this.listaProdutos;
-	}
-
-	public Cor listaProdutos(Set<Produto> produtos)
-	{
-		this.listaProdutos = produtos;
-		return this;
-	}
-
-	public Cor addListaProduto(Produto produto)
-	{
-		this.listaProdutos.add(produto);
-		produto.getListaCors().add(this);
-		return this;
-	}
-
-	public Cor removeListaProduto(Produto produto)
-	{
-		this.listaProdutos.remove(produto);
-		produto.getListaCors().remove(this);
-		return this;
-	}
-
-	public void setListaProdutos(Set<Produto> produtos)
-	{
-		this.listaProdutos = produtos;
-	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
 

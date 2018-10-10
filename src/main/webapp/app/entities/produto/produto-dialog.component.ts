@@ -9,9 +9,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { Produto } from './produto.model';
 import { ProdutoPopupService } from './produto-popup.service';
 import { ProdutoService } from './produto.service';
-import { ConfiguracaoProduto, ConfiguracaoProdutoService } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
-import { ModeloVestuarioService, ModeloVestuario } from '../modelo-vestuario';
 
 @Component({
     selector: 'jhi-produto-dialog',
@@ -21,43 +19,19 @@ export class ProdutoDialogComponent implements OnInit {
 
     produto: Produto;
     isSaving: boolean;
-
-    configuracaoprodutos: ConfiguracaoProduto[];
-
     cors: Cor[];
-    listaModeloVestuario: ModeloVestuario[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private jhiAlertService: JhiAlertService,
         private produtoService: ProdutoService,
-        private configuracaoProdutoService: ConfiguracaoProdutoService,
         private corService: CorService,
         private eventManager: JhiEventManager,
-        private modeloVestuario: ModeloVestuarioService
     ) {
     }
 
     ngOnInit() {
-        if (this.produto.modeloVestuario == null) {
-            this.produto.modeloVestuario = new ModeloVestuario();
-        }
         this.isSaving = false;
-        this.modeloVestuario.query()
-            .subscribe((res: HttpResponse<ModeloVestuario[]>) => { this.listaModeloVestuario = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
-        this.configuracaoProdutoService
-            .query({filter: 'produto-is-null'})
-            .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
-                if (!this.produto.configuracaoProdutoId) {
-                    this.configuracaoprodutos = res.body;
-                } else {
-                    this.configuracaoProdutoService
-                        .find(this.produto.configuracaoProdutoId)
-                        .subscribe((subRes: HttpResponse<ConfiguracaoProduto>) => {
-                            this.configuracaoprodutos = [subRes.body].concat(res.body);
-                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
-                }
-            }, (res: HttpErrorResponse) => this.onError(res.message));
         this.corService.query()
             .subscribe((res: HttpResponse<Cor[]>) => { this.cors = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
     }
@@ -78,22 +52,22 @@ export class ProdutoDialogComponent implements OnInit {
     }
 
     changedModeloVestuario(modeloVestuario) {
-        if (modeloVestuario) {
-            this.produto.configuracaoProdutoId = null;
-            this.configuracaoProdutoService
-            .query({filter: 'produto-is-null', idModeloVestuario: modeloVestuario.id})
-            .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
-                if (!this.produto.configuracaoProdutoId) {
-                    this.configuracaoprodutos = res.body;
-                } else {
-                    this.configuracaoProdutoService
-                        .find(this.produto.configuracaoProdutoId)
-                        .subscribe((subRes: HttpResponse<ConfiguracaoProduto>) => {
-                            this.configuracaoprodutos = [subRes.body].concat(res.body);
-                        }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
-                }
-            }, (res: HttpErrorResponse) => this.onError(res.message));
-        }
+        // if (modeloVestuario) {
+        //     this.produto.configuracaoProdutoId = null;
+        //     this.configuracaoProdutoService
+        //     .query({filter: 'produto-is-null', idModeloVestuario: modeloVestuario.id})
+        //     .subscribe((res: HttpResponse<ConfiguracaoProduto[]>) => {
+        //         if (!this.produto.configuracaoProdutoId) {
+        //             this.configuracaoprodutos = res.body;
+        //         } else {
+        //             this.configuracaoProdutoService
+        //                 .find(this.produto.configuracaoProdutoId)
+        //                 .subscribe((subRes: HttpResponse<ConfiguracaoProduto>) => {
+        //                     this.configuracaoprodutos = [subRes.body].concat(res.body);
+        //                 }, (subRes: HttpErrorResponse) => this.onError(subRes.message));
+        //         }
+        //     }, (res: HttpErrorResponse) => this.onError(res.message));
+        // }
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Produto>>) {
@@ -102,7 +76,7 @@ export class ProdutoDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Produto) {
-        this.eventManager.broadcast({ name: 'produtoListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'produtoListModification', content: 'OK' });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -113,10 +87,6 @@ export class ProdutoDialogComponent implements OnInit {
 
     private onError(error: any) {
         this.jhiAlertService.error(error.message, null, null);
-    }
-
-    trackConfiguracaoProdutoById(index: number, item: ConfiguracaoProduto) {
-        return item.id;
     }
 
     trackCorById(index: number, item: Cor) {
@@ -146,11 +116,11 @@ export class ProdutoPopupComponent implements OnInit, OnDestroy {
     constructor(
         private route: ActivatedRoute,
         private produtoPopupService: ProdutoPopupService
-    ) {}
+    ) { }
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
-            if ( params['id'] ) {
+            if (params['id']) {
                 this.produtoPopupService
                     .open(ProdutoDialogComponent as Component, params['id']);
             } else {
