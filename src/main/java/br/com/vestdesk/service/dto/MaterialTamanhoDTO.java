@@ -1,84 +1,94 @@
 package br.com.vestdesk.service.dto;
 
-
-import javax.validation.constraints.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the MaterialTamanho entity.
  */
-public class MaterialTamanhoDTO implements Serializable {
+public class MaterialTamanhoDTO implements Serializable
+{
 
-    private Long id;
+	private Long id;
 
-    @NotNull
-    private Float quantidadeMaterial;
+	@NotNull
+	private Float quantidadeMaterial;
 
-    private Long configuracaoProdutoId;
+	private Long produtoId;
 
-    private Long materialId;
+	private Long materialId;
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public Float getQuantidadeMaterial() {
-        return quantidadeMaterial;
-    }
+	public Float getQuantidadeMaterial()
+	{
+		return this.quantidadeMaterial;
+	}
 
-    public void setQuantidadeMaterial(Float quantidadeMaterial) {
-        this.quantidadeMaterial = quantidadeMaterial;
-    }
+	public void setQuantidadeMaterial(Float quantidadeMaterial)
+	{
+		this.quantidadeMaterial = quantidadeMaterial;
+	}
 
-    public Long getConfiguracaoProdutoId() {
-        return configuracaoProdutoId;
-    }
+	public Long getMaterialId()
+	{
+		return this.materialId;
+	}
 
-    public void setConfiguracaoProdutoId(Long configuracaoProdutoId) {
-        this.configuracaoProdutoId = configuracaoProdutoId;
-    }
+	public void setMaterialId(Long materialId)
+	{
+		this.materialId = materialId;
+	}
 
-    public Long getMaterialId() {
-        return materialId;
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-    public void setMaterialId(Long materialId) {
-        this.materialId = materialId;
-    }
+		MaterialTamanhoDTO materialTamanhoDTO = (MaterialTamanhoDTO) o;
+		if (materialTamanhoDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), materialTamanhoDTO.getId());
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
 
-        MaterialTamanhoDTO materialTamanhoDTO = (MaterialTamanhoDTO) o;
-        if(materialTamanhoDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), materialTamanhoDTO.getId());
-    }
+	@Override
+	public String toString()
+	{
+		return "MaterialTamanhoDTO{" + "id=" + getId() + ", quantidadeMaterial=" + getQuantidadeMaterial() + "}";
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	public Long getProdutoId()
+	{
+		return this.produtoId;
+	}
 
-    @Override
-    public String toString() {
-        return "MaterialTamanhoDTO{" +
-            "id=" + getId() +
-            ", quantidadeMaterial=" + getQuantidadeMaterial() +
-            "}";
-    }
+	public void setProdutoId(Long produtoId)
+	{
+		this.produtoId = produtoId;
+	}
 }

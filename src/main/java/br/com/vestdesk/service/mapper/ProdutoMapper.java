@@ -8,7 +8,7 @@ import br.com.vestdesk.service.dto.ProdutoDTO;
 /**
  * Mapper for the entity Produto and its DTO ProdutoDTO.
  */
-@Mapper(componentModel = "spring", uses = { ConfiguracaoProdutoMapper.class, CorMapper.class })
+@Mapper(componentModel = "spring", uses = { CorMapper.class, MaterialTamanhoMapper.class })
 public interface ProdutoMapper
 {
 

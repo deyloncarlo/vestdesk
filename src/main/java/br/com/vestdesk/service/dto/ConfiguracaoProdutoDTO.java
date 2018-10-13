@@ -3,7 +3,6 @@ package br.com.vestdesk.service.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
@@ -24,8 +23,6 @@ public class ConfiguracaoProdutoDTO implements Serializable
 	private BigDecimal preco;
 
 	private Long modeloVestuarioId;
-
-	private Set<MaterialTamanhoDTO> listaMaterialTamanhos;
 
 	public Long getId()
 	{
@@ -98,15 +95,5 @@ public class ConfiguracaoProdutoDTO implements Serializable
 	{
 		return "ConfiguracaoProdutoDTO{" + "id=" + getId() + ", tamanho='" + getTamanho() + "'" + ", preco="
 				+ getPreco() + "}";
-	}
-
-	public Set<MaterialTamanhoDTO> getListaMaterialTamanhos()
-	{
-		return this.listaMaterialTamanhos;
-	}
-
-	public void setListaMaterialTamanhos(Set<MaterialTamanhoDTO> listaMaterialTamanhos)
-	{
-		this.listaMaterialTamanhos = listaMaterialTamanhos;
 	}
 }

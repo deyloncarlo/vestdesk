@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
@@ -73,6 +77,10 @@ public class Produto implements Serializable
 	@ManyToMany
 	@JoinTable(name = "produto_lista_cor", joinColumns = @JoinColumn(name = "produtos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "lista_cors_id", referencedColumnName = "id"))
 	private Set<Cor> listaCor = new HashSet<>();
+
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -251,6 +259,16 @@ public class Produto implements Serializable
 	public void setListaMaterial(Set<Cor> litaMaterial)
 	{
 		this.listaMaterial = litaMaterial;
+	}
+
+	public Set<MaterialTamanho> getListaMaterialTamanho()
+	{
+		return this.listaMaterialTamanho;
+	}
+
+	public void setListaMaterialTamanho(Set<MaterialTamanho> listaMaterialTamanho)
+	{
+		this.listaMaterialTamanho = listaMaterialTamanho;
 	}
 
 }

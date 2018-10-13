@@ -97,6 +97,61 @@
         </div>
 
         <div class="form-group">
+            <button type="button" class="btn btn-primary float-right jh-create-entity" (click)="adicionarMaterial()">
+                <span class="fa fa-plus"></span>
+                <span jhiTranslate="vestdeskApp.produto.botaoCriarMaterialTamanho">
+                    Material
+                </span>
+            </button>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.listaMaterialTamanho" for="field_listaMaterial">Lista Material</label>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                <span jhiTranslate="vestdeskApp.materialTamanho.material">Material</span>
+                                <span class="fa fa-sort"></span>
+                            </th>
+                            <th>
+                                <span jhiTranslate="vestdeskApp.materialTamanho.quantidadeMaterial">Quantidade</span>
+                                <span class="fa fa-sort"></span>
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let materialTamanho of produto.listaMaterialTamanhos; index as indice">
+                            <td>
+                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId" required>
+                                    <option [ngValue]="null"></option>
+                                    <option [ngValue]="material.id" *ngFor="let material of listaMateriais;">{{material.nome}}</option>
+                                </select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" name="field_quantidade_material + {{indice}}" id="field_material + {{indice}}" [(ngModel)]="materialTamanho.quantidadeMaterial"/>
+                            </td>
+                            <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="button" (click)="removerMaterialTamanho(indice);" class="btn btn-danger btn-sm">
+                                            <span class="fa fa-remove"></span>
+                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                        </tr>
+                    </tbody> 
+                </table>
+
+                <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group">
             <label jhiTranslate="vestdeskApp.produto.listaCor" for="field_listaCor">Lista Cor</label>
             <select class="form-control" id="field_listaCor" multiple name="listaCor" [(ngModel)]="produto.listaCor">
                 <option [ngValue]="getSelected(produto.listaCor, corOption)" *ngFor="let corOption of cors; trackBy: trackCorById" [ngStyle]="{'background-color': corOption.codigo}">{{corOption.nome}}</option>

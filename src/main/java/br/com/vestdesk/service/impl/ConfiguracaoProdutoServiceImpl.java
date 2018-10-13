@@ -1,6 +1,5 @@
 package br.com.vestdesk.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vestdesk.domain.ConfiguracaoProduto;
-import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.ModeloVestuario;
 import br.com.vestdesk.repository.ConfiguracaoProdutoRepository;
 import br.com.vestdesk.service.ConfiguracaoProdutoService;
@@ -109,43 +107,49 @@ public class ConfiguracaoProdutoServiceImpl implements ConfiguracaoProdutoServic
 	public ConfiguracaoProdutoDTO saveList(Set<ConfiguracaoProduto> listaConfiguracaoProduto,
 			ModeloVestuario modeloVestuario)
 	{
-		for (ConfiguracaoProduto configuracaoProduto : listaConfiguracaoProduto)
-		{
-			configuracaoProduto.setModeloVestuario(modeloVestuario);
-			if (configuracaoProduto.getId() != null)
-			{
-				ConfiguracaoProduto v_configuracaoProdutoEncontrado = this.configuracaoProdutoRepository
-						.findOne(configuracaoProduto.getId());
-
-				Set<MaterialTamanho> listaMaterialTamanhoRemovidos = new HashSet<>();
-
-				for (MaterialTamanho v_materialTamanho : v_configuracaoProdutoEncontrado.getListaMaterialTamanhos())
-				{
-					if (v_materialTamanho.getId() != null
-							&& !configuracaoProduto.getListaMaterialTamanhos().contains(v_materialTamanho))
-					{
-						listaMaterialTamanhoRemovidos.add(v_materialTamanho);
-					}
-				}
-				this.materialTamanhoService.delete(listaMaterialTamanhoRemovidos);
-			}
-			if (configuracaoProduto.getListaMaterialTamanhos() != null)
-			{
-				this.materialTamanhoService.save(configuracaoProduto.getListaMaterialTamanhos(), configuracaoProduto);
-			}
-			this.configuracaoProdutoRepository.save(configuracaoProduto);
-		}
+		// for (ConfiguracaoProduto configuracaoProduto :
+		// listaConfiguracaoProduto)
+		// {
+		// configuracaoProduto.setModeloVestuario(modeloVestuario);
+		// if (configuracaoProduto.getId() != null)
+		// {
+		// ConfiguracaoProduto v_configuracaoProdutoEncontrado =
+		// this.configuracaoProdutoRepository
+		// .findOne(configuracaoProduto.getId());
+		//
+		// Set<MaterialTamanho> listaMaterialTamanhoRemovidos = new HashSet<>();
+		//
+		// for (MaterialTamanho v_materialTamanho :
+		// v_configuracaoProdutoEncontrado.getListaMaterialTamanhos())
+		// {
+		// if (v_materialTamanho.getId() != null
+		// &&
+		// !configuracaoProduto.getListaMaterialTamanhos().contains(v_materialTamanho))
+		// {
+		// listaMaterialTamanhoRemovidos.add(v_materialTamanho);
+		// }
+		// }
+		// this.materialTamanhoService.delete(listaMaterialTamanhoRemovidos);
+		// }
+		// if (configuracaoProduto.getListaMaterialTamanhos() != null)
+		// {
+		// this.materialTamanhoService.save(configuracaoProduto.getListaMaterialTamanhos(),
+		// configuracaoProduto);
+		// }
+		// this.configuracaoProdutoRepository.save(configuracaoProduto);
+		// }
 		return null;
 	}
 
 	@Override
 	public void delete(Set<ConfiguracaoProduto> listaConfiguracaoProduto)
 	{
-		for (ConfiguracaoProduto configuracaoProduto : listaConfiguracaoProduto)
-		{
-			this.materialTamanhoService.delete(configuracaoProduto.getListaMaterialTamanhos());
-			this.configuracaoProdutoRepository.delete(configuracaoProduto);
-		}
+		// for (ConfiguracaoProduto configuracaoProduto :
+		// listaConfiguracaoProduto)
+		// {
+		// this.materialTamanhoService.delete(configuracaoProduto.getListaMaterialTamanhos());
+		// this.configuracaoProdutoRepository.delete(configuracaoProduto);
+		// }
 
 	}
 

@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import br.com.vestdesk.domain.Cor;
+import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
 
@@ -40,6 +41,8 @@ public class ProdutoDTO implements Serializable
 	private Set<Cor> listaMaterial = new HashSet<>();
 
 	private Set<Cor> listaCor = new HashSet<>();
+
+	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
 
 	public Long getId()
 	{
@@ -202,6 +205,16 @@ public class ProdutoDTO implements Serializable
 	public void setListaCor(Set<Cor> listaCor)
 	{
 		this.listaCor = listaCor;
+	}
+
+	public Set<MaterialTamanho> getListaMaterialTamanho()
+	{
+		return this.listaMaterialTamanho;
+	}
+
+	public void setListaMaterialTamanho(Set<MaterialTamanho> listaMaterialTamanho)
+	{
+		this.listaMaterialTamanho = listaMaterialTamanho;
 	}
 
 }

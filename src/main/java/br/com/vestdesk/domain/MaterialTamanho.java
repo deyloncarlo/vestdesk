@@ -32,7 +32,7 @@ public class MaterialTamanho implements Serializable
 	private Float quantidadeMaterial;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	private ConfiguracaoProduto configuracaoProduto;
+	private Produto produto;
 
 	@ManyToOne
 	private Material material;
@@ -63,22 +63,6 @@ public class MaterialTamanho implements Serializable
 	public void setQuantidadeMaterial(Float quantidadeMaterial)
 	{
 		this.quantidadeMaterial = quantidadeMaterial;
-	}
-
-	public ConfiguracaoProduto getConfiguracaoProduto()
-	{
-		return this.configuracaoProduto;
-	}
-
-	public MaterialTamanho configuracaoProduto(ConfiguracaoProduto configuracaoProduto)
-	{
-		this.configuracaoProduto = configuracaoProduto;
-		return this;
-	}
-
-	public void setConfiguracaoProduto(ConfiguracaoProduto configuracaoProduto)
-	{
-		this.configuracaoProduto = configuracaoProduto;
 	}
 
 	public Material getMaterial()
@@ -128,5 +112,15 @@ public class MaterialTamanho implements Serializable
 	public String toString()
 	{
 		return "MaterialTamanho{" + "id=" + getId() + ", quantidadeMaterial=" + getQuantidadeMaterial() + "}";
+	}
+
+	public Produto getProduto()
+	{
+		return this.produto;
+	}
+
+	public void setProduto(Produto produto)
+	{
+		this.produto = produto;
 	}
 }

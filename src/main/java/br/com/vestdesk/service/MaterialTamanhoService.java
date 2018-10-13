@@ -2,18 +2,39 @@ package br.com.vestdesk.service;
 
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import br.com.vestdesk.domain.ConfiguracaoProduto;
 import br.com.vestdesk.domain.MaterialTamanho;
+import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.repository.MaterialTamanhoRepository;
 import br.com.vestdesk.service.dto.MaterialTamanhoDTO;
+import br.com.vestdesk.service.mapper.MaterialTamanhoMapper;
 
 /**
- * Service Interface for managing MaterialTamanho.
+ * Service for managing MaterialTamanho.
  */
-public interface MaterialTamanhoService
+@Service
+@Transactional
+public class MaterialTamanhoService
 {
+
+	private final Logger log = LoggerFactory.getLogger(MaterialTamanhoService.class);
+
+	private final MaterialTamanhoRepository materialTamanhoRepository;
+
+	private final MaterialTamanhoMapper materialTamanhoMapper;
+
+	public MaterialTamanhoService(MaterialTamanhoRepository materialTamanhoRepository,
+			MaterialTamanhoMapper materialTamanhoMapper)
+	{
+		this.materialTamanhoRepository = materialTamanhoRepository;
+		this.materialTamanhoMapper = materialTamanhoMapper;
+	}
 
 	/**
 	 * Save a materialTamanho.
@@ -21,32 +42,51 @@ public interface MaterialTamanhoService
 	 * @param materialTamanhoDTO the entity to save
 	 * @return the persisted entity
 	 */
-	MaterialTamanhoDTO save(MaterialTamanhoDTO materialTamanhoDTO);
+	public MaterialTamanhoDTO save(MaterialTamanhoDTO materialTamanhoDTO)
+	{
+		this.log.debug("Request to save MaterialTamanho : {}", materialTamanhoDTO);
+		MaterialTamanho materialTamanho = this.materialTamanhoMapper.toEntity(materialTamanhoDTO);
+		materialTamanho = this.materialTamanhoRepository.save(materialTamanho);
+		return this.materialTamanhoMapper.toDto(materialTamanho);
+	}
 
-	Set<MaterialTamanho> save(Set<MaterialTamanho> listaMaterialTamanho, ConfiguracaoProduto configuracaoProduto);
+	@Transactional(readOnly = true)
+	public Page<MaterialTamanhoDTO> findAll(Pageable pageable)
+	{
+		this.log.debug("Request to get all MaterialTamanhos");
+		return this.materialTamanhoRepository.findAll(pageable).map(this.materialTamanhoMapper::toDto);
+	}
 
-	/**
-	 * Get all the materialTamanhos.
-	 *
-	 * @param pageable the pagination information
-	 * @return the list of entities
-	 */
-	Page<MaterialTamanhoDTO> findAll(Pageable pageable);
+	@Transactional(readOnly = true)
+	public MaterialTamanhoDTO findOne(Long id)
+	{
+		this.log.debug("Request to get MaterialTamanho : {}", id);
+		MaterialTamanho materialTamanho = this.materialTamanhoRepository.findOne(id);
+		return this.materialTamanhoMapper.toDto(materialTamanho);
+	}
 
-	/**
-	 * Get the "id" materialTamanho.
-	 *
-	 * @param id the id of the entity
-	 * @return the entity
-	 */
-	MaterialTamanhoDTO findOne(Long id);
+	public void delete(Long id)
+	{
+		this.log.debug("Request to delete MaterialTamanho : {}", id);
+		this.materialTamanhoRepository.delete(id);
+	}
 
-	/**
-	 * Delete the "id" materialTamanho.
-	 *
-	 * @param id the id of the entity
-	 */
-	void delete(Long id);
+	public Set<MaterialTamanho> save(Set<MaterialTamanho> listaMaterialTamanho, Produto p_produto)
+	{
+		for (MaterialTamanho materialTamanho : listaMaterialTamanho)
+		{
+			materialTamanho.setProduto(p_produto);
+			this.materialTamanhoRepository.save(materialTamanho);
+		}
+		return listaMaterialTamanho;
+	}
 
-	void delete(Set<MaterialTamanho> lsitaMaterialTamanho);
+	public void delete(Set<MaterialTamanho> lsitaMaterialTamanho)
+	{
+		for (MaterialTamanho materialTamanho : lsitaMaterialTamanho)
+		{
+			this.materialTamanhoRepository.delete(materialTamanho);
+		}
+	}
+
 }

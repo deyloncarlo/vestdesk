@@ -10,6 +10,7 @@ import { Produto } from './produto.model';
 import { ProdutoPopupService } from './produto-popup.service';
 import { ProdutoService } from './produto.service';
 import { Cor, CorService } from '../cor';
+import { MaterialService, Material } from '../material';
 
 @Component({
     selector: 'jhi-produto-dialog',
@@ -20,6 +21,7 @@ export class ProdutoDialogComponent implements OnInit {
     produto: Produto;
     isSaving: boolean;
     cors: Cor[];
+    listaMateriais: Material[];
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -27,6 +29,7 @@ export class ProdutoDialogComponent implements OnInit {
         private produtoService: ProdutoService,
         private corService: CorService,
         private eventManager: JhiEventManager,
+        private materialService: MaterialService
     ) {
     }
 
@@ -34,6 +37,12 @@ export class ProdutoDialogComponent implements OnInit {
         this.isSaving = false;
         this.corService.query()
             .subscribe((res: HttpResponse<Cor[]>) => { this.cors = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+
+        this.materialService.query()
+            .subscribe((res: HttpResponse<Material[]>) => {
+                this.listaMateriais = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     clear() {
