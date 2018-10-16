@@ -29,8 +29,7 @@ public class Cor implements Serializable
 	@Column(name = "nome")
 	private String nome;
 
-	@NotNull
-	@Column(name = "codigo", nullable = false, length = 15)
+	@Column(name = "codigo", length = 15)
 	private String codigo;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not

@@ -11,6 +11,7 @@ import { ProdutoPopupService } from './produto-popup.service';
 import { ProdutoService } from './produto.service';
 import { Cor, CorService } from '../cor';
 import { MaterialService, Material } from '../material';
+import { MaterialTamanho } from '../material-tamanho';
 
 @Component({
     selector: 'jhi-produto-dialog',
@@ -58,6 +59,17 @@ export class ProdutoDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.produtoService.create(this.produto));
         }
+    }
+
+    adicionarMaterial() {
+        if (!this.produto.listaMaterialTamanho) {
+            this.produto.listaMaterialTamanho = new Array<MaterialTamanho>();
+        }
+        this.produto.listaMaterialTamanho.push(new MaterialTamanho());
+    }
+
+    removerMaterialTamanho(p_indice) {
+        this.produto.listaMaterialTamanho.splice(p_indice, 1);
     }
 
     changedModeloVestuario(modeloVestuario) {

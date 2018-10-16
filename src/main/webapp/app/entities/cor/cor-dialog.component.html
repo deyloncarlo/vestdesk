@@ -23,7 +23,7 @@
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.cor.codigo" for="field_codigo">Cor</label>
-            <div class="colorPicker-field" [(colorPicker)]="cor.codigo" [style.background]="cor.codigo" [cpAlphaChannel]="'disabled'" required>
+            <div class="colorPicker-field" [(colorPicker)]="cor.codigo" [style.background]="cor.codigo" [cpAlphaChannel]="'disabled'">
                 <div [hidden]="!(editForm.controls.codigo?.dirty && editForm.controls.codigo?.invalid)">
                     <small class="form-text text-danger" [hidden]="!editForm.controls.codigo?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.

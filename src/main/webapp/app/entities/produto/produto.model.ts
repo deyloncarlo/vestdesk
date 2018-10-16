@@ -4,6 +4,7 @@ import { Tamanho } from '../configuracao-produto';
 import { Modelo } from '../modelo-vestuario';
 import { Material } from '../material';
 import { Cor } from '../cor';
+import { MaterialTamanho } from '../material-tamanho';
 
 export class Produto implements BaseEntity {
     constructor(
@@ -19,6 +20,7 @@ export class Produto implements BaseEntity {
         public modelo?: Modelo,
         public quantidadeEstoque?: number,
         public listaMaterial?: Material[],
+        public listaMaterialTamanho?: MaterialTamanho[],
         public listaCor?: Cor[]
     ) {
     }

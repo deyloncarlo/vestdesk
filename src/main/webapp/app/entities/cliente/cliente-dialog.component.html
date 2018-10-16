@@ -28,6 +28,13 @@
             <input type="text" class="form-control" name="endereco" id="field_endereco"
                 [(ngModel)]="cliente.endereco" />
         </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.cliente.cpf" for="field_cpf">CPF</label>
+            <input type="text" class="form-control" name="cpf" id="field_cpf"
+                [(ngModel)]="cliente.cpf" />
+        </div>
+
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.cliente.telefone" for="field_telefone">Telefone</label>
             <input type="text" class="form-control" name="telefone" id="field_telefone"

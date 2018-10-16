@@ -1,106 +1,132 @@
 package br.com.vestdesk.service.dto;
 
-
-import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * A DTO for the Cliente entity.
  */
-public class ClienteDTO implements Serializable {
+public class ClienteDTO implements Serializable
+{
 
-    private Long id;
+	private Long id;
 
-    @NotNull
-    private String nome;
+	@NotNull
+	private String nome;
 
-    private String endereco;
+	private String endereco;
 
-    private String telefone;
+	private String cpf;
 
-    private String observacao;
+	private String telefone;
 
-    private String email;
+	private String observacao;
 
-    public Long getId() {
-        return id;
-    }
+	private String email;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome()
+	{
+		return this.nome;
+	}
 
-    public String getEndereco() {
-        return endereco;
-    }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+	public String getEndereco()
+	{
+		return this.endereco;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setEndereco(String endereco)
+	{
+		this.endereco = endereco;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public String getTelefone()
+	{
+		return this.telefone;
+	}
 
-    public String getObservacao() {
-        return observacao;
-    }
+	public void setTelefone(String telefone)
+	{
+		this.telefone = telefone;
+	}
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
+	public String getObservacao()
+	{
+		return this.observacao;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setObservacao(String observacao)
+	{
+		this.observacao = observacao;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail()
+	{
+		return this.email;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
 
-        ClienteDTO clienteDTO = (ClienteDTO) o;
-        if(clienteDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), clienteDTO.getId());
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		ClienteDTO clienteDTO = (ClienteDTO) o;
+		if (clienteDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), clienteDTO.getId());
+	}
 
-    @Override
-    public String toString() {
-        return "ClienteDTO{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
-            ", endereco='" + getEndereco() + "'" +
-            ", telefone='" + getTelefone() + "'" +
-            ", observacao='" + getObservacao() + "'" +
-            ", email='" + getEmail() + "'" +
-            "}";
-    }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ClienteDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", endereco='" + getEndereco() + "'"
+				+ ", telefone='" + getTelefone() + "'" + ", observacao='" + getObservacao() + "'" + ", email='"
+				+ getEmail() + "'" + "}";
+	}
+
+	public String getCpf()
+	{
+		return this.cpf;
+	}
+
+	public void setCpf(String cpf)
+	{
+		this.cpf = cpf;
+	}
 }

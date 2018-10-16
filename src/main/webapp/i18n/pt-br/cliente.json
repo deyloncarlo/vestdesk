@@ -20,7 +20,8 @@
             "endereco": "Endereço",
             "telefone": "Telefone",
             "observacao": "Observação",
-            "email": "E-mail"
+            "email": "E-mail",
+            "cpf": "CPF"
         }
     }
 }

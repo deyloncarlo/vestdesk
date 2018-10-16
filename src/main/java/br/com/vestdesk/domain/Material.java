@@ -2,22 +2,16 @@ package br.com.vestdesk.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.vestdesk.domain.enumeration.UnidadeMedida;
 
@@ -52,10 +46,6 @@ public class Material implements Serializable
 
 	@Column(name = "quantidade_minima")
 	private Float quantidadeMinima;
-
-	@OneToMany(mappedBy = "material", cascade = CascadeType.ALL)
-	@JsonIgnore
-	private Set<MaterialTamanho> listaMaterialTamanhos = new HashSet<>();
 
 	@NotNull
 	@Column(name = "unidadeMedida")
@@ -140,35 +130,6 @@ public class Material implements Serializable
 		this.quantidadeMinima = quantidadeMinima;
 	}
 
-	public Set<MaterialTamanho> getListaMaterialTamanhos()
-	{
-		return this.listaMaterialTamanhos;
-	}
-
-	public Material listaMaterialTamanhos(Set<MaterialTamanho> materialTamanhos)
-	{
-		this.listaMaterialTamanhos = materialTamanhos;
-		return this;
-	}
-
-	public Material addListaMaterialTamanho(MaterialTamanho materialTamanho)
-	{
-		this.listaMaterialTamanhos.add(materialTamanho);
-		materialTamanho.setMaterial(this);
-		return this;
-	}
-
-	public Material removeListaMaterialTamanho(MaterialTamanho materialTamanho)
-	{
-		this.listaMaterialTamanhos.remove(materialTamanho);
-		materialTamanho.setMaterial(null);
-		return this;
-	}
-
-	public void setListaMaterialTamanhos(Set<MaterialTamanho> materialTamanhos)
-	{
-		this.listaMaterialTamanhos = materialTamanhos;
-	}
 	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
 	// and setters here, do not remove
 

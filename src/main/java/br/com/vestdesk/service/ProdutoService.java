@@ -1,5 +1,8 @@
 package br.com.vestdesk.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -7,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.Produto;
 import br.com.vestdesk.repository.ProdutoRepository;
 import br.com.vestdesk.service.dto.ProdutoDTO;
@@ -26,10 +30,14 @@ public class ProdutoService
 
 	private final ProdutoMapper produtoMapper;
 
-	public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper)
+	private final MaterialTamanhoService materialTamanhoService;
+
+	public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper,
+			MaterialTamanhoService materialTamanhoService)
 	{
 		this.produtoRepository = produtoRepository;
 		this.produtoMapper = produtoMapper;
+		this.materialTamanhoService = materialTamanhoService;
 	}
 
 	/**
@@ -42,8 +50,27 @@ public class ProdutoService
 	{
 		this.log.debug("Request to save Produto : {}", produtoDTO);
 		Produto produto = this.produtoMapper.toEntity(produtoDTO);
+		Set<MaterialTamanho> listaMaterialTamanho = produto.getListaMaterialTamanho();
+
+		if (produto.getId() != null)
+		{
+			Set<MaterialTamanho> listaMaterialTamanhoRemovidos = new HashSet<>();
+			Produto produtoEncontrado = getById(produto.getId());
+			for (MaterialTamanho materialTamanho : produtoEncontrado.getListaMaterialTamanho())
+			{
+				if (!produto.getListaMaterialTamanho().contains(materialTamanho))
+				{
+					listaMaterialTamanhoRemovidos.add(materialTamanho);
+				}
+			}
+			this.materialTamanhoService.delete(listaMaterialTamanhoRemovidos);
+		}
+
 		produto = this.produtoRepository.save(produto);
+
+		this.materialTamanhoService.save(listaMaterialTamanho, produto);
 		return this.produtoMapper.toDto(produto);
+
 	}
 
 	/**
@@ -71,6 +98,14 @@ public class ProdutoService
 		this.log.debug("Request to get Produto : {}", id);
 		Produto produto = this.produtoRepository.findOneWithEagerRelationships(id);
 		return this.produtoMapper.toDto(produto);
+	}
+
+	@Transactional(readOnly = true)
+	public Produto getById(Long id)
+	{
+		this.log.debug("Request to get Produto : {}", id);
+		Produto produto = this.produtoRepository.findOneWithEagerRelationships(id);
+		return produto;
 	}
 
 	/**

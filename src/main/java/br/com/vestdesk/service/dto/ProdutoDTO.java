@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import br.com.vestdesk.domain.Cor;
-import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
 
@@ -38,11 +36,9 @@ public class ProdutoDTO implements Serializable
 
 	private Integer quantidadeEstoque;
 
-	private Set<Cor> listaMaterial = new HashSet<>();
+	private Set<CorDTO> listaCor = new HashSet<>();
 
-	private Set<Cor> listaCor = new HashSet<>();
-
-	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
+	private Set<MaterialTamanhoDTO> listaMaterialTamanho = new HashSet<>();
 
 	public Long getId()
 	{
@@ -187,32 +183,22 @@ public class ProdutoDTO implements Serializable
 		this.modelo = modelo;
 	}
 
-	public Set<Cor> getListaMaterial()
-	{
-		return this.listaMaterial;
-	}
-
-	public void setListaMaterial(Set<Cor> listaMaterial)
-	{
-		this.listaMaterial = listaMaterial;
-	}
-
-	public Set<Cor> getListaCor()
+	public Set<CorDTO> getListaCor()
 	{
 		return this.listaCor;
 	}
 
-	public void setListaCor(Set<Cor> listaCor)
+	public void setListaCor(Set<CorDTO> listaCor)
 	{
 		this.listaCor = listaCor;
 	}
 
-	public Set<MaterialTamanho> getListaMaterialTamanho()
+	public Set<MaterialTamanhoDTO> getListaMaterialTamanho()
 	{
 		return this.listaMaterialTamanho;
 	}
 
-	public void setListaMaterialTamanho(Set<MaterialTamanho> listaMaterialTamanho)
+	public void setListaMaterialTamanho(Set<MaterialTamanhoDTO> listaMaterialTamanho)
 	{
 		this.listaMaterialTamanho = listaMaterialTamanho;
 	}

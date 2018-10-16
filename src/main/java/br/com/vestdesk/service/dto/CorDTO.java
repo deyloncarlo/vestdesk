@@ -14,7 +14,6 @@ public class CorDTO implements Serializable
 	@NotNull
 	private String nome;
 
-	@NotNull
 	private String codigo;
 
 	protected Long id;

@@ -1,145 +1,183 @@
 package br.com.vestdesk.domain;
 
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * A Cliente.
  */
 @Entity
 @Table(name = "cliente")
-public class Cliente implements Serializable {
+public class Cliente implements Serializable
+{
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @NotNull
-    @Column(name = "nome", nullable = false)
-    private String nome;
+	@NotNull
+	@Column(name = "nome", nullable = false)
+	private String nome;
 
-    @Column(name = "endereco")
-    private String endereco;
+	@Column(name = "endereco")
+	private String endereco;
 
-    @Column(name = "telefone")
-    private String telefone;
+	@Column(name = "cpf")
+	private String cpf;
 
-    @Column(name = "observacao")
-    private String observacao;
+	@Column(name = "telefone")
+	private String telefone;
 
-    @Column(name = "email")
-    private String email;
+	@Column(name = "observacao")
+	private String observacao;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	@Column(name = "email")
+	private String email;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
+	// remove
+	public Long getId()
+	{
+		return this.id;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    public Cliente nome(String nome) {
-        this.nome = nome;
-        return this;
-    }
+	public String getNome()
+	{
+		return this.nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public Cliente nome(String nome)
+	{
+		this.nome = nome;
+		return this;
+	}
 
-    public String getEndereco() {
-        return endereco;
-    }
+	public void setNome(String nome)
+	{
+		this.nome = nome;
+	}
 
-    public Cliente endereco(String endereco) {
-        this.endereco = endereco;
-        return this;
-    }
+	public String getEndereco()
+	{
+		return this.endereco;
+	}
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+	public Cliente endereco(String endereco)
+	{
+		this.endereco = endereco;
+		return this;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public void setEndereco(String endereco)
+	{
+		this.endereco = endereco;
+	}
 
-    public Cliente telefone(String telefone) {
-        this.telefone = telefone;
-        return this;
-    }
+	public String getTelefone()
+	{
+		return this.telefone;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public Cliente telefone(String telefone)
+	{
+		this.telefone = telefone;
+		return this;
+	}
 
-    public String getObservacao() {
-        return observacao;
-    }
+	public void setTelefone(String telefone)
+	{
+		this.telefone = telefone;
+	}
 
-    public Cliente observacao(String observacao) {
-        this.observacao = observacao;
-        return this;
-    }
+	public String getObservacao()
+	{
+		return this.observacao;
+	}
 
-    public void setObservacao(String observacao) {
-        this.observacao = observacao;
-    }
+	public Cliente observacao(String observacao)
+	{
+		this.observacao = observacao;
+		return this;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setObservacao(String observacao)
+	{
+		this.observacao = observacao;
+	}
 
-    public Cliente email(String email) {
-        this.email = email;
-        return this;
-    }
+	public String getEmail()
+	{
+		return this.email;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+	public Cliente email(String email)
+	{
+		this.email = email;
+		return this;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Cliente cliente = (Cliente) o;
-        if (cliente.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), cliente.getId());
-    }
+	public void setEmail(String email)
+	{
+		this.email = email;
+	}
+	// jhipster-needle-entity-add-getters-setters - JHipster will add getters
+	// and setters here, do not remove
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
+		Cliente cliente = (Cliente) o;
+		if (cliente.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), cliente.getId());
+	}
 
-    @Override
-    public String toString() {
-        return "Cliente{" +
-            "id=" + getId() +
-            ", nome='" + getNome() + "'" +
-            ", endereco='" + getEndereco() + "'" +
-            ", telefone='" + getTelefone() + "'" +
-            ", observacao='" + getObservacao() + "'" +
-            ", email='" + getEmail() + "'" +
-            "}";
-    }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString()
+	{
+		return "Cliente{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", endereco='" + getEndereco() + "'"
+				+ ", telefone='" + getTelefone() + "'" + ", observacao='" + getObservacao() + "'" + ", email='"
+				+ getEmail() + "'" + "}";
+	}
+
+	public String getCpf()
+	{
+		return this.cpf;
+	}
+
+	public void setCpf(String cpf)
+	{
+		this.cpf = cpf;
+	}
 }

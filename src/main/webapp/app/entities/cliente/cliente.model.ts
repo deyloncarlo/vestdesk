@@ -5,6 +5,7 @@ export class Cliente implements BaseEntity {
         public id?: number,
         public nome?: string,
         public endereco?: string,
+        public cpf?: string,
         public telefone?: string,
         public observacao?: string,
         public email?: string,

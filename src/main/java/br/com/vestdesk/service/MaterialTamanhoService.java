@@ -50,6 +50,12 @@ public class MaterialTamanhoService
 		return this.materialTamanhoMapper.toDto(materialTamanho);
 	}
 
+	public MaterialTamanho save(MaterialTamanho materialTamanho)
+	{
+		return this.materialTamanhoRepository.save(materialTamanho);
+
+	}
+
 	@Transactional(readOnly = true)
 	public Page<MaterialTamanhoDTO> findAll(Pageable pageable)
 	{
@@ -69,6 +75,11 @@ public class MaterialTamanhoService
 	{
 		this.log.debug("Request to delete MaterialTamanho : {}", id);
 		this.materialTamanhoRepository.delete(id);
+	}
+
+	public void delete(MaterialTamanho materialTamanho)
+	{
+		this.materialTamanhoRepository.delete(materialTamanho);
 	}
 
 	public Set<MaterialTamanho> save(Set<MaterialTamanho> listaMaterialTamanho, Produto p_produto)
