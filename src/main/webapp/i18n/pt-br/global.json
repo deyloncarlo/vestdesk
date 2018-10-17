@@ -21,6 +21,7 @@
                 "materialTamanho": "Material Tamanho",
                 "cor": "Cor",
                 "usuario": "Usuario",
+                "pedidoItem": "Pedido Item",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

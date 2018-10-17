@@ -2,7 +2,9 @@ package br.com.vestdesk.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -69,6 +72,9 @@ public class Pedido implements Serializable
 
 	@ManyToOne
 	private Cliente cliente;
+
+	@OneToMany
+	private Set<PedidoItem> listaPedidoItem = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -259,5 +265,15 @@ public class Pedido implements Serializable
 	public void setNomeResponsavel(String nomeResponsavel)
 	{
 		this.nomeResponsavel = nomeResponsavel;
+	}
+
+	public Set<PedidoItem> getListaPedidoItem()
+	{
+		return this.listaPedidoItem;
+	}
+
+	public void setListaPedidoItem(Set<PedidoItem> listaPedidoItem)
+	{
+		this.listaPedidoItem = listaPedidoItem;
 	}
 }

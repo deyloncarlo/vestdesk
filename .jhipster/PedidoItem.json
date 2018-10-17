@@ -1,0 +1,16 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nomeRoupa",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20181017211955",
+    "entityTableName": "pedido_item",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false
+}

@@ -1,0 +1,22 @@
+
+{
+    "vestdeskApp": {
+        "pedidoItem" : {
+            "home": {
+                "title": "Pedido Items",
+                "createLabel": "Create a new Pedido Item",
+                "createOrEditLabel": "Create or edit a Pedido Item"
+            },
+            "created": "A new Pedido Item is created with identifier {{ param }}",
+            "updated": "A Pedido Item is updated with identifier {{ param }}",
+            "deleted": "A Pedido Item is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Pedido Item {{ id }}?"
+            },
+            "detail": {
+                "title": "Pedido Item"
+            },
+            "nomeRoupa": "Nome Roupa"
+        }
+    }
+}

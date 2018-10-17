@@ -1,5 +1,6 @@
 import { BaseEntity } from './../../shared';
 import { Cliente } from '../cliente';
+import { PedidoItem } from '../pedido-item';
 
 export const enum TipoPedido {
     'PRODUCAO',
@@ -22,7 +23,8 @@ export class Pedido implements BaseEntity {
         public tipoEstampaMangaEsquerda?: TipoEstampa,
         public dataCriacao?: any,
         public cliente?: Cliente,
-        public nomeResponsavel?: string
+        public nomeResponsavel?: string,
+        public listaPedidoItem?: PedidoItem[]
     ) {
     }
 }

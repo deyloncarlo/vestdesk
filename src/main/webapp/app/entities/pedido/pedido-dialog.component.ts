@@ -13,6 +13,7 @@ import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente'
 import { Modelo } from '../modelo-vestuario';
 import { Tamanho } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
+import { PedidoItem } from '../pedido-item';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -86,7 +87,8 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     inserir() {
-        
+        let pedidoItem = new PedidoItem();
+        this.pedido.listaPedidoItem.push();
     }
 
     selecionarCliente() {
