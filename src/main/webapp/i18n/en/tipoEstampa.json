@@ -1,0 +1,9 @@
+{
+    "vestdeskApp": {
+        "TipoEstampa" : {
+            "null": "",
+            "BORDADO": "BORDADO",
+            "SILK": "SILK"
+        }
+    }
+}

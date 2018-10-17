@@ -1,0 +1,74 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myClienteLabel" jhiTranslate="vestdeskApp.cliente.home.pesquisar"></h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            (click)="clear()">&times;</button>
+</div>
+<div class="container">
+    <h2>
+        <button class="btn btn-primary float-right jh-create-entity create-cliente" [routerLink]="['/', { outlets: { popup: ['cliente-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="vestdeskApp.cliente.home.createLabel">
+            Create new Cliente
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-3">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" name="nome" [(ngModel)]="nome">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button class="btn btn-primary" (click)="filtrar()">Pesquisar</button>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="clientes" style="height: 400px;">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.cliente.nome">Nome</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="endereco"><span jhiTranslate="vestdeskApp.cliente.endereco">Endereco</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="telefone"><span jhiTranslate="vestdeskApp.cliente.telefone">Telefone</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="observacao"><span jhiTranslate="vestdeskApp.cliente.observacao">Observacao</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span jhiTranslate="vestdeskApp.cliente.email">Email</span> <span class="fa fa-sort"></span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let cliente of clientes ;trackBy: trackId" (click) = "selecionar(cliente)">
+                <td>{{cliente.nome}}</td>
+                <td>{{cliente.endereco}}</td>
+                <td>{{cliente.telefone}}</td>
+                <td>{{cliente.observacao}}</td>
+                <td>{{cliente.email}}</td>
+                <!-- <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'cliente/'+ cliente.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'cliente/'+ cliente.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td> -->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

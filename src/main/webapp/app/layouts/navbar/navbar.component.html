@@ -83,6 +83,13 @@
                             <span jhiTranslate="global.menu.entities.produto">Produto</span>
                         </a>
                     </li>
+
+                    <li>
+                        <a class="dropdown-item" routerLink="pedido" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.pedido">Pedido</span>
+                        </a>
+                    </li>
                     <!-- <li>
                         <a class="dropdown-item" routerLink="adiantamento" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>

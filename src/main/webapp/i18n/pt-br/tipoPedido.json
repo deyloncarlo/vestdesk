@@ -1,0 +1,9 @@
+{
+    "vestdeskApp": {
+        "TipoPedido" : {
+            "null": "",
+            "PRODUCAO": "PRODUCAO",
+            "VENDA": "VENDA"
+        }
+    }
+}

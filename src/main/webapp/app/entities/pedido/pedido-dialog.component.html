@@ -1,0 +1,101 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <!-- <div class="form-group" [hidden]="!pedido.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="pedido.id" readonly />
+        </div> -->
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" disabled/>
+                </div>
+                <button class="btn btn-primary col-md-2" (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nome" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome" [(ngModel)]="pedido.nome" required/>
+            <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido</label>
+            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" required>
+                <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
+                <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.tipoPedido?.dirty && editForm.controls.tipoPedido?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.tipoPedido?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-3">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaFrente" for="field_tipoEstampaFrente">Tipo Estampa Frente</label>
+                <select class="form-control" name="tipoEstampaFrente" [(ngModel)]="pedido.tipoEstampaFrente" id="field_tipoEstampaFrente">
+                    <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
+                    <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaCosta" for="field_tipoEstampaCosta">Tipo Estampa Costa</label>
+                <select class="form-control" name="tipoEstampaCosta" [(ngModel)]="pedido.tipoEstampaCosta" id="field_tipoEstampaCosta">
+                    <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
+                    <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaDireita" for="field_tipoEstampaMangaDireita">Tipo Estampa Manga Direita</label>
+                <select class="form-control" name="tipoEstampaMangaDireita" [(ngModel)]="pedido.tipoEstampaMangaDireita" id="field_tipoEstampaMangaDireita">
+                    <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
+                    <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaEsquerda" for="field_tipoEstampaMangaEsquerda">Tipo Estampa Manga Esquerda</label>
+                <select class="form-control" name="tipoEstampaMangaEsquerda" [(ngModel)]="pedido.tipoEstampaMangaEsquerda" id="field_tipoEstampaMangaEsquerda">
+                    <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
+                    <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataCriacao" for="field_dataCriacao">Data Criacao</label>
+            <div class="input-group">
+                <input id="field_dataCriacao" type="text" class="form-control" name="dataCriacao" ngbDatepicker #dataCriacaoDp="ngbDatepicker"
+                    [(ngModel)]="pedido.dataCriacao" />
+                <span class="input-group-append">
+                    <button type="button" class="btn btn-secondary" (click)="dataCriacaoDp.toggle()">
+                        <i class="fa fa-calendar"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

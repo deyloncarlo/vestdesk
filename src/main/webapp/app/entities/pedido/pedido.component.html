@@ -1,0 +1,70 @@
+<div>
+    <h2>
+        <span jhiTranslate="vestdeskApp.pedido.home.title">Pedidos</span>
+        <button class="btn btn-primary float-right jh-create-entity create-pedido" [routerLink]="['/', { outlets: { popup: ['pedido-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="vestdeskApp.pedido.home.createLabel">
+            Create new Pedido
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="pedidos">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="nome"><span jhiTranslate="vestdeskApp.pedido.nome">Nome</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tipoPedido"><span jhiTranslate="vestdeskApp.pedido.tipoPedido">Tipo Pedido</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tipoEstampaFrente"><span jhiTranslate="vestdeskApp.pedido.tipoEstampaFrente">Tipo Estampa Frente</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tipoEstampaCosta"><span jhiTranslate="vestdeskApp.pedido.tipoEstampaCosta">Tipo Estampa Costa</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tipoEstampaMangaDireita"><span jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaDireita">Tipo Estampa Manga Direita</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="tipoEstampaMangaEsquerda"><span jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaEsquerda">Tipo Estampa Manga Esquerda</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="dataCriacao"><span jhiTranslate="vestdeskApp.pedido.dataCriacao">Data Criacao</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tr *ngFor="let pedido of pedidos ;trackBy: trackId">
+                <td><a [routerLink]="['../pedido', pedido.id ]">{{pedido.id}}</a></td>
+                <td>{{pedido.nome}}</td>
+                <td jhiTranslate="{{'vestdeskApp.TipoPedido.' + pedido.tipoPedido}}">{{pedido.tipoPedido}}</td>
+                <td jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaFrente}}">{{pedido.tipoEstampaFrente}}</td>
+                <td jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaCosta}}">{{pedido.tipoEstampaCosta}}</td>
+                <td jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaMangaDireita}}">{{pedido.tipoEstampaMangaDireita}}</td>
+                <td jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaMangaEsquerda}}">{{pedido.tipoEstampaMangaEsquerda}}</td>
+                <td>{{pedido.dataCriacao | date:'mediumDate'}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../pedido', pedido.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

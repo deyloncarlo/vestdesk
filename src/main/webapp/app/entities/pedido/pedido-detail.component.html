@@ -1,0 +1,50 @@
+
+<div *ngIf="pedido">
+    <h2><span jhiTranslate="vestdeskApp.pedido.detail.title">Pedido</span> {{pedido.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="vestdeskApp.pedido.nome">Nome</span></dt>
+        <dd>
+            <span>{{pedido.nome}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.tipoPedido">Tipo Pedido</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.TipoPedido.' + pedido.tipoPedido}}">{{pedido.tipoPedido}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.tipoEstampaFrente">Tipo Estampa Frente</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaFrente}}">{{pedido.tipoEstampaFrente}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.tipoEstampaCosta">Tipo Estampa Costa</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaCosta}}">{{pedido.tipoEstampaCosta}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaDireita">Tipo Estampa Manga Direita</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaMangaDireita}}">{{pedido.tipoEstampaMangaDireita}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaEsquerda">Tipo Estampa Manga Esquerda</span></dt>
+        <dd>
+            <span jhiTranslate="{{'vestdeskApp.TipoEstampa.' + pedido.tipoEstampaMangaEsquerda}}">{{pedido.tipoEstampaMangaEsquerda}}</span>
+        </dd>
+        <dt><span jhiTranslate="vestdeskApp.pedido.dataCriacao">Data Criacao</span></dt>
+        <dd>
+            <span>{{pedido.dataCriacao | date:'mediumDate'}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/edit'} }]"
+            replaceUrl="true"
+            queryParamsHandling="merge"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

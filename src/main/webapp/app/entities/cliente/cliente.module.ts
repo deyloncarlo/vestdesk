@@ -13,6 +13,7 @@ import {
     ClienteDeleteDialogComponent,
     clienteRoute,
     clientePopupRoute,
+    ClienteInputComponent
 } from './';
 
 const ENTITY_STATES = [
@@ -32,6 +33,7 @@ const ENTITY_STATES = [
         ClienteDeleteDialogComponent,
         ClientePopupComponent,
         ClienteDeletePopupComponent,
+        ClienteInputComponent
     ],
     entryComponents: [
         ClienteComponent,
@@ -39,6 +41,7 @@ const ENTITY_STATES = [
         ClientePopupComponent,
         ClienteDeleteDialogComponent,
         ClienteDeletePopupComponent,
+        ClienteInputComponent
     ],
     providers: [
         ClienteService,

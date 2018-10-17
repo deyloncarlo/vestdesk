@@ -1,0 +1,51 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "nome",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tipoPedido",
+            "fieldType": "TipoPedido",
+            "fieldValues": "PRODUCAO,VENDA",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "tipoEstampaFrente",
+            "fieldType": "TipoEstampa",
+            "fieldValues": "BORDADO,SILK"
+        },
+        {
+            "fieldName": "tipoEstampaCosta",
+            "fieldType": "TipoEstampa",
+            "fieldValues": "BORDADO,SILK"
+        },
+        {
+            "fieldName": "tipoEstampaMangaDireita",
+            "fieldType": "TipoEstampa",
+            "fieldValues": "BORDADO,SILK"
+        },
+        {
+            "fieldName": "tipoEstampaMangaEsquerda",
+            "fieldType": "TipoEstampa",
+            "fieldValues": "BORDADO,SILK"
+        },
+        {
+            "fieldName": "dataCriacao",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20181016161104",
+    "entityTableName": "pedido",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false
+}

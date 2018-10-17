@@ -5,7 +5,8 @@
             "home": {
                 "title": "Cliente",
                 "createLabel": "Criar novo Cliente",
-                "createOrEditLabel": "Criar ou editar Cliente"
+                "createOrEditLabel": "Criar ou editar Cliente",
+                "pesquisar": "Pesquisar Cliente"
             },
             "created": "Um novo Cliente foi criado com o identificador {{ param }}",
             "updated": "Um Cliente foi atualizado com o identificador {{ param }}",

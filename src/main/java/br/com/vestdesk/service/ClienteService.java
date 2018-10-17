@@ -1,8 +1,14 @@
 package br.com.vestdesk.service;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +32,13 @@ public class ClienteService
 
 	private final ClienteMapper clienteMapper;
 
-	public ClienteService(ClienteRepository clienteRepository, ClienteMapper clienteMapper)
+	private EntityManager em;
+
+	public ClienteService(ClienteRepository clienteRepository, ClienteMapper clienteMapper, EntityManager em)
 	{
 		this.clienteRepository = clienteRepository;
 		this.clienteMapper = clienteMapper;
+		this.em = em;
 	}
 
 	/**
@@ -50,13 +59,22 @@ public class ClienteService
 	 * Get all the clientes.
 	 *
 	 * @param pageable the pagination information
+	 * @param nome
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<ClienteDTO> findAll(Pageable pageable)
+	public Page<ClienteDTO> findAll(Pageable pageable, String nome)
 	{
+
+		Query query = this.em.createQuery("SELECT cliente FROM Cliente cliente WHERE nome LIKE :nomeCliente");
+		query.setParameter("nomeCliente", "%" + nome + "%");
+
+		List<Cliente> listaCliente = query.getResultList();
+		Page<Cliente> page = new PageImpl<>(listaCliente, pageable, listaCliente.size());
+
 		this.log.debug("Request to get all Clientes");
-		return this.clienteRepository.findAll(pageable).map(this.clienteMapper::toDto);
+		return page.map(this.clienteMapper::toDto);
+		// this.clienteRepository.findAll(pageable, ).map();
 	}
 
 	/**

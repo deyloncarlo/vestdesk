@@ -1,0 +1,27 @@
+
+entity Pedido {
+	nome String required,
+    tipoPedido TipoPedido required,
+	tipoEstampaFrente TipoEstampa,
+    tipoEstampaCosta TipoEstampa,
+	tipoEstampaMangaDireita TipoEstampa,
+	tipoEstampaMangaEsquerda TipoEstampa,
+    dataCriacao LocalDate
+}
+
+enum TipoPedido {
+	PRODUCAO, VENDA
+}
+
+enum TipoEstampa
+{
+	BORDADO, SILK
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+
+dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl

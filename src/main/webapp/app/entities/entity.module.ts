@@ -14,6 +14,7 @@ import { VestdeskConfiguracaoProdutoModule } from './configuracao-produto/config
 import { VestdeskMaterialTamanhoModule } from './material-tamanho/material-tamanho.module';
 import { VestdeskCorModule } from './cor/cor.module';
 import { VestdeskUsuarioModule } from './usuario/usuario.module';
+import { VestdeskPedidoModule } from './pedido/pedido.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -32,6 +33,7 @@ import { VestdeskUsuarioModule } from './usuario/usuario.module';
         VestdeskMaterialTamanhoModule,
         VestdeskCorModule,
         VestdeskUsuarioModule,
+        VestdeskPedidoModule
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],
