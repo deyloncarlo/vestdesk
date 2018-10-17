@@ -4,13 +4,15 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Pedido } from './pedido.model';
 import { PedidoPopupService } from './pedido-popup.service';
 import { PedidoService } from './pedido.service';
 import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente';
 import { Modelo } from '../modelo-vestuario';
+import { Tamanho } from '../configuracao-produto';
+import { Cor, CorService } from '../cor';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -25,17 +27,24 @@ export class PedidoDialogComponent implements OnInit {
     nomeRoupa: string;
     telefone: string;
     modelo: Modelo;
+    tamanho: Tamanho;
+    listaCor: Cor[];
+    cor: Cor;
 
     constructor(
         public activeModal: NgbActiveModal,
         private pedidoService: PedidoService,
         private eventManager: JhiEventManager,
-        private clientePopupService: ClientePopupService
+        private clientePopupService: ClientePopupService,
+        private corService: CorService,
+        private jhiAlertService: JhiAlertService
     ) {
     }
 
     ngOnInit() {
         this.isSaving = false;
+        this.corService.query()
+            .subscribe((res: HttpResponse<Cor[]>) => { this.listaCor = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
         if (this.pedido.cliente == null) {
             this.pedido.cliente = new Cliente();
         }
@@ -57,6 +66,10 @@ export class PedidoDialogComponent implements OnInit {
         }
     }
 
+    private onError(error: any) {
+        this.jhiAlertService.error(error.message, null, null);
+    }
+
     private subscribeToSaveResponse(result: Observable<HttpResponse<Pedido>>) {
         result.subscribe((res: HttpResponse<Pedido>) =>
             this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
@@ -72,10 +85,14 @@ export class PedidoDialogComponent implements OnInit {
         this.isSaving = false;
     }
 
+    inserir() {
+        
+    }
+
     selecionarCliente() {
         this.clientePopupService.open(ClienteInputComponent as Component)
-            .then( (resolve) => {
-                resolve.result.then( (cliente) => {
+            .then((resolve) => {
+                resolve.result.then((cliente) => {
                     if (cliente != null) {
                         this.pedido.cliente = cliente;
                     }

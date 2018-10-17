@@ -31,12 +31,12 @@
         </div>
 
         <div class="form-group">
-                <label class="form-control-label" jhiTranslate="vestdeskApp.material.cor" for="field_cor">Cor</label>
-                <select class="form-control" id="field_cor" name="cor" [(ngModel)]="material.cor.id" required>
-                    <option [ngValue]="null"></option>
-                    <option [ngValue]="cor.id" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
-                </select>
-            </div>
+            <label class="form-control-label" jhiTranslate="vestdeskApp.material.cor" for="field_cor">Cor</label>
+            <select class="form-control" id="field_cor" name="cor" [(ngModel)]="material.cor.id" required>
+                <option [ngValue]="null"></option>
+                <option [ngValue]="cor.id" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.material.unidadeMedida" for="field_unidadeMedida">Unidade Medida</label>

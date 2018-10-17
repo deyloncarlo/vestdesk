@@ -23,7 +23,12 @@
             "tipoEstampaCosta": "Costa",
             "tipoEstampaMangaDireita": "Manga Direita",
             "tipoEstampaMangaEsquerda": "Manga Esquerda",
-            "dataCriacao": "Data Criacao"
+            "dataCriacao": "Data Criacao",
+            "nomeRoupa": "Nome na Roupa",
+            "telefone": "telefone",
+            "modelo": "Modelo",
+            "tamanho": "Tamanho",
+            "cor": "Cor"
             
         }
     }
