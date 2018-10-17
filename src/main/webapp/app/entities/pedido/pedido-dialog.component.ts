@@ -10,6 +10,7 @@ import { Pedido } from './pedido.model';
 import { PedidoPopupService } from './pedido-popup.service';
 import { PedidoService } from './pedido.service';
 import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente';
+import { Modelo } from '../modelo-vestuario';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -20,6 +21,10 @@ export class PedidoDialogComponent implements OnInit {
     pedido: Pedido;
     isSaving: boolean;
     dataCriacaoDp: any;
+
+    nomeRoupa: string;
+    telefone: string;
+    modelo: Modelo;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -67,17 +72,15 @@ export class PedidoDialogComponent implements OnInit {
         this.isSaving = false;
     }
 
-    selecionarCliente(cliente) {
-        let promise = this.clientePopupService.open(ClienteInputComponent as Component);
-        promise.then(
-            resolve => {
-                resolve.result.then(cliente => {
+    selecionarCliente() {
+        this.clientePopupService.open(ClienteInputComponent as Component)
+            .then( (resolve) => {
+                resolve.result.then( (cliente) => {
                     if (cliente != null) {
                         this.pedido.cliente = cliente;
                     }
                 });
-            }
-        );
+            });
     }
 }
 

@@ -17,12 +17,14 @@
                 "title": "Pedido"
             },
             "nome": "Nome",
+            "nomeResponsavel": "Nome Responsável",
             "tipoPedido": "Tipo Pedido",
             "tipoEstampaFrente": "Frente",
             "tipoEstampaCosta": "Costa",
             "tipoEstampaMangaDireita": "Manga Direita",
             "tipoEstampaMangaEsquerda": "Manga Esquerda",
             "dataCriacao": "Data Criacao"
+            
         }
     }
 }

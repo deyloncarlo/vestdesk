@@ -21,7 +21,8 @@ export class Pedido implements BaseEntity {
         public tipoEstampaMangaDireita?: TipoEstampa,
         public tipoEstampaMangaEsquerda?: TipoEstampa,
         public dataCriacao?: any,
-        public cliente?: Cliente
+        public cliente?: Cliente,
+        public nomeResponsavel?: string
     ) {
     }
 }

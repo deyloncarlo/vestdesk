@@ -66,6 +66,10 @@ public class ClienteService
 	public Page<ClienteDTO> findAll(Pageable pageable, String nome)
 	{
 
+		if (nome == null)
+		{
+			nome = "";
+		}
 		Query query = this.em.createQuery("SELECT cliente FROM Cliente cliente WHERE nome LIKE :nomeCliente");
 		query.setParameter("nomeCliente", "%" + nome + "%");
 

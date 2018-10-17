@@ -44,6 +44,9 @@ public class Produto implements Serializable
 	@Column(name = "descricao")
 	private String descricao;
 
+	@Column(name = "nome_roupa")
+	private String nomeRoupa;
+
 	@Column(name = "quantidadeInicial")
 	private Integer quantidadeInicial;
 

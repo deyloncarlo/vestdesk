@@ -37,6 +37,10 @@ public class Pedido implements Serializable
 	private String nome;
 
 	@NotNull
+	@Column(name = "nome_responsavel", nullable = false)
+	private String nomeResponsavel;
+
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_pedido", nullable = false)
 	private TipoPedido tipoPedido;
@@ -245,5 +249,15 @@ public class Pedido implements Serializable
 	public void setCliente(Cliente cliente)
 	{
 		this.cliente = cliente;
+	}
+
+	public String getNomeResponsavel()
+	{
+		return this.nomeResponsavel;
+	}
+
+	public void setNomeResponsavel(String nomeResponsavel)
+	{
+		this.nomeResponsavel = nomeResponsavel;
 	}
 }
