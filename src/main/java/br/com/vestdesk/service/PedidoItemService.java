@@ -80,14 +80,26 @@ public class PedidoItemService
 	{
 		for (PedidoItem pedidoItem : listaPedidoItem)
 		{
-			Modelo modelo = pedidoItem.getProduto().getModelo();
-			Tamanho tamanho = pedidoItem.getProduto().getTamanho();
-			Set<Cor> listaCor = pedidoItem.getProduto().getListaCor();
-			Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, listaCor);
-			produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - 1);
-			pedidoItem.setProduto(produtoEncontrado);
+			if (pedidoItem.getProduto().getId() == null)
+			{
+				Modelo modelo = pedidoItem.getProduto().getModelo();
+				Tamanho tamanho = pedidoItem.getProduto().getTamanho();
+				Set<Cor> listaCor = pedidoItem.getProduto().getListaCor();
+				Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, listaCor);
+				produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - 1);
+				pedidoItem.setProduto(produtoEncontrado);
+			}
 			pedidoItem.setPedido(pedido);
 			this.pedidoItemRepository.save(pedidoItem);
 		}
+	}
+
+	public void delete(Set<PedidoItem> listaPedidoItemRemovido)
+	{
+		for (PedidoItem pedidoItem : listaPedidoItemRemovido)
+		{
+			this.pedidoItemRepository.delete(pedidoItem);
+		}
+
 	}
 }

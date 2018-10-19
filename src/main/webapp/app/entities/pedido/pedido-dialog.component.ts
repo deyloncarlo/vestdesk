@@ -103,13 +103,13 @@ export class PedidoDialogComponent implements OnInit {
         }
         const pedidoItem = new PedidoItem();
         pedidoItem.telefone = this.telefone;
+        pedidoItem.nomeRoupa = this.nomeRoupa;
         pedidoItem.produto = this.criarProduto();
         this.pedido.listaPedidoItem.push(pedidoItem);
     }
 
     criarProduto() {
         const produto = new Produto();
-        produto.nomeRoupa = this.nomeRoupa;
         produto.tamanho = this.tamanho;
         produto.modelo = this.modelo;
         produto.listaCor = new Array<Produto>();

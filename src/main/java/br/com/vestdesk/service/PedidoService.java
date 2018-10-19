@@ -53,6 +53,21 @@ public class PedidoService
 		Pedido pedido = this.pedidoMapper.toEntity(pedidoDTO);
 		Set<PedidoItem> listaPedidoItem = new HashSet<>(pedido.getListaPedidoItem());
 
+		if (pedido.getId() != null)
+		{
+			Set<PedidoItem> listaPedidoItemRemovido = new HashSet<>();
+			Pedido pedidoEncontrado = this.pedidoRepository.findOne(pedido.getId());
+			for (PedidoItem pedidoItem : pedidoEncontrado.getListaPedidoItem())
+			{
+				if (!listaPedidoItem.contains(pedidoItem))
+				{
+					listaPedidoItemRemovido.add(pedidoItem);
+				}
+			}
+
+			this.pedidoItemService.delete(listaPedidoItemRemovido);
+		}
+
 		pedido = this.pedidoRepository.save(pedido);
 
 		this.pedidoItemService.save(listaPedidoItem, pedido);

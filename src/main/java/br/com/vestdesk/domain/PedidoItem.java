@@ -25,6 +25,9 @@ public class PedidoItem implements Serializable
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "nome_roupa")
+	private String nomeRoupa;
+
 	@Column
 	private String telefone;
 
@@ -108,5 +111,15 @@ public class PedidoItem implements Serializable
 	public void setTelefone(String telefone)
 	{
 		this.telefone = telefone;
+	}
+
+	public String getNomeRoupa()
+	{
+		return this.nomeRoupa;
+	}
+
+	public void setNomeRoupa(String nomeRoupa)
+	{
+		this.nomeRoupa = nomeRoupa;
 	}
 }
