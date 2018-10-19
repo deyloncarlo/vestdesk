@@ -14,47 +14,42 @@
         <ngb-tabset>
             <ngb-tab title="Pedido">
                 <ng-template ngbTabContent>
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
-                        <div class="row">
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" disabled/>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" disabled/>
+                                </div>
+                                <button type="button" class="btn btn-primary col-md-2" (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
                             </div>
-                            <button class="btn btn-primary col-md-2" (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nome" for="field_nome">Nome</label>
-                        <input type="text" class="form-control" name="nome" id="field_nome" [(ngModel)]="pedido.nome" required disabled/>
-                        <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
-                            <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
-                                This field is required.
-                            </small>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeResponsavel" for="field_nomeResonsavel">Nome Responsável</label>
+                            <input type="text" class="form-control" name="nomeResponsavel" id="field_nomeResonsavel" [(ngModel)]="pedido.nomeResponsavel"
+                                required/>
+                            <div [hidden]="!(editForm.controls.nomeResponsavel?.dirty && editForm.controls.nomeResponsavel?.invalid)">
+                                <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeResponsavel" for="field_nomeResonsavel">Nome Responsável</label>
-                        <input type="text" class="form-control" name="nomeResponsavel" id="field_nomeResonsavel" [(ngModel)]="pedido.nomeResponsavel"
-                            required/>
-                        <div [hidden]="!(editForm.controls.nomeResponsavel?.dirty && editForm.controls.nomeResponsavel?.invalid)">
-                            <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
-                                This field is required.
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido</label>
-                        <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" required>
-                            <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
-                            <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
-                        </select>
-                        <div [hidden]="!(editForm.controls.tipoPedido?.dirty && editForm.controls.tipoPedido?.invalid)">
-                            <small class="form-text text-danger" [hidden]="!editForm.controls.tipoPedido?.errors?.required" jhiTranslate="entity.validation.required">
-                                This field is required.
-                            </small>
+                        <div class="col-md-6">
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido</label>
+                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" required>
+                                <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
+                                <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
+                            </select>
+                            <div [hidden]="!(editForm.controls.tipoPedido?.dirty && editForm.controls.tipoPedido?.invalid)">
+                                <small class="form-text text-danger" [hidden]="!editForm.controls.tipoPedido?.errors?.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -86,47 +81,126 @@
                                 <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
                                 <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
                             </select>
+
                         </div>
+
+                        <div class="col-md-4">
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataPrevisao" for="field_dataPrevisao">Data Previsão</label>
+                            <div class="input-group">
+                                <input id="field_dataPrevisao" type="date" class="form-control" name="dataPrevisao"
+                                    [(ngModel)]="pedido.dataPrevisao" />
+                                <!-- <span class="input-group-append">
+                                    <button type="button" class="btn btn-secondary" (click)="dataPrevisaoDp.toggle()">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span> -->
+                            </div>
+                        </div>
+
                     </div>
                 </ng-template>
             </ngb-tab>
             <ngb-tab title="Produtos">
                 <ng-template ngbTabContent>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa" for="field_nomeRoupa">Nome Roupa</label>
-                            <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa" required/>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone" for="field_telefone">Nome Roupa</label>
-                            <input type="text" class="form-control" name="telefone" id="field_telefone" [(ngModel)]="telefone" />
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo" for="field_modelo">Modelo</label>
-                            <select class="form-control" name="modelo" [(ngModel)]="modelo" id="field_modelo" required>
-                                <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
-                                <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
-                                <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho" for="field_tamanho">Tamanho</label>
-                            <select class="form-control" name="tamanho" [(ngModel)]="tamanho" id="field_tamanho" required>
-                                <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
-                                <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
-                                <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor" for="field_cor">Cor</label>
-                            <select class="form-control" id="field_cor" name="cor" [(ngModel)]="cor" required>
-                                <option [ngValue]="null"></option>
-                                <option [ngValue]="cor.id" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
-                            </select>
-                        </div>
+                    <div class="container">
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                                <button class="btn btn-primary" (click)="inserir()">Pesquisar</button>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa" for="field_nomeRoupa">Nome Roupa</label>
+                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa" required/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone" for="field_telefone">Nome Roupa</label>
+                                        <input type="text" class="form-control" name="telefone" id="field_telefone" [(ngModel)]="telefone" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo" for="field_modelo">Modelo</label>
+                                        <select class="form-control" name="modelo" [(ngModel)]="modelo" id="field_modelo" required>
+                                            <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
+                                            <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
+                                            <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho" for="field_tamanho">Tamanho</label>
+                                        <select class="form-control" name="tamanho" [(ngModel)]="tamanho" id="field_tamanho" required>
+                                            <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
+                                            <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
+                                            <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor" for="field_cor">Cor</label>
+                                        <select class="form-control" id="field_cor" name="cor" [(ngModel)]="cor" required>
+                                            <option [ngValue]="null"></option>
+                                            <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button type="button" class="btn btn-primary" (click)="inserir()">Inserir</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
+                                        </th>
+                                        <th>
+                                            <span jhiTranslate="vestdeskApp.pedidoItem.telefone">Telefone</span>
+                                        </th>
+                                        <th>
+                                            <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
+                                        </th>
+                                        <th>
+                                            <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
+                                        </th>
+                                        <th>
+                                            <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let pedidoItem of pedido.listaPedidoItem; index as indice">
+                                        <td>
+                                            {{pedidoItem.produto.nomeRoupa}}
+                                        </td>
+                                        <td>
+                                            {{pedidoItem.telefone}}
+                                        </td>
+                                        <td>
+                                            {{pedidoItem.produto.tamanho}}
+                                        </td>
+                                        <td>
+                                            {{pedidoItem.produto.modelo}}
+                                        </td>
+                                        <td>
+                                            {{pedidoItem.produto.listaCor[0].nome}}
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="button" (click)="removerPedidoItem(indice);" class="btn btn-danger btn-sm">
+                                                    <span class="fa fa-remove"></span>
+                                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">
+                                <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required" jhiTranslate="entity.validation.required">
+                                    This field is required.
+                                </small>
                             </div>
                         </div>
                     </div>

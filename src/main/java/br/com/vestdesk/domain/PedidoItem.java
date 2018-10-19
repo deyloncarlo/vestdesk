@@ -3,12 +3,12 @@ package br.com.vestdesk.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +25,10 @@ public class PedidoItem implements Serializable
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToOne
+	@Column
+	private String telefone;
+
+	@ManyToOne
 	private Produto produto;
 
 	@ManyToOne
@@ -95,5 +98,15 @@ public class PedidoItem implements Serializable
 	public void setPedido(Pedido pedido)
 	{
 		this.pedido = pedido;
+	}
+
+	public String getTelefone()
+	{
+		return this.telefone;
+	}
+
+	public void setTelefone(String telefone)
+	{
+		this.telefone = telefone;
 	}
 }

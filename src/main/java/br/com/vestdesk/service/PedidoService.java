@@ -1,5 +1,8 @@
 package br.com.vestdesk.service;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -8,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vestdesk.domain.Pedido;
+import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.repository.PedidoRepository;
 import br.com.vestdesk.service.dto.PedidoDTO;
 import br.com.vestdesk.service.mapper.PedidoMapper;
@@ -27,10 +31,14 @@ public class PedidoService
 
 	private final PedidoMapper pedidoMapper;
 
-	public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper)
+	private final PedidoItemService pedidoItemService;
+
+	public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper,
+			PedidoItemService pedidoItemService)
 	{
 		this.pedidoRepository = pedidoRepository;
 		this.pedidoMapper = pedidoMapper;
+		this.pedidoItemService = pedidoItemService;
 	}
 
 	/**
@@ -43,7 +51,11 @@ public class PedidoService
 	{
 		this.log.debug("Request to save Pedido : {}", pedidoDTO);
 		Pedido pedido = this.pedidoMapper.toEntity(pedidoDTO);
+		Set<PedidoItem> listaPedidoItem = new HashSet<>(pedido.getListaPedidoItem());
+
 		pedido = this.pedidoRepository.save(pedido);
+
+		this.pedidoItemService.save(listaPedidoItem, pedido);
 		return this.pedidoMapper.toDto(pedido);
 	}
 

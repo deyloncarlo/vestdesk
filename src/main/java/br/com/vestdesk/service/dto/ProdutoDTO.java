@@ -1,6 +1,7 @@
 package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -39,6 +40,8 @@ public class ProdutoDTO implements Serializable
 	private Set<CorDTO> listaCor = new HashSet<>();
 
 	private Set<MaterialTamanhoDTO> listaMaterialTamanho = new HashSet<>();
+
+	private BigDecimal preco;
 
 	public Long getId()
 	{
@@ -201,6 +204,16 @@ public class ProdutoDTO implements Serializable
 	public void setListaMaterialTamanho(Set<MaterialTamanhoDTO> listaMaterialTamanho)
 	{
 		this.listaMaterialTamanho = listaMaterialTamanho;
+	}
+
+	public BigDecimal getPreco()
+	{
+		return this.preco;
+	}
+
+	public void setPreco(BigDecimal preco)
+	{
+		this.preco = preco;
 	}
 
 }

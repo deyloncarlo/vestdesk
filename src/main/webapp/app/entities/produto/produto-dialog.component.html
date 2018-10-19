@@ -55,6 +55,20 @@
         </div>
 
         <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.produto.preco" for="field_preco">Preço</label>
+            <input type="number" class="form-control" name="preco" id="field_preco" [(ngModel)]="produto.preco"
+                required/>
+            <div [hidden]="!(editForm.controls.preco?.dirty && editForm.controls.preco?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+                <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
+                    This field should be a number.
+                </small>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
             <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
                 required/>
@@ -122,24 +136,26 @@
                     <tbody>
                         <tr *ngFor="let materialTamanho of produto.listaMaterialTamanho; index as indice">
                             <td>
-                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId" required>
+                                <select class="form-control" id="field_material + {{indice}}" name="field_material + {{indice}}" [(ngModel)]="materialTamanho.materialId"
+                                    required>
                                     <option [ngValue]="null"></option>
                                     <option [ngValue]="material.id" *ngFor="let material of listaMateriais;">{{material.nome}}</option>
                                 </select>
                             </td>
                             <td>
-                                <input type="number" class="form-control" name="field_quantidade_material + {{indice}}" id="field_material + {{indice}}" [(ngModel)]="materialTamanho.quantidadeMaterial"/>
+                                <input type="number" class="form-control" name="field_quantidade_material + {{indice}}" id="field_material + {{indice}}"
+                                    [(ngModel)]="materialTamanho.quantidadeMaterial" />
                             </td>
                             <td class="text-right">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="button" (click)="removerMaterialTamanho(indice);" class="btn btn-danger btn-sm">
-                                            <span class="fa fa-remove"></span>
-                                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
-                                        </button>
-                                    </div>
-                                </td>
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="button" (click)="removerMaterialTamanho(indice);" class="btn btn-danger btn-sm">
+                                        <span class="fa fa-remove"></span>
+                                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
-                    </tbody> 
+                    </tbody>
                 </table>
 
                 <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">

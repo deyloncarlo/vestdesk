@@ -1,6 +1,7 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -83,6 +84,10 @@ public class Produto implements Serializable
 	@OneToMany(mappedBy = "produto")
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
+
+	@NotNull
+	@Column(name = "preco", precision = 10, scale = 2, nullable = false)
+	private BigDecimal preco;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -271,6 +276,26 @@ public class Produto implements Serializable
 	public void setListaMaterialTamanho(Set<MaterialTamanho> listaMaterialTamanho)
 	{
 		this.listaMaterialTamanho = listaMaterialTamanho;
+	}
+
+	public String getNomeRoupa()
+	{
+		return this.nomeRoupa;
+	}
+
+	public void setNomeRoupa(String nomeRoupa)
+	{
+		this.nomeRoupa = nomeRoupa;
+	}
+
+	public BigDecimal getPreco()
+	{
+		return this.preco;
+	}
+
+	public void setPreco(BigDecimal preco)
+	{
+		this.preco = preco;
 	}
 
 }

@@ -28,7 +28,8 @@
             "modeloVestuario": "Modelo Vestuário",
             "quantidadeMinima": "Quantidade Mínima",
             "botaoCriarMaterialTamanho": "Adicionar Material",
-            "listaMaterialTamanho": "Lista de Materiais"
+            "listaMaterialTamanho": "Lista de Materiais",
+            "preco": "Preço"
         }
     }
 }

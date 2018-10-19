@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,10 +35,6 @@ public class Pedido implements Serializable
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	@NotNull
-	@Column(name = "nome", nullable = false)
-	private String nome;
 
 	@NotNull
 	@Column(name = "nome_responsavel", nullable = false)
@@ -73,8 +70,17 @@ public class Pedido implements Serializable
 	@ManyToOne
 	private Cliente cliente;
 
-	@OneToMany
+	@OneToMany(mappedBy = "pedido", fetch = FetchType.LAZY)
 	private Set<PedidoItem> listaPedidoItem = new HashSet<>();
+
+	@Column(name = "data_previsao")
+	private LocalDate dataPrevisao;
+
+	@Column(name = "data_conclusao")
+	private LocalDate dataConclusao;
+
+	@Column(name = "data_fim")
+	private LocalDate dataFim;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -86,22 +92,6 @@ public class Pedido implements Serializable
 	public void setId(Long id)
 	{
 		this.id = id;
-	}
-
-	public String getNome()
-	{
-		return this.nome;
-	}
-
-	public Pedido nome(String nome)
-	{
-		this.nome = nome;
-		return this;
-	}
-
-	public void setNome(String nome)
-	{
-		this.nome = nome;
 	}
 
 	public TipoPedido getTipoPedido()
@@ -230,11 +220,10 @@ public class Pedido implements Serializable
 	@Override
 	public String toString()
 	{
-		return "Pedido{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", tipoPedido='" + getTipoPedido() + "'"
-				+ ", tipoEstampaFrente='" + getTipoEstampaFrente() + "'" + ", tipoEstampaCosta='"
-				+ getTipoEstampaCosta() + "'" + ", tipoEstampaMangaDireita='" + getTipoEstampaMangaDireita() + "'"
-				+ ", tipoEstampaMangaEsquerda='" + getTipoEstampaMangaEsquerda() + "'" + ", dataCriacao='"
-				+ getDataCriacao() + "'" + "}";
+		return "Pedido{" + "id=" + getId() + "'" + ", tipoPedido='" + getTipoPedido() + "'" + ", tipoEstampaFrente='"
+				+ getTipoEstampaFrente() + "'" + ", tipoEstampaCosta='" + getTipoEstampaCosta() + "'"
+				+ ", tipoEstampaMangaDireita='" + getTipoEstampaMangaDireita() + "'" + ", tipoEstampaMangaEsquerda='"
+				+ getTipoEstampaMangaEsquerda() + "'" + ", dataCriacao='" + getDataCriacao() + "'" + "}";
 	}
 
 	public User getVendedor()
@@ -275,5 +264,35 @@ public class Pedido implements Serializable
 	public void setListaPedidoItem(Set<PedidoItem> listaPedidoItem)
 	{
 		this.listaPedidoItem = listaPedidoItem;
+	}
+
+	public LocalDate getDataPrevisao()
+	{
+		return this.dataPrevisao;
+	}
+
+	public void setDataPrevisao(LocalDate dataPrevisao)
+	{
+		this.dataPrevisao = dataPrevisao;
+	}
+
+	public LocalDate getDataConclusao()
+	{
+		return this.dataConclusao;
+	}
+
+	public void setDataConclusao(LocalDate dataConclusao)
+	{
+		this.dataConclusao = dataConclusao;
+	}
+
+	public LocalDate getDataFim()
+	{
+		return this.dataFim;
+	}
+
+	public void setDataFim(LocalDate dataFim)
+	{
+		this.dataFim = dataFim;
 	}
 }

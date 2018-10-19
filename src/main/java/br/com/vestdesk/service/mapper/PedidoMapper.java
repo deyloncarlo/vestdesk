@@ -4,16 +4,21 @@ import org.mapstruct.Mapper;
 
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.service.dto.PedidoDTO;
+import br.com.vestdesk.service.dto.PedidoMinDTO;
 
 /**
  * Mapper for the entity Pedido and its DTO PedidoDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = { PedidoItemMapper.class })
 public interface PedidoMapper
 {
 	Pedido toEntity(PedidoDTO pedidoDTO);
 
+	Pedido toEntity(PedidoMinDTO pedido);
+
 	PedidoDTO toDto(Pedido pedido);
+
+	PedidoMinDTO toMinDto(Pedido pedido);
 
 	default Pedido fromId(Long id)
 	{

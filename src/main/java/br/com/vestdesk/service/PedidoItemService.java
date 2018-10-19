@@ -1,10 +1,19 @@
 package br.com.vestdesk.service;
 
+import java.util.Set;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.vestdesk.domain.Cor;
+import br.com.vestdesk.domain.Pedido;
+import br.com.vestdesk.domain.PedidoItem;
+import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.domain.enumeration.Tamanho;
+import br.com.vestdesk.repository.PedidoItemRepository;
 import br.com.vestdesk.service.dto.PedidoItemDTO;
 
 /**
@@ -14,6 +23,16 @@ import br.com.vestdesk.service.dto.PedidoItemDTO;
 @Transactional
 public class PedidoItemService
 {
+
+	private final PedidoItemRepository pedidoItemRepository;
+
+	private final ProdutoService produtoService;
+
+	public PedidoItemService(PedidoItemRepository pedidoItemRepository, ProdutoService produtoService)
+	{
+		this.pedidoItemRepository = pedidoItemRepository;
+		this.produtoService = produtoService;
+	}
 
 	/**
 	 * Save a pedidoItem.
@@ -55,5 +74,20 @@ public class PedidoItemService
 	 */
 	public void delete(Long id)
 	{
+	}
+
+	public void save(Set<PedidoItem> listaPedidoItem, Pedido pedido)
+	{
+		for (PedidoItem pedidoItem : listaPedidoItem)
+		{
+			Modelo modelo = pedidoItem.getProduto().getModelo();
+			Tamanho tamanho = pedidoItem.getProduto().getTamanho();
+			Set<Cor> listaCor = pedidoItem.getProduto().getListaCor();
+			Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, listaCor);
+			produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - 1);
+			pedidoItem.setProduto(produtoEncontrado);
+			pedidoItem.setPedido(pedido);
+			this.pedidoItemRepository.save(pedidoItem);
+		}
 	}
 }

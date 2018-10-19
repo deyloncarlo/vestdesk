@@ -28,7 +28,9 @@
             "telefone": "telefone",
             "modelo": "Modelo",
             "tamanho": "Tamanho",
-            "cor": "Cor"
+            "cor": "Cor",
+            "cliente": "Cliente",
+            "dataPrevisao": "Data Previsão"
             
         }
     }

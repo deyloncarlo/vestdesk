@@ -3,6 +3,9 @@ package br.com.vestdesk.service;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -10,8 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.vestdesk.domain.Cor;
 import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.domain.enumeration.Tamanho;
 import br.com.vestdesk.repository.ProdutoRepository;
 import br.com.vestdesk.service.dto.ProdutoDTO;
 import br.com.vestdesk.service.mapper.ProdutoMapper;
@@ -32,12 +38,15 @@ public class ProdutoService
 
 	private final MaterialTamanhoService materialTamanhoService;
 
+	private EntityManager em;
+
 	public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper,
-			MaterialTamanhoService materialTamanhoService)
+			MaterialTamanhoService materialTamanhoService, EntityManager em)
 	{
 		this.produtoRepository = produtoRepository;
 		this.produtoMapper = produtoMapper;
 		this.materialTamanhoService = materialTamanhoService;
+		this.em = em;
 	}
 
 	/**
@@ -117,5 +126,40 @@ public class ProdutoService
 	{
 		this.log.debug("Request to delete Produto : {}", id);
 		this.produtoRepository.delete(id);
+	}
+
+	public Produto save(Produto produto)
+	{
+		Set<MaterialTamanho> listaMaterialTamanho = produto.getListaMaterialTamanho();
+
+		if (produto.getId() != null)
+		{
+			Set<MaterialTamanho> listaMaterialTamanhoRemovidos = new HashSet<>();
+			Produto produtoEncontrado = getById(produto.getId());
+			for (MaterialTamanho materialTamanho : produtoEncontrado.getListaMaterialTamanho())
+			{
+				if (!produto.getListaMaterialTamanho().contains(materialTamanho))
+				{
+					listaMaterialTamanhoRemovidos.add(materialTamanho);
+				}
+			}
+			this.materialTamanhoService.delete(listaMaterialTamanhoRemovidos);
+		}
+
+		produto = this.produtoRepository.save(produto);
+
+		this.materialTamanhoService.save(listaMaterialTamanho, produto);
+		return produto;
+	}
+
+	public Produto obterPeloModeloTamanhoCor(Modelo modelo, Tamanho tamanho, Set<Cor> listaCor)
+	{
+		Query query = this.em.createQuery(
+				"SELECT produto FROM Produto produto WHERE modelo = :modeloProduto and tamanho = :tamanhoProduto");
+		query.setParameter("modeloProduto", modelo);
+		query.setParameter("tamanhoProduto", tamanho);
+		// query.setParameter("listaCorProduto", listaCor);
+		Produto produto = (Produto) query.getSingleResult();
+		return produto;
 	}
 }

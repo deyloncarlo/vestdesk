@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { Pedido } from './pedido.model';
@@ -14,6 +14,12 @@ import { Modelo } from '../modelo-vestuario';
 import { Tamanho } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
 import { PedidoItem } from '../pedido-item';
+import { Produto } from '../produto';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDateStructAdapter } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-adapter';
+import { NgbDatepickerService } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
+import { NgbDatepickerDayView, NgbDatepickerConfig } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker.module';
+import { NgbDate } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -38,7 +44,8 @@ export class PedidoDialogComponent implements OnInit {
         private eventManager: JhiEventManager,
         private clientePopupService: ClientePopupService,
         private corService: CorService,
-        private jhiAlertService: JhiAlertService
+        private jhiAlertService: JhiAlertService,
+        private calendar: NgbCalendar
     ) {
     }
 
@@ -49,6 +56,7 @@ export class PedidoDialogComponent implements OnInit {
         if (this.pedido.cliente == null) {
             this.pedido.cliente = new Cliente();
         }
+        // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
 
     }
 
@@ -58,6 +66,9 @@ export class PedidoDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        debugger
+        
+
         if (this.pedido.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.pedidoService.update(this.pedido));
@@ -87,8 +98,24 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     inserir() {
-        let pedidoItem = new PedidoItem();
-        this.pedido.listaPedidoItem.push();
+        if (!this.pedido.listaPedidoItem) {
+            this.pedido.listaPedidoItem = new Array<PedidoItem>();
+        }
+        const pedidoItem = new PedidoItem();
+        pedidoItem.telefone = this.telefone;
+        pedidoItem.produto = this.criarProduto();
+        this.pedido.listaPedidoItem.push(pedidoItem);
+    }
+
+    criarProduto() {
+        const produto = new Produto();
+        produto.nomeRoupa = this.nomeRoupa;
+        produto.tamanho = this.tamanho;
+        produto.modelo = this.modelo;
+        produto.listaCor = new Array<Produto>();
+        produto.listaCor.push(this.cor);
+        produto.listaCor[0].nome
+        return produto;
     }
 
     selecionarCliente() {
@@ -100,6 +127,10 @@ export class PedidoDialogComponent implements OnInit {
                     }
                 });
             });
+    }
+
+    removerPedidoItem(indice) {
+        this.pedido.listaPedidoItem.splice(indice, 1);
     }
 }
 

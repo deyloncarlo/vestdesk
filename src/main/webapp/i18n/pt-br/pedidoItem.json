@@ -16,7 +16,11 @@
             "detail": {
                 "title": "Pedido Item"
             },
-            "nomeRoupa": "Nome Roupa"
+            "nomeRoupa": "Nome Roupa",
+            "telefone": "Telefone",
+            "tamanho": "Tamanho",
+            "modelo": "Modelo",
+            "cor": "Cor"
         }
     }
 }

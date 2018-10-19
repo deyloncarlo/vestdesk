@@ -24,7 +24,8 @@ export class Pedido implements BaseEntity {
         public dataCriacao?: any,
         public cliente?: Cliente,
         public nomeResponsavel?: string,
-        public listaPedidoItem?: PedidoItem[]
+        public listaPedidoItem?: PedidoItem[],
+        public dataPrevisao?: Date
     ) {
     }
 }
