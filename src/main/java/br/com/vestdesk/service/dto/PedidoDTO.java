@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import br.com.vestdesk.domain.User;
+import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.TipoEstampa;
 import br.com.vestdesk.domain.enumeration.TipoPedido;
 
@@ -43,6 +44,8 @@ public class PedidoDTO implements Serializable
 	private LocalDate dataConclusao;
 
 	private LocalDate dataFim;
+
+	private StatusPedido statusPedido;
 
 	public Long getId()
 	{
@@ -217,5 +220,15 @@ public class PedidoDTO implements Serializable
 	public void setListaPedidoItem(Set<PedidoItemDTO> listaPedidoItem)
 	{
 		this.listaPedidoItem = listaPedidoItem;
+	}
+
+	public StatusPedido getStatusPedido()
+	{
+		return this.statusPedido;
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido)
+	{
+		this.statusPedido = statusPedido;
 	}
 }

@@ -30,7 +30,8 @@
             "tamanho": "Tamanho",
             "cor": "Cor",
             "cliente": "Cliente",
-            "dataPrevisao": "Data Previsão"
+            "dataPrevisao": "Data Previsão",
+            "statusPedido": "Status Pedido"
             
         }
     }

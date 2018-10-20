@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.TipoEstampa;
 import br.com.vestdesk.domain.enumeration.TipoPedido;
 
@@ -81,6 +82,9 @@ public class Pedido implements Serializable
 
 	@Column(name = "data_fim")
 	private LocalDate dataFim;
+
+	@Column(name = "status_pedido")
+	private StatusPedido statusPedido;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -294,5 +298,15 @@ public class Pedido implements Serializable
 	public void setDataFim(LocalDate dataFim)
 	{
 		this.dataFim = dataFim;
+	}
+
+	public StatusPedido getStatusPedido()
+	{
+		return this.statusPedido;
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido)
+	{
+		this.statusPedido = statusPedido;
 	}
 }

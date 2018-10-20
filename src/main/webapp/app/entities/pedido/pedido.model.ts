@@ -3,8 +3,8 @@ import { Cliente } from '../cliente';
 import { PedidoItem } from '../pedido-item';
 
 export const enum TipoPedido {
-    'PRODUCAO',
-    'VENDA'
+    'PRODUCAO' = 'PRODUCAO',
+    'VENDA' = 'VENDA'
 }
 
 export const enum TipoEstampa {
@@ -12,6 +12,12 @@ export const enum TipoEstampa {
     'SILK'
 }
 
+export const enum StatusPedido
+{
+    'CONCLUIDO' = 'CONCLUIDO' ,
+    'FINALIZADO' = 'FINALIZADO', 
+    'RASCUNHO' = 'RASCUNHO'
+}
 export class Pedido implements BaseEntity {
     constructor(
         public id?: number,
@@ -25,7 +31,8 @@ export class Pedido implements BaseEntity {
         public cliente?: Cliente,
         public nomeResponsavel?: string,
         public listaPedidoItem?: PedidoItem[],
-        public dataPrevisao?: Date
+        public dataPrevisao?: Date,
+        public statusPedido?: any
     ) {
     }
 }

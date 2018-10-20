@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
-import { NgbActiveModal, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Pedido } from './pedido.model';
+import { Pedido, StatusPedido } from './pedido.model';
 import { PedidoPopupService } from './pedido-popup.service';
 import { PedidoService } from './pedido.service';
 import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente';
@@ -15,11 +15,7 @@ import { Tamanho } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
 import { PedidoItem } from '../pedido-item';
 import { Produto } from '../produto';
-import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDateStructAdapter } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/ngb-date-adapter';
-import { NgbDatepickerService } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker-service';
-import { NgbDatepickerDayView, NgbDatepickerConfig } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/datepicker.module';
-import { NgbDate } from '../../../../../../node_modules/@ng-bootstrap/ng-bootstrap/datepicker/ngb-date';
+import { statSync } from 'fs';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -30,6 +26,7 @@ export class PedidoDialogComponent implements OnInit {
     pedido: Pedido;
     isSaving: boolean;
     dataCriacaoDp: any;
+    statusPedido: any;
 
     nomeRoupa: string;
     telefone: string;
@@ -45,7 +42,7 @@ export class PedidoDialogComponent implements OnInit {
         private clientePopupService: ClientePopupService,
         private corService: CorService,
         private jhiAlertService: JhiAlertService,
-        private calendar: NgbCalendar
+        private ngbModal: NgbModal
     ) {
     }
 
@@ -64,11 +61,28 @@ export class PedidoDialogComponent implements OnInit {
         this.activeModal.dismiss('cancel');
     }
 
-    save() {
-        this.isSaving = true;
-        debugger
-        
+    save(content) {
 
+        this.isSaving = true;
+        if (this.pedido.statusPedido == null || this.pedido.statusPedido == StatusPedido.RASCUNHO) {
+            this.ngbModal.open(content).result.then((result) => {
+                this.pedido.statusPedido = result;
+                this.salvar();
+            }, (reason) => {
+                debugger
+            });
+        }
+        else {
+            this.salvar();
+        }
+
+    }
+
+    limparListaPedidoItem() {
+        this.pedido.listaPedidoItem.splice(0, this.pedido.listaPedidoItem.length);
+    }
+
+    private salvar() {
         if (this.pedido.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.pedidoService.update(this.pedido));

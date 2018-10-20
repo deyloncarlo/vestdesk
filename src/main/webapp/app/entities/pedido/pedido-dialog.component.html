@@ -1,4 +1,4 @@
-<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+<form name="editForm" role="form" novalidate (ngSubmit)="save(statusPedido)" #editForm="ngForm">
 
     <div class="modal-header">
         <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h4>
@@ -41,7 +41,7 @@
 
                         <div class="col-md-6">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido</label>
-                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" required>
+                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" (change)="limparListaPedidoItem()" required>
                                 <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
                                 <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
                             </select>
@@ -105,10 +105,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="container">
-                                <div class="row">
+                                <div class="row" [hidden]="pedido.tipoPedido == 'VENDA' ">
                                     <div class="col-md-6">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa" for="field_nomeRoupa">Nome Roupa</label>
-                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa" required/>
+                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa"/>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone" for="field_telefone">Nome Roupa</label>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo" for="field_modelo">Modelo</label>
-                                        <select class="form-control" name="modelo" [(ngModel)]="modelo" id="field_modelo" required>
+                                        <select class="form-control" name="modelo" [(ngModel)]="modelo" id="field_modelo">
                                             <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
                                             <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
                                             <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho" for="field_tamanho">Tamanho</label>
-                                        <select class="form-control" name="tamanho" [(ngModel)]="tamanho" id="field_tamanho" required>
+                                        <select class="form-control" name="tamanho" [(ngModel)]="tamanho" id="field_tamanho">
                                             <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
                                             <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
                                             <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
@@ -132,14 +132,14 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor" for="field_cor">Cor</label>
-                                        <select class="form-control" id="field_cor" name="cor" [(ngModel)]="cor" required>
+                                        <select class="form-control" id="field_cor" name="cor" [(ngModel)]="cor">
                                             <option [ngValue]="null"></option>
                                             <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12 text-center">
+                                    <div class="col-md-12 text-center botao-central">
                                         <button type="button" class="btn btn-primary" (click)="inserir()">Inserir</button>
                                     </div>
                                 </div>
@@ -232,4 +232,20 @@
             <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
+    
+    <ng-template #statusPedido let-d="dismiss" let-c="close">
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Salvar ou Rascunho</h4>
+          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p> Deseja concluir o pedido ou salvar como rascunho? </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-success" (click)="c('RASCUNHO')">Rascunho</button>
+          <button type="button" class="btn btn-primary" (click)="c('CONCLUIDO')">Concluir</button>
+        </div>
+      </ng-template>
 </form>
