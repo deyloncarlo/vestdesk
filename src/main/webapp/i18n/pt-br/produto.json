@@ -5,7 +5,8 @@
             "home": {
                 "title": "Produto",
                 "createLabel": "Criar novo Produto",
-                "createOrEditLabel": "Criar ou editar Produto"
+                "createOrEditLabel": "Criar ou editar Produto",
+                "pesquisar": "Pesquisar Produto"
             },
             "created": "Um novo Produto foi criado com o identificador {{ param }}",
             "updated": "Um Produto foi atualizado com o identificador {{ param }}",

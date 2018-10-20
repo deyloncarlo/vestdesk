@@ -1,0 +1,88 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myProdutoLabel" jhiTranslate="vestdeskApp.produto.home.pesquisar"></h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+</div>
+<div class="container">
+    <h2>
+        <button class="btn btn-primary float-right jh-create-entity create-produto" [routerLink]="['/', { outlets: { popup: ['produto-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span jhiTranslate="vestdeskApp.produto.home.createLabel">
+                Create new Produto
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="descricao">Descrição</label>
+            <input type="text" class="form-control" name="descricao" [(ngModel)]="descricao">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center botao-central">
+            <button class="btn btn-primary" (click)="filtrar()">Pesquisar</button>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="produtos" style="height: 400px;">
+        <table class="table table-striped">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <th jhiSortBy="codigo">
+                        <span jhiTranslate="vestdeskApp.produto.codigo">Código</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="descricao">
+                        <span jhiTranslate="vestdeskApp.produto.descricao">Descrição</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="modelo">
+                        <span jhiTranslate="vestdeskApp.produto.modelo">Modelo</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="tamanho">
+                        <span jhiTranslate="vestdeskApp.produto.tamanho">Tamanho</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                    <th jhiSortBy="quantidadeInicial">
+                        <span jhiTranslate="vestdeskApp.produto.quantidadeInicial">Quantidade Inicial</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let produto of produtos ;trackBy: trackId" (click)="selecionar(produto)">
+                    <td>{{produto.codigo}}</td>
+                    <td>{{produto.descricao}}</td>
+                    <td>{{produto.modelo}}</td>
+                    <td>{{produto.tamanho}}</td>
+                    <td>{{produto.quantidadeInicial}}</td>
+                    <!-- <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'produto/'+ produto.id + '/edit'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'produto/'+ produto.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,6 +1,7 @@
 package br.com.vestdesk.service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,13 +88,25 @@ public class ProdutoService
 	 * Get all the produtos.
 	 *
 	 * @param pageable the pagination information
+	 * @param descricao
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<ProdutoDTO> findAll(Pageable pageable)
+	public Page<ProdutoDTO> findAll(Pageable pageable, String descricao)
 	{
+		if (descricao == null)
+		{
+			descricao = "";
+		}
+
+		Query query = this.em.createQuery("SELECT produto FROM Produto produto WHERE descricao LIKE :descricaoProduto");
+		query.setParameter("descricaoProduto", "%" + descricao + "%");
+
+		List<Produto> listaProduto = query.getResultList();
+		Page<Produto> page = new PageImpl<>(listaProduto, pageable, listaProduto.size());
+
 		this.log.debug("Request to get all Produtos");
-		return this.produtoRepository.findAll(pageable).map(this.produtoMapper::toDto);
+		return page.map(this.produtoMapper::toDto);
 	}
 
 	/**

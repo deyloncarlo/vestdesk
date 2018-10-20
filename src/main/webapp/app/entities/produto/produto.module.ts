@@ -13,6 +13,7 @@ import {
     ProdutoDeleteDialogComponent,
     produtoRoute,
     produtoPopupRoute,
+    ProdutoInputComponent
 } from './';
 
 const ENTITY_STATES = [
@@ -32,6 +33,7 @@ const ENTITY_STATES = [
         ProdutoDeleteDialogComponent,
         ProdutoPopupComponent,
         ProdutoDeletePopupComponent,
+        ProdutoInputComponent
     ],
     entryComponents: [
         ProdutoComponent,
@@ -39,6 +41,7 @@ const ENTITY_STATES = [
         ProdutoPopupComponent,
         ProdutoDeleteDialogComponent,
         ProdutoDeletePopupComponent,
+        ProdutoInputComponent
     ],
     providers: [
         ProdutoService,
@@ -46,4 +49,4 @@ const ENTITY_STATES = [
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class VestdeskProdutoModule {}
+export class VestdeskProdutoModule { }

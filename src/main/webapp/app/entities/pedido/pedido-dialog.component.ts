@@ -14,8 +14,9 @@ import { Modelo } from '../modelo-vestuario';
 import { Tamanho } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
 import { PedidoItem } from '../pedido-item';
-import { Produto } from '../produto';
+import { Produto, ProdutoPopupService } from '../produto';
 import { statSync } from 'fs';
+import { ProdutoInputComponent } from '../produto/produto-input.component';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -34,6 +35,7 @@ export class PedidoDialogComponent implements OnInit {
     tamanho: Tamanho;
     listaCor: Cor[];
     cor: Cor;
+    produto: Produto;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -42,7 +44,8 @@ export class PedidoDialogComponent implements OnInit {
         private clientePopupService: ClientePopupService,
         private corService: CorService,
         private jhiAlertService: JhiAlertService,
-        private ngbModal: NgbModal
+        private ngbModal: NgbModal,
+        private produtoPopupService: ProdutoPopupService
     ) {
     }
 
@@ -50,6 +53,8 @@ export class PedidoDialogComponent implements OnInit {
         this.isSaving = false;
         this.corService.query()
             .subscribe((res: HttpResponse<Cor[]>) => { this.listaCor = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
+
+        this.produto = new Produto();
         if (this.pedido.cliente == null) {
             this.pedido.cliente = new Cliente();
         }
@@ -138,6 +143,17 @@ export class PedidoDialogComponent implements OnInit {
                 resolve.result.then((cliente) => {
                     if (cliente != null) {
                         this.pedido.cliente = cliente;
+                    }
+                });
+            });
+    }
+
+    selecionarProduto() {
+        this.produtoPopupService.open(ProdutoInputComponent as Component)
+            .then((resolve) => {
+                resolve.result.then((produto) => {
+                    if (produto != null) {
+                        this.produto = produto;
                     }
                 });
             });

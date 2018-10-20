@@ -6,3 +6,4 @@ export * from './produto-delete-dialog.component';
 export * from './produto-detail.component';
 export * from './produto.component';
 export * from './produto.route';
+export * from './produto-input.component';

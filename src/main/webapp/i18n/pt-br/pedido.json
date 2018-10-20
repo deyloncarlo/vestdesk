@@ -31,7 +31,8 @@
             "cor": "Cor",
             "cliente": "Cliente",
             "dataPrevisao": "Data Previsão",
-            "statusPedido": "Status Pedido"
+            "statusPedido": "Status Pedido",
+            "produto": "Produto"
             
         }
     }

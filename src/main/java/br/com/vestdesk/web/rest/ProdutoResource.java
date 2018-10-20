@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -107,10 +108,11 @@ public class ProdutoResource
 	 */
 	@GetMapping("/produtos")
 	@Timed
-	public ResponseEntity<List<ProdutoDTO>> getAllProdutos(Pageable pageable)
+	public ResponseEntity<List<ProdutoDTO>> getAllProdutos(Pageable pageable,
+			@RequestParam(name = "descricao", required = false) String descricao)
 	{
 		this.log.debug("REST request to get a page of Produtos");
-		Page<ProdutoDTO> page = this.produtoService.findAll(pageable);
+		Page<ProdutoDTO> page = this.produtoService.findAll(pageable, descricao);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/produtos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

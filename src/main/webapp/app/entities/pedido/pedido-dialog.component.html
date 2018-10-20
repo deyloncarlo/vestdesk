@@ -41,7 +41,8 @@
 
                         <div class="col-md-6">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido</label>
-                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" (change)="limparListaPedidoItem()" required>
+                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" (change)="limparListaPedidoItem()"
+                                required>
                                 <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
                                 <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
                             </select>
@@ -87,8 +88,7 @@
                         <div class="col-md-4">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataPrevisao" for="field_dataPrevisao">Data Previsão</label>
                             <div class="input-group">
-                                <input id="field_dataPrevisao" type="date" class="form-control" name="dataPrevisao"
-                                    [(ngModel)]="pedido.dataPrevisao" />
+                                <input id="field_dataPrevisao" type="date" class="form-control" name="dataPrevisao" [(ngModel)]="pedido.dataPrevisao" />
                                 <!-- <span class="input-group-append">
                                     <button type="button" class="btn btn-secondary" (click)="dataPrevisaoDp.toggle()">
                                         <i class="fa fa-calendar"></i>
@@ -105,10 +105,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="container">
+                                <!-- PRODUTO -->
                                 <div class="row" [hidden]="pedido.tipoPedido == 'VENDA' ">
                                     <div class="col-md-6">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa" for="field_nomeRoupa">Nome Roupa</label>
-                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa"/>
+                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa" />
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone" for="field_telefone">Nome Roupa</label>
@@ -138,6 +139,20 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <!-- VENDA -->
+                                <div class="row" [hidden]="pedido.tipoPedido != 'VENDA' ">
+                                    <div class="col-md-12">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.produto" for="field_produto">Produto</label>
+                                        <div class="row">
+                                            <div class="col-md-10">
+                                                <input type="text" class="form-control" name="pedido_produto" id="field_produto" [(ngModel)]="produto.descricao" disabled/>
+                                            </div>
+                                            <button type="button" class="btn btn-primary col-md-2" (click)="selecionarProduto(produto)">Selecionar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="col-md-12 text-center botao-central">
                                         <button type="button" class="btn btn-primary" (click)="inserir()">Inserir</button>
@@ -232,20 +247,20 @@
             <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
-    
+
     <ng-template #statusPedido let-d="dismiss" let-c="close">
         <div class="modal-header">
-          <h4 class="modal-title" id="modal-basic-title">Salvar ou Rascunho</h4>
-          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-            <span aria-hidden="true">&times;</span>
-          </button>
+            <h4 class="modal-title" id="modal-basic-title">Salvar ou Rascunho</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
         <div class="modal-body">
-          <p> Deseja concluir o pedido ou salvar como rascunho? </p>
+            <p> Deseja concluir o pedido ou salvar como rascunho? </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="c('RASCUNHO')">Rascunho</button>
-          <button type="button" class="btn btn-primary" (click)="c('CONCLUIDO')">Concluir</button>
+            <button type="button" class="btn btn-success" (click)="c('RASCUNHO')">Rascunho</button>
+            <button type="button" class="btn btn-primary" (click)="c('CONCLUIDO')">Concluir</button>
         </div>
-      </ng-template>
+    </ng-template>
 </form>
