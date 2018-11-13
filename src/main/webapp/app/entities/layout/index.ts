@@ -6,3 +6,4 @@ export * from './layout-delete-dialog.component';
 export * from './layout-detail.component';
 export * from './layout.component';
 export * from './layout.route';
+export * from './layout-input.component';

@@ -20,7 +20,8 @@
             "telefone": "Telefone",
             "tamanho": "Tamanho",
             "modelo": "Modelo",
-            "cor": "Cor"
+            "cor": "Cor",
+            "quantidade": "Quantidade"
         }
     }
 }

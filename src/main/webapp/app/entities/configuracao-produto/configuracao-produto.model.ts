@@ -2,9 +2,7 @@ import { BaseEntity } from './../../shared';
 import { MaterialTamanho } from '../material-tamanho/material-tamanho.model';
 
 export const enum Tamanho {
-    'P',
-    'M',
-    'G'
+    'P', 'PP', 'M', 'G', 'GG', 'XG', 'PPBL', 'PBL', 'MBL', 'GBL', 'GGBL', 'XGBL'
 }
 
 export class ConfiguracaoProduto implements BaseEntity {

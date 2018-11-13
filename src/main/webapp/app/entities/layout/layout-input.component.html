@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myLayoutLabel" jhiTranslate="vestdeskApp.layout.home.pesquisar"></h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+</div>
+<div class="container">
+    <h2>
+        <button class="btn btn-primary float-right jh-create-entity create-layout" [routerLink]="['/', { outlets: { popup: ['layout-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span jhiTranslate="vestdeskApp.layout.home.createLabel">
+                Create new Layout
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="nome">Nome</label>
+            <input type="text" class="form-control" name="nome" [(ngModel)]="nome">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center botao-central">
+            <button class="btn btn-primary" (click)="filtrar()">Pesquisar</button>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="layouts" style="height: 400px;">
+        <table class="table table-striped">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                </tr>
+            </thead>
+            <tbody>
+                {{layouts}}
+                <tr style="display: inline-block;" class="col-md-6 layout" *ngFor="let layout of layouts ;trackBy: trackId" (click)="selecionar(layout)">
+                    <div class="col-md-12 text-center">
+                        <label for="nome"><b>Nome:</b></label>
+                        {{layout.nome}}
+                        <br>
+                    </div>
+                    <div class="col-md-12">
+                        <img [src]="'data:image/jpg;base64,' + layout.imagem" alt="" class="img-fluid">
+                    </div>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

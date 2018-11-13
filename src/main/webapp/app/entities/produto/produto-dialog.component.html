@@ -43,9 +43,18 @@
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.produto.tamanho" for="field_tamanho">Tamanho</label>
             <select class="form-control" name="tamanho" [(ngModel)]="produto.tamanho" id="field_tamanho" required>
+                <option value="PP">{{'vestdeskApp.Tamanho.PP' | translate}}</option>
                 <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
                 <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
                 <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
+                <option value="GG">{{'vestdeskApp.Tamanho.GG' | translate}}</option>
+                <option value="XG">{{'vestdeskApp.Tamanho.XG' | translate}}</option>
+                <option value="PPBL">{{'vestdeskApp.Tamanho.PPBL' | translate}}</option>
+                <option value="PBL">{{'vestdeskApp.Tamanho.PBL' | translate}}</option>
+                <option value="MBL">{{'vestdeskApp.Tamanho.MBL' | translate}}</option>
+                <option value="GBL">{{'vestdeskApp.Tamanho.GBL' | translate}}</option>
+                <option value="GGBL">{{'vestdeskApp.Tamanho.GGBL' | translate}}</option>
+                <option value="XGBL">{{'vestdeskApp.Tamanho.XGBL' | translate}}</option>
             </select>
             <div [hidden]="!(editForm.controls.tamanho?.dirty && editForm.controls.tamanho?.invalid)">
                 <small class="form-text text-danger" [hidden]="!editForm.controls.tamanho?.errors?.required" jhiTranslate="entity.validation.required">

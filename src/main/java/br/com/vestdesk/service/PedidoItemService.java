@@ -76,7 +76,7 @@ public class PedidoItemService
 	{
 	}
 
-	public void save(Set<PedidoItem> listaPedidoItem, Pedido pedido)
+	public void save(Set<PedidoItem> listaPedidoItem, Pedido pedido) throws Exception
 	{
 		for (PedidoItem pedidoItem : listaPedidoItem)
 		{
@@ -86,6 +86,10 @@ public class PedidoItemService
 				Tamanho tamanho = pedidoItem.getProduto().getTamanho();
 				Set<Cor> listaCor = pedidoItem.getProduto().getListaCor();
 				Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, listaCor);
+				if (produtoEncontrado == null)
+				{
+					throw new RuntimeException("error.produto.nenhumProdutoCadastrado");
+				}
 				produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - 1);
 				pedidoItem.setProduto(produtoEncontrado);
 			}

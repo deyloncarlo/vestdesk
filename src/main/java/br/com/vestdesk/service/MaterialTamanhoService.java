@@ -1,5 +1,7 @@
 package br.com.vestdesk.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -84,11 +86,12 @@ public class MaterialTamanhoService
 
 	public Set<MaterialTamanho> save(Set<MaterialTamanho> listaMaterialTamanho, Produto p_produto)
 	{
-		for (MaterialTamanho materialTamanho : listaMaterialTamanho)
+		List<MaterialTamanho> lista = new ArrayList<>(listaMaterialTamanho);
+		for (int indice = 0; indice < lista.size(); indice++)
 		{
-			materialTamanho.setProduto(p_produto);
-			this.materialTamanhoRepository.save(materialTamanho);
+			lista.get(indice).setProduto(p_produto);
 		}
+		this.materialTamanhoRepository.save(lista);
 		return listaMaterialTamanho;
 	}
 

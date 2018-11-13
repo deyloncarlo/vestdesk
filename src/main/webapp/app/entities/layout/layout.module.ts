@@ -13,6 +13,7 @@ import {
     LayoutDeleteDialogComponent,
     layoutRoute,
     layoutPopupRoute,
+    LayoutInputComponent
 } from './';
 
 const ENTITY_STATES = [
@@ -32,6 +33,7 @@ const ENTITY_STATES = [
         LayoutDeleteDialogComponent,
         LayoutPopupComponent,
         LayoutDeletePopupComponent,
+        LayoutInputComponent
     ],
     entryComponents: [
         LayoutComponent,
@@ -39,6 +41,7 @@ const ENTITY_STATES = [
         LayoutPopupComponent,
         LayoutDeleteDialogComponent,
         LayoutDeletePopupComponent,
+        LayoutInputComponent
     ],
     providers: [
         LayoutService,

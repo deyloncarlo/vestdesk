@@ -172,8 +172,11 @@ public class ProdutoService
 				"SELECT produto FROM Produto produto WHERE modelo = :modeloProduto and tamanho = :tamanhoProduto");
 		query.setParameter("modeloProduto", modelo);
 		query.setParameter("tamanhoProduto", tamanho);
-		// query.setParameter("listaCorProduto", listaCor);
-		Produto produto = (Produto) query.getSingleResult();
-		return produto;
+		List<Produto> listaProduto = query.getResultList();
+		if (!listaProduto.isEmpty())
+		{
+			return listaProduto.get(0);
+		}
+		return null;
 	}
 }

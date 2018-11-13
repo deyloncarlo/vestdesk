@@ -8,7 +8,8 @@ export class PedidoItem implements BaseEntity {
         public produto?: Produto,
         public pedido?: Pedido,
         public telefone?: string,
-        public nomeRoupa?: string
+        public nomeRoupa?: string,
+        public quantidade?: number
     ) {
     }
 }

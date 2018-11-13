@@ -32,8 +32,10 @@
             "cliente": "Cliente",
             "dataPrevisao": "Data Previsão",
             "statusPedido": "Status Pedido",
-            "produto": "Produto"
-            
+            "produto": "Produto",
+            "quantidadeItem": "Quantidade",
+            "id": "Código",
+            "layout": "Layout"
         }
     }
 }

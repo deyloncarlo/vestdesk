@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { Pedido, StatusPedido } from './pedido.model';
+import { Pedido, StatusPedido, TipoPedido } from './pedido.model';
 import { PedidoPopupService } from './pedido-popup.service';
 import { PedidoService } from './pedido.service';
 import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente';
@@ -17,6 +17,8 @@ import { PedidoItem } from '../pedido-item';
 import { Produto, ProdutoPopupService } from '../produto';
 import { statSync } from 'fs';
 import { ProdutoInputComponent } from '../produto/produto-input.component';
+import { LayoutPopupService } from '../layout';
+import { LayoutInputComponent } from '../layout/layout-input.component';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -36,6 +38,7 @@ export class PedidoDialogComponent implements OnInit {
     listaCor: Cor[];
     cor: Cor;
     produto: Produto;
+    quantidade: number;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -45,7 +48,8 @@ export class PedidoDialogComponent implements OnInit {
         private corService: CorService,
         private jhiAlertService: JhiAlertService,
         private ngbModal: NgbModal,
-        private produtoPopupService: ProdutoPopupService
+        private produtoPopupService: ProdutoPopupService,
+        private layoutPopupService: LayoutPopupService
     ) {
     }
 
@@ -57,6 +61,9 @@ export class PedidoDialogComponent implements OnInit {
         this.produto = new Produto();
         if (this.pedido.cliente == null) {
             this.pedido.cliente = new Cliente();
+        }
+        if (this.pedido.layout == null) {
+            this.pedido.layout = new Cliente();
         }
         // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
 
@@ -98,12 +105,16 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.jhiAlertService.error(error.message, null, null);
+        this.jhiAlertService.error(error.error.detail, null, null);
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Pedido>>) {
         result.subscribe((res: HttpResponse<Pedido>) =>
-            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => this.onSaveError());
+            this.onSaveSuccess(res.body), (res: HttpErrorResponse) => {
+                debugger
+                this.onSaveError();
+
+            });
     }
 
     private onSaveSuccess(result: Pedido) {
@@ -121,9 +132,19 @@ export class PedidoDialogComponent implements OnInit {
             this.pedido.listaPedidoItem = new Array<PedidoItem>();
         }
         const pedidoItem = new PedidoItem();
-        pedidoItem.telefone = this.telefone;
-        pedidoItem.nomeRoupa = this.nomeRoupa;
-        pedidoItem.produto = this.criarProduto();
+        debugger
+        if (this.pedido.tipoPedido == TipoPedido.PRODUCAO) {
+            if (this.pedido.cliente != null && this.pedido.cliente.telefone) {
+                pedidoItem.telefone = this.pedido.cliente.telefone;
+            }
+            pedidoItem.produto = this.produto;
+            pedidoItem.quantidade = this.quantidade;
+
+        } else {
+            pedidoItem.telefone = this.telefone;
+            pedidoItem.nomeRoupa = this.nomeRoupa;
+            pedidoItem.produto = this.criarProduto();
+        }
         this.pedido.listaPedidoItem.push(pedidoItem);
     }
 
@@ -143,6 +164,17 @@ export class PedidoDialogComponent implements OnInit {
                 resolve.result.then((cliente) => {
                     if (cliente != null) {
                         this.pedido.cliente = cliente;
+                    }
+                });
+            });
+    }
+
+    selecionarLayout() {
+        this.layoutPopupService.open(LayoutInputComponent as Component)
+            .then((resolve) => {
+                resolve.result.then((layout) => {
+                    if (layout != null) {
+                        this.pedido.layout = layout;
                     }
                 });
             });

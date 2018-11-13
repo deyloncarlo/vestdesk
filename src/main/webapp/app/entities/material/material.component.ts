@@ -24,6 +24,8 @@ export class MaterialComponent implements OnInit, OnDestroy {
     reverse: any;
     totalItems: number;
 
+    nome: string;
+
     constructor(
         private materialService: MaterialService,
         private jhiAlertService: JhiAlertService,
@@ -50,6 +52,10 @@ export class MaterialComponent implements OnInit, OnDestroy {
             (res: HttpResponse<Material[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+    }
+
+    filtrar() {
+        this.reset();
     }
 
     reset() {

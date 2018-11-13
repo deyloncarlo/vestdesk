@@ -37,6 +37,9 @@ public class PedidoItem implements Serializable
 	@ManyToOne
 	private Pedido pedido;
 
+	@Column(name = "quantidade")
+	private Integer quantidade;
+
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId()
@@ -121,5 +124,15 @@ public class PedidoItem implements Serializable
 	public void setNomeRoupa(String nomeRoupa)
 	{
 		this.nomeRoupa = nomeRoupa;
+	}
+
+	public Integer getQuantidade()
+	{
+		return this.quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade)
+	{
+		this.quantidade = quantidade;
 	}
 }

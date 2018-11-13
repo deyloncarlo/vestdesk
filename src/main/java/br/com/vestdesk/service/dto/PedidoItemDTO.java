@@ -19,6 +19,8 @@ public class PedidoItemDTO implements Serializable
 
 	private PedidoMinDTO pedido;
 
+	private Integer quantidade;
+
 	public Long getId()
 	{
 		return this.id;
@@ -99,6 +101,16 @@ public class PedidoItemDTO implements Serializable
 	public void setNomeRoupa(String nomeRoupa)
 	{
 		this.nomeRoupa = nomeRoupa;
+	}
+
+	public Integer getQuantidade()
+	{
+		return this.quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade)
+	{
+		this.quantidade = quantidade;
 	}
 
 }

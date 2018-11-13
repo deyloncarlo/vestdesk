@@ -21,6 +21,7 @@
                 "materialTamanho": "Material Tamanho",
                 "cor": "Cor",
                 "usuario": "Usuario",
+                "pedido": "Pedido",
                 "pedidoItem": "Pedido Item",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -71,7 +72,8 @@
                 }
             },
             "error": {
-                "dontmatch" : "A senha e sua confirmação devem ser iguais!"
+                "dontmatch" : "A senha e sua confirmação devem ser iguais!",
+                "nenhum_produto_cadastrado": "Nenhum Produto cadastrado com tais configurações"
             },
             "validate": {
                 "newpassword": {
@@ -137,6 +139,7 @@
         "internalServerError": "Internal server error",
         "server.not.reachable": "Servidor indisponível",
         "url.not.found": "Not found",
+        "produto.nenhumProdutoCadastrado": "Nenhum Produto cadastrado com tais configurações",
         "NotNull": "O Campo {{fieldName}} não pode ser vazio!",
         "Size": "O campo {{fieldName}} não obedece os requisitos de tamanho mínimo ou máximo!",
         "userexists": "Usuário já existente!",

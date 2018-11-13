@@ -1,6 +1,7 @@
 import { BaseEntity } from './../../shared';
 import { Cliente } from '../cliente';
 import { PedidoItem } from '../pedido-item';
+import { Layout } from '../layout';
 
 export const enum TipoPedido {
     'PRODUCAO' = 'PRODUCAO',
@@ -12,10 +13,9 @@ export const enum TipoEstampa {
     'SILK'
 }
 
-export const enum StatusPedido
-{
-    'CONCLUIDO' = 'CONCLUIDO' ,
-    'FINALIZADO' = 'FINALIZADO', 
+export const enum StatusPedido {
+    'CONCLUIDO' = 'CONCLUIDO',
+    'FINALIZADO' = 'FINALIZADO',
     'RASCUNHO' = 'RASCUNHO'
 }
 export class Pedido implements BaseEntity {
@@ -32,7 +32,8 @@ export class Pedido implements BaseEntity {
         public nomeResponsavel?: string,
         public listaPedidoItem?: PedidoItem[],
         public dataPrevisao?: Date,
-        public statusPedido?: any
+        public statusPedido?: any,
+        public layout?: Layout
     ) {
     }
 }

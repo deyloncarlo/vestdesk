@@ -1,10 +1,19 @@
 {
     "vestdeskApp": {
-        "Tamanho" : {
+        "Tamanho": {
             "null": "",
             "P": "P",
             "M": "M",
-            "G": "G"
+            "G": "G",
+            "PP": "PP",
+            "GG": "GG",
+            "XG": "XG",
+            "PPBL": "PPBL",
+            "PBL": "PBL",
+            "MBL": "MBL",
+            "GBL": "GBL",
+            "GGBL": "GGBL",
+            "XGBL": "XGBL"
         }
     }
 }
