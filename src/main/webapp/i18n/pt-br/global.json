@@ -23,6 +23,7 @@
                 "usuario": "Usuario",
                 "pedido": "Pedido",
                 "pedidoItem": "Pedido Item",
+                "configuracaoLayout": "Configuracao Layout",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

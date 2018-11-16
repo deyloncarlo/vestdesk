@@ -1,0 +1,22 @@
+
+{
+    "vestdeskApp": {
+        "configuracaoLayout" : {
+            "home": {
+                "title": "Configuracao Layouts",
+                "createLabel": "Criar novo Configuracao Layout",
+                "createOrEditLabel": "Criar ou editar Configuracao Layout"
+            },
+            "created": "Um novo Configuracao Layout foi criado com o identificador {{ param }}",
+            "updated": "Um Configuracao Layout foi atualizado com o identificador {{ param }}",
+            "deleted": "Um Configuracao Layout foi deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Configuracao Layout {{ id }}?"
+            },
+            "detail": {
+                "title": "Configuracao Layout"
+            },
+            "dataCricao": "Data Cricao"
+        }
+    }
+}

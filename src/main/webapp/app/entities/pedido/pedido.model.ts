@@ -2,6 +2,7 @@ import { BaseEntity } from './../../shared';
 import { Cliente } from '../cliente';
 import { PedidoItem } from '../pedido-item';
 import { Layout } from '../layout';
+import { ConfiguracaoLayout } from '../configuracao-layout';
 
 export const enum TipoPedido {
     'PRODUCAO' = 'PRODUCAO',
@@ -33,7 +34,8 @@ export class Pedido implements BaseEntity {
         public listaPedidoItem?: PedidoItem[],
         public dataPrevisao?: Date,
         public statusPedido?: any,
-        public layout?: Layout
+        public layout?: Layout,
+        public listaConfiguracaoLayout?: ConfiguracaoLayout[]
     ) {
     }
 }

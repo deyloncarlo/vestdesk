@@ -7,6 +7,7 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LayoutService } from './layout.service';
 import { Layout } from './layout.model';
+import { ConfiguracaoLayout } from './../configuracao-layout';
 
 @Component({
     selector: 'jhi-layout-input',
@@ -15,6 +16,7 @@ import { Layout } from './layout.model';
 export class LayoutInputComponent implements OnInit, OnDestroy {
 
     layouts: Layout[];
+    selecionados: ConfiguracaoLayout[];
     currentAccount: any;
     eventSubscriber: Subscription;
     itemsPerPage: number;
@@ -37,6 +39,7 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         public activeModal: NgbActiveModal
     ) {
         this.layouts = [];
+        this.selecionados = [];
         this.nome = '';
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 0;
@@ -106,10 +109,32 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         this.activeModal.dismiss('cancel');
     }
 
-    selecionar(cliente) {
-        if (cliente) {
-            this.activeModal.close(cliente);
+    desselecionar(layout) {
+        layout.selecionado = false;
+        layout.configuracaoLayout = null;
+        let index = this.selecionados.indexOf(layout);
+        this.selecionados.splice(1, index);
+    }
+
+    clique(layout) {
+        if(layout.selecionado) {
+            this.desselecionar(layout);
+        }else {
+            debugger
+            this.selecionar(layout);
         }
+    }
+
+    finalizar() {
+        this.activeModal.close(this.selecionados);
+    }
+
+    selecionar(layout) {
+        layout.selecionado = true;
+        layout.configuracaoLayout = new ConfiguracaoLayout();
+        layout.configuracaoLayout.layout = new Layout();
+        layout.configuracaoLayout.layout.id = layout.id;
+        this.selecionados.push(layout.configuracaoLayout);
     }
 
     sort() {

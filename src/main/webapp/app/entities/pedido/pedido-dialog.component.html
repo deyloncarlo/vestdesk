@@ -35,7 +35,7 @@
                             <div class="row">
                                 <div class="col-md-10">
                                     <input type="text" class="form-control" name="pedido_layout" id="field_layout"
-                                        [(ngModel)]="pedido.layout.nome" disabled />
+                                        [(ngModel)]="pedido.listaConfiguracaoLayout.length" disabled />
                                 </div>
                                 <button type="button" class="btn btn-primary col-md-2" (click)="selecionarLayout(pedido.layout)">Selecionar</button>
                             </div>
@@ -73,45 +73,6 @@
                         </div>
                     </div>
                     <div class="row">
-
-                        <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaFrente" for="field_tipoEstampaFrente">Tipo
-                                Estampa Frente</label>
-                            <select class="form-control" name="tipoEstampaFrente" [(ngModel)]="pedido.tipoEstampaFrente"
-                                id="field_tipoEstampaFrente">
-                                <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
-                                <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaCosta" for="field_tipoEstampaCosta">Tipo
-                                Estampa Costa</label>
-                            <select class="form-control" name="tipoEstampaCosta" [(ngModel)]="pedido.tipoEstampaCosta"
-                                id="field_tipoEstampaCosta">
-                                <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
-                                <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaDireita"
-                                for="field_tipoEstampaMangaDireita">Tipo Estampa Manga Direita</label>
-                            <select class="form-control" name="tipoEstampaMangaDireita" [(ngModel)]="pedido.tipoEstampaMangaDireita"
-                                id="field_tipoEstampaMangaDireita">
-                                <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
-                                <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaEsquerda"
-                                for="field_tipoEstampaMangaEsquerda">Tipo Estampa Manga Esquerda</label>
-                            <select class="form-control" name="tipoEstampaMangaEsquerda" [(ngModel)]="pedido.tipoEstampaMangaEsquerda"
-                                id="field_tipoEstampaMangaEsquerda">
-                                <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
-                                <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
-                            </select>
-
-                        </div>
-
                         <div class="col-md-4">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataPrevisao" for="field_dataPrevisao">Data
                                 Previsão</label>

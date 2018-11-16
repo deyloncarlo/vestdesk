@@ -19,6 +19,7 @@ import { statSync } from 'fs';
 import { ProdutoInputComponent } from '../produto/produto-input.component';
 import { LayoutPopupService } from '../layout';
 import { LayoutInputComponent } from '../layout/layout-input.component';
+import { ConfiguracaoLayout } from '../configuracao-layout';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -64,6 +65,9 @@ export class PedidoDialogComponent implements OnInit {
         }
         if (this.pedido.layout == null) {
             this.pedido.layout = new Cliente();
+        }
+        if (!this.pedido.listaConfiguracaoLayout) {
+            this.pedido.listaConfiguracaoLayout = [];
         }
         // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
 
@@ -172,9 +176,10 @@ export class PedidoDialogComponent implements OnInit {
     selecionarLayout() {
         this.layoutPopupService.open(LayoutInputComponent as Component)
             .then((resolve) => {
-                resolve.result.then((layout) => {
-                    if (layout != null) {
-                        this.pedido.layout = layout;
+                resolve.result.then((listaConfiguracaoLayout) => {
+                    debugger
+                    if (listaConfiguracaoLayout != null) {
+                        this.pedido.listaConfiguracaoLayout = listaConfiguracaoLayout;
                     }
                 });
             });

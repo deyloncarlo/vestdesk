@@ -1,4 +1,5 @@
 import { BaseEntity } from './../../shared';
+import { ConfiguracaoLayout } from '../configuracao-layout';
 
 export class Layout implements BaseEntity {
     constructor(
@@ -7,6 +8,7 @@ export class Layout implements BaseEntity {
         public nome?: string,
         public imagemContentType?: string,
         public imagem?: any,
+        public configuracaoLayout?: ConfiguracaoLayout
     ) {
     }
 }

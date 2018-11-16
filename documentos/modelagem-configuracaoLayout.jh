@@ -1,0 +1,9 @@
+
+entity ConfiguracaoLayout {
+	dataCricao LocalDate
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+
+dto * with mapstruct

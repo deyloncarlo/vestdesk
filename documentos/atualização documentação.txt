@@ -1,0 +1,29 @@
+1º Fazer tela separada para Tela de Produção (Na verdade será a tela de Ordem de Produção, onde será possível criar uma Ordem
+de Produção de forma esporádica)
+2º Exibir opções de bordado no momento de selecionar o Layout
+3º Colocar check quando for Pedido de Escola. (Quando for pedido de escola não deve ser retirado os materiais do estoque).
+Deve ser gerado uma Ordem de Produção
+4º Na tela de venda, adicionar os campos "Cliente da Camisa" (texto) e "Nome na camisa"(texto), "Quantidade", "Observação"
+5º Atualizar estoque apenas quando o Pedido for Concluído de fato!
+6º Criar nova tela "Vendas Acumuladas" (deverá listar, por Produto, quantidade de itens Vendidos)
+7º Mudar Status do pedido "Concluído" para "Enviar pedido".
+    Após o pedido ser enviado, o Pedido terá o Status "Em andamento". o Status do Pedido
+    passa a ser "Concluído" apenas quanto todos os Pedido Itens estiverem com Status Pronto.
+8º Cada Item de Pedido (na tela de venda) deverá ter algum dos Status
+    "Em Produção"(Está sendo produzido, ROXO),
+    "Em separação" (Possui o estoque, mas está sendo selecionado, AMARELO),
+    "Bordando" (, LARANJA)
+    "Silkando" (, PRATA)
+    "Pronta" (, AZUL)
+    "Entregue" (, VERDE)
+
+    OBS: Apenas usuário da Produção podem editar este Status
+9º Tela Inicial
+    -> Vendedor: Lista de Pedido Salvos, Lista de Pedidos em Adamento, Lista de Pedidos Concluídos
+    -> Produção: Lista de Pedidos para Produzir, Lista de Pedido em Produção, Lista de Pedidos Concluídos
+    -> Separador: Lista de Pedidos para Separar, Lista de Pedidos em Andamento, Lista de Pedidos Concluídos
+
+
+
+Usuaário
+    -> Produção: Pode alterar apenas o Status dos Pedidos Item, mais nada
