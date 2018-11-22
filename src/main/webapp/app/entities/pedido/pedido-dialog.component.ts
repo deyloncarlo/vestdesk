@@ -31,7 +31,6 @@ export class PedidoDialogComponent implements OnInit {
     isSaving: boolean;
     dataCriacaoDp: any;
     statusPedido: any;
-
     nomeRoupa: string;
     telefone: string;
     modelo: Modelo;
@@ -44,6 +43,10 @@ export class PedidoDialogComponent implements OnInit {
     primeiroPagamento: number;
     formaPrimeiroPagamento: FormaPagamento;
     produtos: Produto[];
+    valorTotalPedido: number; // Exibir o total do Preço
+    valorRestantePedido: number;
+    esconderCampos: any;
+    tamanhoGrid: any;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -75,6 +78,11 @@ export class PedidoDialogComponent implements OnInit {
         if (!this.pedido.listaConfiguracaoLayout) {
             this.pedido.listaConfiguracaoLayout = [];
         }
+        this.atualizarTotal();
+        this.esconderCampos = false;
+        this.tamanhoGrid = {
+            height: '350px'
+        }
         // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
 
     }
@@ -91,13 +99,26 @@ export class PedidoDialogComponent implements OnInit {
                 this.pedido.statusPedido = result;
                 this.salvar();
             }, (reason) => {
-                debugger
             });
         }
         else {
             this.salvar();
         }
 
+    }
+
+    esconder() {
+        if(this.esconderCampos) {
+            this.esconderCampos = false;
+            this.tamanhoGrid = {
+                height: '350px'
+            }
+        }else {
+            this.esconderCampos = true;
+            this.tamanhoGrid = {
+                height: '500px'
+            }
+        }
     }
 
     limparListaPedidoItem() {
@@ -121,9 +142,7 @@ export class PedidoDialogComponent implements OnInit {
     private subscribeToSaveResponse(result: Observable<HttpResponse<Pedido>>) {
         result.subscribe((res: HttpResponse<Pedido>) =>
             this.onSaveSuccess(res.body), (res: HttpErrorResponse) => {
-                debugger
                 this.onSaveError();
-
             });
     }
 
@@ -139,6 +158,15 @@ export class PedidoDialogComponent implements OnInit {
 
     private onSuccess(data, headers) {
         this.adcionarPedidoItem(data);
+    }
+
+    private atualizarTotal() {
+        this.valorRestantePedido = 0;
+        this.valorTotalPedido = 0;
+        this.pedido.listaPedidoItem.forEach(element => {
+            this.valorRestantePedido += element.valor;
+            this.valorTotalPedido += element.produto.preco * element.quantidade;
+        });
     }
 
     private adcionarPedidoItem(p_produto) {
@@ -164,6 +192,7 @@ export class PedidoDialogComponent implements OnInit {
             pedidoItem.valor = (pedidoItem.quantidade * pedidoItem.produto.preco) - pedidoItem.primeiroPagamento;
         }
         this.pedido.listaPedidoItem.push(pedidoItem);
+        this.atualizarTotal();
     }
 
     inserir() {
@@ -197,10 +226,9 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     selecionarLayout() {
-        this.layoutPopupService.open(LayoutInputComponent as Component, this.pedido.listaConfiguracaoLayout)
+        this.layoutPopupService.openLista(LayoutInputComponent as Component, this.pedido.listaConfiguracaoLayout)
             .then((resolve) => {
                 resolve.result.then((listaConfiguracaoLayout) => {
-                    debugger
                     if (listaConfiguracaoLayout != null) {
                         this.pedido.listaConfiguracaoLayout = listaConfiguracaoLayout;
                     }

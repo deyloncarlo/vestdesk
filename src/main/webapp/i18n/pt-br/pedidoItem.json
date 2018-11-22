@@ -22,7 +22,8 @@
             "tamanho": "Tamanho",
             "modelo": "Modelo",
             "cor": "Cor",
-            "quantidade": "Qtd"
+            "quantidade": "Qtd",
+            "status": "Status"
         }
     }
 }

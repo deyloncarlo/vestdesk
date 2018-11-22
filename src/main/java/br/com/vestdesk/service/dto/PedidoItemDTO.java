@@ -1,7 +1,11 @@
 package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
+
+import br.com.vestdesk.domain.enumeration.FormaPagamento;
+import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
 
 /**
  * A DTO for the PedidoItem entity.
@@ -24,6 +28,14 @@ public class PedidoItemDTO implements Serializable
 	private String observacao;
 
 	private String clienteCamisa;
+
+	private BigDecimal primeiroPagamento;
+
+	private BigDecimal valor;
+
+	private FormaPagamento formaPrimeiroPagamento;
+
+	private StatusPedidoItem status;
 
 	public Long getId()
 	{
@@ -135,6 +147,46 @@ public class PedidoItemDTO implements Serializable
 	public void setClienteCamisa(String clienteCamisa)
 	{
 		this.clienteCamisa = clienteCamisa;
+	}
+
+	public BigDecimal getPrimeiroPagamento()
+	{
+		return this.primeiroPagamento;
+	}
+
+	public void setPrimeiroPagamento(BigDecimal primeiroPagamento)
+	{
+		this.primeiroPagamento = primeiroPagamento;
+	}
+
+	public BigDecimal getValor()
+	{
+		return this.valor;
+	}
+
+	public void setValor(BigDecimal valor)
+	{
+		this.valor = valor;
+	}
+
+	public FormaPagamento getFormaPrimeiroPagamento()
+	{
+		return this.formaPrimeiroPagamento;
+	}
+
+	public void setFormaPrimeiroPagamento(FormaPagamento formaPrimeiroPagamento)
+	{
+		this.formaPrimeiroPagamento = formaPrimeiroPagamento;
+	}
+
+	public StatusPedidoItem getStatus()
+	{
+		return this.status;
+	}
+
+	public void setStatus(StatusPedidoItem status)
+	{
+		this.status = status;
 	}
 
 }

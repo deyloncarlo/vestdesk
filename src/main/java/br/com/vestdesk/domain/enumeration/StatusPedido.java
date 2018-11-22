@@ -2,5 +2,5 @@ package br.com.vestdesk.domain.enumeration;
 
 public enum StatusPedido
 {
-	CONCLUIDO, FINALIZADO, RASCUNHO
+	CONCLUIDO, RASCUNHO, EM_ANDAMENTO
 }

@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.ConfiguracaoLayout;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
-import br.com.vestdesk.domain.Produto;
 import br.com.vestdesk.domain.enumeration.StatusPedido;
+import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
 import br.com.vestdesk.domain.enumeration.TipoPedido;
 import br.com.vestdesk.repository.PedidoRepository;
 import br.com.vestdesk.service.dto.PedidoDTO;
@@ -74,29 +74,29 @@ public class PedidoService
 		Pedido pedido = this.pedidoMapper.toEntity(pedidoDTO);
 		Set<PedidoItem> listaPedidoItem = new HashSet<>(pedido.getListaPedidoItem());
 		Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>(pedido.getListaConfiguracaoLayout());
+		boolean atualizarEstoque = false;
 
-		if (pedido.getStatusPedido().equals(StatusPedido.CONCLUIDO))
+		if (pedido.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && pedido.getDataConclusao() == null)
 		{
 			pedido.setDataConclusao(LocalDate.now());
+			atualizarEstoque = true;
+
 		}
-		else if (pedido.getStatusPedido().equals(StatusPedido.FINALIZADO))
+		else if (pedido.getStatusPedido().equals(StatusPedido.CONCLUIDO))
 		{
 			pedido.setDataFim(LocalDate.now());
 		}
 		if (pedido.getId() != null)
 		{
+			Pedido pedidoEncontrado = this.pedidoRepository.findOne(pedido.getId());
 			Set<PedidoItem> listaPedidoItemRemovido = new HashSet<>();
 			Set<ConfiguracaoLayout> listaConfiguracaoLayoutRemovido = new HashSet<>();
-			Pedido pedidoEncontrado = this.pedidoRepository.findOne(pedido.getId());
 
 			for (PedidoItem pedidoItem : pedidoEncontrado.getListaPedidoItem())
 			{
 				if (!listaPedidoItem.contains(pedidoItem))
 				{
 					listaPedidoItemRemovido.add(pedidoItem);
-					Produto produtoEncontrado = this.produtoService.getById(pedidoItem.getProduto().getId());
-					produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() + 1);
-					this.produtoService.save(produtoEncontrado);
 				}
 			}
 
@@ -119,10 +119,29 @@ public class PedidoService
 		pedido.getListaConfiguracaoLayout().clear();
 		pedido.getListaConfiguracaoLayout().addAll(listaConfiguracaoLayout);
 
+		if (pedido.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && concluirPedido(listaPedidoItem))
+		{
+			pedido.setStatusPedido(StatusPedido.CONCLUIDO);
+		}
+
 		pedido = this.pedidoRepository.save(pedido);
 
-		this.pedidoItemService.save(listaPedidoItem, pedido);
+		this.pedidoItemService.save(listaPedidoItem, pedido, atualizarEstoque);
 		return this.pedidoMapper.toDto(pedido);
+	}
+
+	public boolean concluirPedido(Set<PedidoItem> listaPedidoItem)
+	{
+		boolean podeConcluir = true;
+		for (PedidoItem pedidoItem : listaPedidoItem)
+		{
+			if (pedidoItem.getStatus() == null || !pedidoItem.getStatus().equals(StatusPedidoItem.PRONTO))
+			{
+				podeConcluir = false;
+				break;
+			}
+		}
+		return podeConcluir;
 	}
 
 	/**

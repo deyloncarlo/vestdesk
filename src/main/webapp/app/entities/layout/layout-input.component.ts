@@ -89,7 +89,6 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     ngOnInit() {
-        debugger
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
@@ -106,7 +105,6 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
                 }
                 return false;
             });
-            debugger
             listaLayouts[0].selecionado = true;
             listaLayouts[0].configuracaoLayout = p_configuracaoProduto;
         });
@@ -139,7 +137,6 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         if (layout.selecionado) {
             this.desselecionar(layout);
         } else {
-            debugger
             this.selecionar(layout);
         }
     }

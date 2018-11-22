@@ -2,8 +2,7 @@
 
     <div class="modal-header">
         <h4 class="modal-title" id="myLayoutLabel" jhiTranslate="vestdeskApp.layout.home.createOrEditLabel">Create or edit a Layout</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                (click)="clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
@@ -14,12 +13,23 @@
         </div> -->
         <div class="form-group">
             <label class="form-control-label" jhiTranslate="vestdeskApp.layout.nome" for="field_nome">Nome</label>
-            <input type="text" class="form-control" name="nome" id="field_nome"
-                [(ngModel)]="layout.nome" required/>
+            <input type="text" class="form-control" name="nome" id="field_nome" [(ngModel)]="layout.nome" required/>
             <div [hidden]="!(editForm.controls.nome?.dirty && editForm.controls.nome?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
+                </small>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.layout.modelo" for="field_modelo">Modelo</label>
+            <select class="form-control" name="modelo" [(ngModel)]="layout.modelo" id="field_modelo" required>
+                <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
+                <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
+                <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
+            </select>
+            <div [hidden]="!(editForm.controls.modelo?.dirty && editForm.controls.modelo?.invalid)">
+                <small class="form-text text-danger" [hidden]="!editForm.controls.modelo?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
@@ -27,23 +37,22 @@
             <label class="form-control-label" jhiTranslate="vestdeskApp.layout.imagem" for="field_imagem">Imagem</label>
             <div>
                 <div *ngIf="layout.imagem" class="form-text text-danger clearfix">
-                    <a class="pull-left" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a><br>
+                    <a class="pull-left" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a>
+                    <br>
                     <span class="pull-left">{{layout.imagemContentType}}, {{byteSize(layout.imagem)}}</span>
-                    <button type="button" (click)="layout.imagem=null;layout.imagemContentType=null;"
-                            class="btn btn-secondary btn-xs pull-right">
+                    <button type="button" (click)="layout.imagem=null;layout.imagemContentType=null;" class="btn btn-secondary btn-xs pull-right">
                         <span class="fa fa-times"></span>
                     </button>
                 </div>
-                <input type="file" id="file_imagem" (change)="setFileData($event, layout, 'imagem', false)" jhiTranslate="entity.action.addblob"/>
+                <input type="file" id="file_imagem" (change)="setFileData($event, layout, 'imagem', false)" jhiTranslate="entity.action.addblob"
+                />
             </div>
-            <input type="hidden" class="form-control" name="imagem" id="field_imagem"
-                [(ngModel)]="layout.imagem" required/>
-            <input type="hidden" class="form-control" name="imagemContentType" id="field_imagemContentType"
-                [(ngModel)]="layout.imagemContentType" />
+            <input type="hidden" class="form-control" name="imagem" id="field_imagem" [(ngModel)]="layout.imagem" required/>
+            <input type="hidden" class="form-control" name="imagemContentType" id="field_imagemContentType" [(ngModel)]="layout.imagemContentType"
+            />
             <div [hidden]="!(editForm.controls.imagem?.dirty && editForm.controls.imagem?.invalid)">
-                <small class="form-text text-danger"
-                   [hidden]="!editForm.controls.imagem?.errors?.required" jhiTranslate="entity.validation.required">
-                   This field is required.
+                <small class="form-text text-danger" [hidden]="!editForm.controls.imagem?.errors?.required" jhiTranslate="entity.validation.required">
+                    This field is required.
                 </small>
             </div>
         </div>
@@ -51,10 +60,12 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            <span class="fa fa-ban"></span>&nbsp;
+            <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+            <span class="fa fa-save"></span>&nbsp;
+            <span jhiTranslate="entity.action.save">Save</span>
         </button>
     </div>
 </form>

@@ -39,8 +39,10 @@
             "layout": "Layout",
             "clienteCamisa": "Nome",
             "formaPagamento": "Forma Pagamento",
-            "primeiroPagamento": "Primeiro Pagamento (R$)",
-            "valorProduto": "Valor Restante(R$)"
+            "primeiroPagamento": "1º Pagamento (R$)",
+            "valorProduto": "Valor Restante",
+            "valorRestantePedido": "Valor à pagar",
+            "valorTotalPedido": "Total"
         }
     }
 }

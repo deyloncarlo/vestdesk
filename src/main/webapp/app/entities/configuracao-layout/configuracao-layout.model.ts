@@ -1,6 +1,6 @@
 import { BaseEntity } from './../../shared';
 import { Layout } from '../layout/layout.model';
-import { TipoEstampa } from "../pedido";
+import { TipoEstampa } from '../pedido';
 
 export class ConfiguracaoLayout implements BaseEntity {
     constructor(

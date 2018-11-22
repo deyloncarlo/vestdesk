@@ -16,8 +16,10 @@ export const enum TipoEstampa {
 
 export const enum StatusPedido {
     'CONCLUIDO' = 'CONCLUIDO',
+    'ENVIADO' = 'ENVIADO',
     'FINALIZADO' = 'FINALIZADO',
-    'RASCUNHO' = 'RASCUNHO'
+    'RASCUNHO' = 'RASCUNHO',
+    'EM_ANDAMENTO' = ' EM_ANDAMENTO'
 }
 export class Pedido implements BaseEntity {
     constructor(

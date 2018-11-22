@@ -17,7 +17,8 @@ import { VestdeskAccountModule } from './account/account.module';
 import { VestdeskEntityModule } from './entities/entity.module';
 import { PaginationConfig } from './blocks/config/uib-pagination.config';
 import { StateStorageService } from './shared/auth/state-storage.service';
-import {ColorPickerModule} from 'ngx-color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { LOCALE_ID } from '@angular/core';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import {
     JhiMainComponent,
@@ -78,6 +79,10 @@ import {
             deps: [
                 Injector
             ]
+        },
+        {
+            provide: LOCALE_ID,
+            useValue: "pt-BR"
         }
     ],
     bootstrap: [JhiMainComponent]

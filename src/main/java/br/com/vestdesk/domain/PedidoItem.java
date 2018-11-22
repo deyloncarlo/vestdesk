@@ -1,15 +1,21 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import br.com.vestdesk.domain.enumeration.FormaPagamento;
+import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
 
 /**
  * A PedidoItem.
@@ -45,6 +51,19 @@ public class PedidoItem implements Serializable
 
 	@Column(name = "quantidade")
 	private Integer quantidade;
+
+	@Column
+	private BigDecimal primeiroPagamento;
+
+	@Column
+	private BigDecimal valor;
+
+	@Column
+	private FormaPagamento formaPrimeiroPagamento;
+
+	@Enumerated(EnumType.STRING)
+	@Column
+	private StatusPedidoItem status;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -160,5 +179,45 @@ public class PedidoItem implements Serializable
 	public void setClienteCamisa(String clienteCamisa)
 	{
 		this.clienteCamisa = clienteCamisa;
+	}
+
+	public BigDecimal getPrimeiroPagamento()
+	{
+		return this.primeiroPagamento;
+	}
+
+	public void setPrimeiroPagamento(BigDecimal primeiroPagamento)
+	{
+		this.primeiroPagamento = primeiroPagamento;
+	}
+
+	public BigDecimal getValor()
+	{
+		return this.valor;
+	}
+
+	public void setValor(BigDecimal valor)
+	{
+		this.valor = valor;
+	}
+
+	public FormaPagamento getFormaPrimeiroPagamento()
+	{
+		return this.formaPrimeiroPagamento;
+	}
+
+	public void setFormaPrimeiroPagamento(FormaPagamento formaPrimeiroPagamento)
+	{
+		this.formaPrimeiroPagamento = formaPrimeiroPagamento;
+	}
+
+	public StatusPedidoItem getStatus()
+	{
+		return this.status;
+	}
+
+	public void setStatus(StatusPedidoItem status)
+	{
+		this.status = status;
 	}
 }

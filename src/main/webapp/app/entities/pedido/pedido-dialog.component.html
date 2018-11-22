@@ -77,15 +77,38 @@
                                 </span> -->
                             </div>
                         </div>
-
+                        <div class="col-md-12">
+                            <div class="container-fluid pedido-resumo">
+                                <div class="col-md-3" style="font-weight: bold">
+                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
+                                    </label>: {{pedido.statusPedido}}
+                                </div>
+                                <div class="col-md-3" style="font-weight: bold">
+                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
+                                    </label>: {{valorTotalPedido | currency:'BRL':true}}
+                                </div>
+                                <div class="col-md-3" style="font-weight: bold">
+                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
+                                    </label>: {{valorRestantePedido | currency:'BRL':true}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </ng-template>
             </ngb-tab>
             <ngb-tab title="Produtos">
                 <ng-template ngbTabContent>
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="container-fluid">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="container-fluid">
+                                    <div class="pull-left" (click)="esconder()">
+                                        <i [ngClass]="{false: 'fa fa-chevron-up', true:'fa fa-chevron-down'}[esconderCampos]" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [hidden]="esconderCampos">
+
                                 <!-- PRODUTO -->
                                 <div class="row" [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                     <div class="col-md-6">
@@ -179,98 +202,114 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="table-responsive" style="height: 350px;">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
-                                            <span jhiTranslate="vestdeskApp.pedido.clienteCamisa">Cliente Casmisa</span>
-                                        </th>
-                                        <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.telefone">Telefone</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedidoItem.quantidade">Quantidade</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedido.observacao">Observação</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedido.primeiroPagamento">Primeiro Pagamento</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedido.formaPagamento">Forma Pagamento</span>
-                                        </th>
-                                        <th>
-                                            <span jhiTranslate="vestdeskApp.pedido.valorProduto">Valor Produto</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let pedidoItem of pedido.listaPedidoItem; index as indice">
-                                        <td [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
-                                            {{pedidoItem.clienteCamisa}}
-                                        </td>
-                                        <td [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
-                                            {{pedidoItem.nomeRoupa}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.telefone}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.produto.tamanho}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.produto.modelo}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.produto.cor.nome}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.quantidade}}
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" name="observacao" id="field_observacao" [(ngModel)]="pedidoItem.observacao" />
-                                        </td>
-                                        <td style="font-weight: bold; color: green">
-                                            {{pedidoItem.primeiroPagamento}}
-                                        </td>
-                                        <td>
-                                            {{pedidoItem.formaPrimeiroPagamento}}
-                                        </td>
-                                        <td style="font-weight: bold; color: red">
-                                           {{pedidoItem.valor}}
-                                        </td>
-                                        <td [hidden]="pedido.tipoPedido == 'PRODUCAO' " class="text-right">
-                                            <div class="btn-group flex-btn-group-container">
-                                                <button type="button" (click)="removerPedidoItem(indice);" class="btn btn-danger btn-sm">
-                                                    <span class="fa fa-trash"></span>
-                                                    <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                    <div class="table-responsive" [ngStyle]="tamanhoGrid">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                        <span jhiTranslate="vestdeskApp.pedido.clienteCamisa">Cliente Casmisa</span>
+                                    </th>
+                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.telefone">Telefone</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.quantidade">Quantidade</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedido.observacao">Observação</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedido.primeiroPagamento">Primeiro Pagamento</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedido.formaPagamento">Forma Pagamento</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedido.valorProduto">Valor Produto</span>
+                                    </th>
+                                    <th>
+                                        <span jhiTranslate="vestdeskApp.pedidoItem.status">Status Pedido Item</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pedidoItem of pedido.listaPedidoItem; index as indice">
+                                    <td [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                        {{pedidoItem.clienteCamisa}}
+                                    </td>
+                                    <td [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                        {{pedidoItem.nomeRoupa}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.telefone}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.produto.tamanho}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.produto.modelo}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.produto.cor.nome}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.quantidade}}
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="observacao + {{indice}}" id="field_observacao + {{indice}}" [(ngModel)]="pedidoItem.observacao"
+                                        />
+                                    </td>
+                                    <td style="font-weight: bold; color: green">
+                                        {{pedidoItem.primeiroPagamento | currency:'BRL':true}}
+                                    </td>
+                                    <td>
+                                        {{pedidoItem.formaPrimeiroPagamento}}
+                                    </td>
+                                    <td style="font-weight: bold; color: red">
+                                        {{pedidoItem.valor | currency:'BRL':true}}
+                                    </td>
+                                    <td [ngClass]="{EM_PRODUCAO: 'EM_PRODUCAO', EM_SEPARACAO: 'EM_SEPARACAO',
+                                        BORDADO: 'BORDADO', SILKANDO: 'SILKANDO', PRONTO: 'PRONTO',
+                                        ENTREGUE: 'ENTREGUE'}[pedidoItem.status]">
+                                        <select class="form-control" name="statusPedidoItem + {{indice}}" [(ngModel)]="pedidoItem.status">
+                                            <option value="EM_PRODUCAO">{{'vestdeskApp.StatusPedidoItem.EM_PRODUCAO' | translate}}</option>
+                                            <option value="EM_SEPARACAO">{{'vestdeskApp.StatusPedidoItem.EM_SEPARACAO' | translate}}</option>
+                                            <option value="BORDADO">{{'vestdeskApp.StatusPedidoItem.BORDADO' | translate}}</option>
+                                            <option value="SILKANDO">{{'vestdeskApp.StatusPedidoItem.SILKANDO' | translate}}</option>
+                                            <option value="PRONTO">{{'vestdeskApp.StatusPedidoItem.PRONTO' | translate}}</option>
+                                            <option value="ENTREGUE">{{'vestdeskApp.StatusPedidoItem.ENTREGUE' | translate}}</option>
+                                        </select>
+                                    </td>
+                                    <td [hidden]="pedido.tipoPedido == 'PRODUCAO' " class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="button" (click)="removerPedidoItem(indice);" class="btn btn-danger btn-sm">
+                                                <span class="fa fa-trash"></span>
+                                                <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                            <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">
-                                <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required" jhiTranslate="entity.validation.required">
-                                    This field is required.
-                                </small>
-                            </div>
+                        <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">
+                            <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required" jhiTranslate="entity.validation.required">
+                                This field is required.
+                            </small>
                         </div>
                     </div>
                 </ng-template>
@@ -310,11 +349,11 @@
             </button>
         </div>
         <div class="modal-body">
-            <p> Deseja concluir o pedido ou salvar como rascunho? </p>
+            <p> Deseja Eviar o pedido para Produção ou salvar como rascunho? </p>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-success" (click)="c('RASCUNHO')">Rascunho</button>
-            <button type="button" class="btn btn-primary" (click)="c('CONCLUIDO')">Concluir</button>
+            <button type="button" class="btn btn-primary" (click)="c('EM_ANDAMENTO')">Enviar Pedido</button>
         </div>
     </ng-template>
 </form>

@@ -10,6 +10,15 @@ export const enum FormaPagamento {
     'BOLETO'
 }
 
+export const enum StatusPedidoItem {
+    'EM_PRODUCAO' = 'EM_PRODUCAO',
+    'EM_SEPARACAO' = 'EM_SEPARACAO',
+    'BORDADO' = 'BORDADO',
+    'SILKANDO' = 'SILKANDO',
+    'PRONTO' = 'PRONTO',
+    'ENTREGUE' = 'ENTREGUE'
+}
+
 export class PedidoItem implements BaseEntity {
     constructor(
         public id?: number,

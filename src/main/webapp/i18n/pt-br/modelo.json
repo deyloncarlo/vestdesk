@@ -1,10 +1,12 @@
 {
     "vestdeskApp": {
-        "Modelo" : {
-            "null": "",
-            "MOLETOM": "MOLETOM",
-            "POLO": "POLO",
-            "CAMISA": "CAMISA"
+        "StatusPedidoItem" : {
+            "EM_PRODUCAO" : "Produção",
+            "EM_SEPARACAO" : "Separação",
+            "BORDADO" : "Bordado",
+            "SILKANDO" : "Silkando",
+            "PRONTO" : "Pronto",
+            "ENTREGUE" : "Entregue"
         }
     }
 }

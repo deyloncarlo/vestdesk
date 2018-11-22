@@ -1,0 +1,10 @@
+{
+    "vestdeskApp": {
+        "Modelo" : {
+            "null": "",
+            "MOLETOM": "MOLETOM",
+            "POLO": "POLO",
+            "CAMISA": "CAMISA"
+        }
+    }
+}

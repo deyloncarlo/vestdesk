@@ -76,23 +76,25 @@ public class PedidoItemService
 	{
 	}
 
-	public void save(Set<PedidoItem> listaPedidoItem, Pedido pedido) throws Exception
+	public void save(Set<PedidoItem> listaPedidoItem, Pedido pedido, boolean atualizarEstoque) throws Exception
 	{
 		for (PedidoItem pedidoItem : listaPedidoItem)
 		{
-			if (pedidoItem.getProduto().getId() == null)
+			Modelo modelo = pedidoItem.getProduto().getModelo();
+			Tamanho tamanho = pedidoItem.getProduto().getTamanho();
+			Cor cor = pedidoItem.getProduto().getCor();
+			Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
+			if (produtoEncontrado == null)
 			{
-				Modelo modelo = pedidoItem.getProduto().getModelo();
-				Tamanho tamanho = pedidoItem.getProduto().getTamanho();
-				Cor cor = pedidoItem.getProduto().getCor();
-				Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
-				if (produtoEncontrado == null)
-				{
-					throw new RuntimeException("error.produto.nenhumProdutoCadastrado");
-				}
-				produtoEncontrado.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - 1);
-				pedidoItem.setProduto(produtoEncontrado);
+				throw new RuntimeException("error.produto.nenhumProdutoCadastrado");
 			}
+			if (atualizarEstoque)
+			{
+				produtoEncontrado
+						.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - pedidoItem.getQuantidade());
+				this.produtoService.save(produtoEncontrado);
+			}
+			pedidoItem.setProduto(produtoEncontrado);
 			pedidoItem.setPedido(pedido);
 			this.pedidoItemRepository.save(pedidoItem);
 		}

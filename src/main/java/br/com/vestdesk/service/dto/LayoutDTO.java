@@ -6,6 +6,8 @@ import java.util.Objects;
 import javax.persistence.Lob;
 import javax.validation.constraints.NotNull;
 
+import br.com.vestdesk.domain.enumeration.Modelo;
+
 /**
  * A DTO for the Layout entity.
  */
@@ -21,6 +23,8 @@ public class LayoutDTO implements Serializable
 	@Lob
 	private byte[] imagem;
 	private String imagemContentType;
+
+	private Modelo modelo;
 
 	public Long getId()
 	{
@@ -92,5 +96,15 @@ public class LayoutDTO implements Serializable
 	public String toString()
 	{
 		return "LayoutDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", imagem='" + getImagem() + "'" + "}";
+	}
+
+	public Modelo getModelo()
+	{
+		return this.modelo;
+	}
+
+	public void setModelo(Modelo modelo)
+	{
+		this.modelo = modelo;
 	}
 }

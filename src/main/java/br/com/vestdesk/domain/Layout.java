@@ -12,6 +12,8 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.com.vestdesk.domain.enumeration.Modelo;
+
 /**
  * A Layout.
  */
@@ -37,6 +39,9 @@ public class Layout implements Serializable
 
 	@Column(name = "imagem_content_type", nullable = false)
 	private String imagemContentType;
+
+	@Column(nullable = false)
+	private Modelo modelo;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -130,5 +135,15 @@ public class Layout implements Serializable
 	{
 		return "Layout{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", imagem='" + getImagem() + "'"
 				+ ", imagemContentType='" + getImagemContentType() + "'" + "}";
+	}
+
+	public Modelo getModelo()
+	{
+		return this.modelo;
+	}
+
+	public void setModelo(Modelo modelo)
+	{
+		this.modelo = modelo;
 	}
 }

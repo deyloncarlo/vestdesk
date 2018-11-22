@@ -1,7 +1,6 @@
-
 {
     "vestdeskApp": {
-        "layout" : {
+        "layout": {
             "home": {
                 "title": "Layout",
                 "createLabel": "Criar novo Layout",
@@ -19,6 +18,7 @@
             },
             "oid": "Oid",
             "nome": "Nome",
+            "modelo": "Modelo",
             "imagem": "Imagem"
         }
     }

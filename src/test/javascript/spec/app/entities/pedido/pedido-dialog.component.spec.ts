@@ -48,7 +48,7 @@ describe('Component Tests', () => {
                         spyOn(service, 'update').and.returnValue(Observable.of(new HttpResponse({body: entity})));
                         comp.pedido = entity;
                         // WHEN
-                        comp.save();
+                        comp.save(entity);
                         tick(); // simulate async
 
                         // THEN
@@ -68,7 +68,7 @@ describe('Component Tests', () => {
                         spyOn(service, 'create').and.returnValue(Observable.of(new HttpResponse({body: entity})));
                         comp.pedido = entity;
                         // WHEN
-                        comp.save();
+                        comp.save(entity);
                         tick(); // simulate async
 
                         // THEN

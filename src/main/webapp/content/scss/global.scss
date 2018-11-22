@@ -237,8 +237,37 @@ ui bootstrap tweaks
 
 @media (min-width: 992px) {
     .modal-lg {
-        max-width: 90%;
+        max-width: 99%;
     }
 }
 
+.pedido-resumo {
+    margin-top: 10px;
+    background: #eee;
+    padding: 10px;
+}
+
+.EM_PRODUCAO {
+    background-color: purple;
+}
+
+.EM_SEPARACAO {
+    background-color: yellow;
+}
+
+.SILKANDO {
+    background-color: gray; 
+}
+
+.BORDADO {
+    background-color: orange;
+}
+
+.PRONTO {
+    background-color: blue;
+}
+
+.ENTREGUE {
+    background-color: green;
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */
