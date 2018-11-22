@@ -235,4 +235,10 @@ ui bootstrap tweaks
      opacity: 0.7;
  }
 
+@media (min-width: 992px) {
+    .modal-lg {
+        max-width: 90%;
+    }
+}
+
 /* jhipster-needle-scss-add-main JHipster will add new css style */

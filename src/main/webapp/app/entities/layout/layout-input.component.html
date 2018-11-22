@@ -2,7 +2,7 @@
     <h4 class="modal-title" id="myLayoutLabel" jhiTranslate="vestdeskApp.layout.home.pesquisar"></h4>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
 </div>
-<div class="container">
+<div class="container-fluid">
     <h2>
         <button class="btn btn-primary float-right jh-create-entity create-layout" [routerLink]="['/', { outlets: { popup: ['layout-new'] } }]">
             <span class="fa fa-plus"></span>
@@ -37,7 +37,8 @@
                 </thead>
                 <tbody>
                     {{layouts}}
-                    <tr style="display: inline-block; padding: 10px; height: 300px;" [ngClass]="{'selecionado': layout.selecionado}" class="col-md-6" *ngFor="let layout of layouts ;trackBy: trackId">
+                    <tr style="display: inline-block; padding: 5px; height: 300px;" [ngClass]="{'selecionado': layout.selecionado}" class="col-md-4"
+                        *ngFor="let layout of layouts ;trackBy: trackId">
                         <div class="col-md-12 text-center" (click)="clique(layout)">
                             <input type="checkbox" [(ngModel)]="layout.selecionado">
                             <label for="nome">
@@ -50,10 +51,11 @@
                             <div class="offset-md-3">
                                 <img [src]="'data:image/jpg;base64,' + layout.imagem" width="200px;" alt="">
                             </div>
-                            <div class="row" style="position: absolute;top: 40px;left: 15px;padding: 5px;color: black; font-weight: bold;" *ngIf="layout.configuracaoLayout != null || layout.configuracaoLayout != undefined">
+                            <div class="row" style="position: absolute;top: 40px;padding: 5px;color: black; font-weight: bold;" *ngIf="layout.configuracaoLayout != null || layout.configuracaoLayout != undefined">
                                 <div class="col-md-6">
                                     <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaFrente" for="field_tipoEstampaFrente">Tipo Estampa Frente</label>
                                     <select class="form-control" name="tipoEstampaFrente" [(ngModel)]="layout.configuracaoLayout.tipoEstampaFrente" id="field_tipoEstampaFrente">
+                                        <option value="NENHUM">{{'vestdeskApp.TipoEstampa.NENHUM' | translate}}</option>
                                         <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
                                         <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
                                     </select>
@@ -61,20 +63,25 @@
                                 <div class="col-md-6">
                                     <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaCosta" for="field_tipoEstampaCosta">Tipo Estampa Costa</label>
                                     <select class="form-control" name="tipoEstampaCosta" [(ngModel)]="layout.configuracaoLayout.tipoEstampaCosta" id="field_tipoEstampaCosta">
+                                        <option value="NENHUM">{{'vestdeskApp.TipoEstampa.NENHUM' | translate}}</option>
                                         <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
                                         <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaDireita" for="field_tipoEstampaMangaDireita">Tipo Estampa Manga Direita</label>
-                                    <select class="form-control" name="tipoEstampaMangaDireita" [(ngModel)]="layout.configuracaoLayout.tipoEstampaMangaDireita" id="field_tipoEstampaMangaDireita">
+                                    <select class="form-control" name="tipoEstampaMangaDireita" [(ngModel)]="layout.configuracaoLayout.tipoEstampaMangaDireita"
+                                        id="field_tipoEstampaMangaDireita">
+                                        <option value="NENHUM">{{'vestdeskApp.TipoEstampa.NENHUM' | translate}}</option>
                                         <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
                                         <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoEstampaMangaEsquerda" for="field_tipoEstampaMangaEsquerda">Tipo Estampa Manga Esquerda</label>
-                                    <select class="form-control" name="tipoEstampaMangaEsquerda" [(ngModel)]="layout.configuracaoLayout.tipoEstampaMangaEsquerda" id="field_tipoEstampaMangaEsquerda">
+                                    <select class="form-control" name="tipoEstampaMangaEsquerda" [(ngModel)]="layout.configuracaoLayout.tipoEstampaMangaEsquerda"
+                                        id="field_tipoEstampaMangaEsquerda">
+                                        <option value="NENHUM">{{'vestdeskApp.TipoEstampa.NENHUM' | translate}}</option>
                                         <option value="BORDADO">{{'vestdeskApp.TipoEstampa.BORDADO' | translate}}</option>
                                         <option value="SILK">{{'vestdeskApp.TipoEstampa.SILK' | translate}}</option>
                                     </select>

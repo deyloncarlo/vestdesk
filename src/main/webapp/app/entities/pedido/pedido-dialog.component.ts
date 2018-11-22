@@ -4,7 +4,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
 import { Pedido, StatusPedido, TipoPedido } from './pedido.model';
 import { PedidoPopupService } from './pedido-popup.service';
@@ -13,8 +13,8 @@ import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente'
 import { Modelo } from '../modelo-vestuario';
 import { Tamanho } from '../configuracao-produto';
 import { Cor, CorService } from '../cor';
-import { PedidoItem } from '../pedido-item';
-import { Produto, ProdutoPopupService } from '../produto';
+import { PedidoItem, FormaPagamento } from '../pedido-item';
+import { Produto, ProdutoPopupService, ProdutoService } from '../produto';
 import { statSync } from 'fs';
 import { ProdutoInputComponent } from '../produto/produto-input.component';
 import { LayoutPopupService } from '../layout';
@@ -40,6 +40,10 @@ export class PedidoDialogComponent implements OnInit {
     cor: Cor;
     produto: Produto;
     quantidade: number;
+    clienteCamisa: string;
+    primeiroPagamento: number;
+    formaPrimeiroPagamento: FormaPagamento;
+    produtos: Produto[];
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -50,7 +54,9 @@ export class PedidoDialogComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private ngbModal: NgbModal,
         private produtoPopupService: ProdutoPopupService,
-        private layoutPopupService: LayoutPopupService
+        private layoutPopupService: LayoutPopupService,
+        private produtoService: ProdutoService,
+        private parseLinks: JhiParseLinks,
     ) {
     }
 
@@ -131,34 +137,51 @@ export class PedidoDialogComponent implements OnInit {
         this.isSaving = false;
     }
 
-    inserir() {
+    private onSuccess(data, headers) {
+        this.adcionarPedidoItem(data);
+    }
+
+    private adcionarPedidoItem(p_produto) {
         if (!this.pedido.listaPedidoItem) {
             this.pedido.listaPedidoItem = new Array<PedidoItem>();
         }
         const pedidoItem = new PedidoItem();
-        debugger
+        pedidoItem.quantidade = this.quantidade; 
         if (this.pedido.tipoPedido == TipoPedido.PRODUCAO) {
             if (this.pedido.cliente != null && this.pedido.cliente.telefone) {
                 pedidoItem.telefone = this.pedido.cliente.telefone;
             }
             pedidoItem.produto = this.produto;
-            pedidoItem.quantidade = this.quantidade;
 
         } else {
             pedidoItem.telefone = this.telefone;
+            pedidoItem.clienteCamisa = this.clienteCamisa;
             pedidoItem.nomeRoupa = this.nomeRoupa;
-            pedidoItem.produto = this.criarProduto();
+            // pedidoItem.produto = this.criarProduto();
+            pedidoItem.produto = p_produto;
+            pedidoItem.primeiroPagamento = this.primeiroPagamento;
+            pedidoItem.formaPrimeiroPagamento = this.formaPrimeiroPagamento;
+            pedidoItem.valor = (pedidoItem.quantidade * pedidoItem.produto.preco) - pedidoItem.primeiroPagamento;
         }
         this.pedido.listaPedidoItem.push(pedidoItem);
+    }
+
+    inserir() {
+        this.produtoService.obterProduto({
+            modelo: this.modelo,
+            tamanho: this.tamanho,
+            corId: this.cor.id
+        }).subscribe(
+            (res: HttpResponse<Produto>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     criarProduto() {
         const produto = new Produto();
         produto.tamanho = this.tamanho;
         produto.modelo = this.modelo;
-        produto.listaCor = new Array<Produto>();
-        produto.listaCor.push(this.cor);
-        produto.listaCor[0].nome
+        produto.cor = this.cor;
         return produto;
     }
 
@@ -174,7 +197,7 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     selecionarLayout() {
-        this.layoutPopupService.open(LayoutInputComponent as Component)
+        this.layoutPopupService.open(LayoutInputComponent as Component, this.pedido.listaConfiguracaoLayout)
             .then((resolve) => {
                 resolve.result.then((listaConfiguracaoLayout) => {
                     debugger

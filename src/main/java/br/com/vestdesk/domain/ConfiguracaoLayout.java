@@ -11,6 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import br.com.vestdesk.domain.enumeration.TipoEstampa;
@@ -46,6 +47,9 @@ public class ConfiguracaoLayout implements Serializable
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_estampa_manga_esquerda")
 	private TipoEstampa tipoEstampaMangaEsquerda;
+
+	@ManyToOne
+	private Layout layout;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -106,5 +110,55 @@ public class ConfiguracaoLayout implements Serializable
 	public String toString()
 	{
 		return "ConfiguracaoLayout{" + "id=" + getId() + ", dataCricao='" + getDataCricao() + "'" + "}";
+	}
+
+	public TipoEstampa getTipoEstampaFrente()
+	{
+		return this.tipoEstampaFrente;
+	}
+
+	public void setTipoEstampaFrente(TipoEstampa tipoEstampaFrente)
+	{
+		this.tipoEstampaFrente = tipoEstampaFrente;
+	}
+
+	public TipoEstampa getTipoEstampaCosta()
+	{
+		return this.tipoEstampaCosta;
+	}
+
+	public void setTipoEstampaCosta(TipoEstampa tipoEstampaCosta)
+	{
+		this.tipoEstampaCosta = tipoEstampaCosta;
+	}
+
+	public TipoEstampa getTipoEstampaMangaDireita()
+	{
+		return this.tipoEstampaMangaDireita;
+	}
+
+	public void setTipoEstampaMangaDireita(TipoEstampa tipoEstampaMangaDireita)
+	{
+		this.tipoEstampaMangaDireita = tipoEstampaMangaDireita;
+	}
+
+	public TipoEstampa getTipoEstampaMangaEsquerda()
+	{
+		return this.tipoEstampaMangaEsquerda;
+	}
+
+	public void setTipoEstampaMangaEsquerda(TipoEstampa tipoEstampaMangaEsquerda)
+	{
+		this.tipoEstampaMangaEsquerda = tipoEstampaMangaEsquerda;
+	}
+
+	public Layout getLayout()
+	{
+		return this.layout;
+	}
+
+	public void setLayout(Layout layout)
+	{
+		this.layout = layout;
 	}
 }

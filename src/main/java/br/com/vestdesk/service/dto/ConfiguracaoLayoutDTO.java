@@ -1,61 +1,129 @@
 package br.com.vestdesk.service.dto;
 
-
-import java.time.LocalDate;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
+
+import br.com.vestdesk.domain.enumeration.TipoEstampa;
 
 /**
  * A DTO for the ConfiguracaoLayout entity.
  */
-public class ConfiguracaoLayoutDTO implements Serializable {
+public class ConfiguracaoLayoutDTO implements Serializable
+{
+	private Long id;
 
-    private Long id;
+	private LocalDate dataCricao;
 
-    private LocalDate dataCricao;
+	private TipoEstampa tipoEstampaFrente;
 
-    public Long getId() {
-        return id;
-    }
+	private TipoEstampa tipoEstampaCosta;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	private TipoEstampa tipoEstampaMangaDireita;
 
-    public LocalDate getDataCricao() {
-        return dataCricao;
-    }
+	private TipoEstampa tipoEstampaMangaEsquerda;
 
-    public void setDataCricao(LocalDate dataCricao) {
-        this.dataCricao = dataCricao;
-    }
+	private LayoutDTO layout;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	public Long getId()
+	{
+		return this.id;
+	}
 
-        ConfiguracaoLayoutDTO configuracaoLayoutDTO = (ConfiguracaoLayoutDTO) o;
-        if(configuracaoLayoutDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), configuracaoLayoutDTO.getId());
-    }
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	public LocalDate getDataCricao()
+	{
+		return this.dataCricao;
+	}
 
-    @Override
-    public String toString() {
-        return "ConfiguracaoLayoutDTO{" +
-            "id=" + getId() +
-            ", dataCricao='" + getDataCricao() + "'" +
-            "}";
-    }
+	public void setDataCricao(LocalDate dataCricao)
+	{
+		this.dataCricao = dataCricao;
+	}
+
+	@Override
+	public boolean equals(Object o)
+	{
+		if (this == o)
+		{
+			return true;
+		}
+		if (o == null || getClass() != o.getClass())
+		{
+			return false;
+		}
+
+		ConfiguracaoLayoutDTO configuracaoLayoutDTO = (ConfiguracaoLayoutDTO) o;
+		if (configuracaoLayoutDTO.getId() == null || getId() == null)
+		{
+			return false;
+		}
+		return Objects.equals(getId(), configuracaoLayoutDTO.getId());
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return Objects.hashCode(getId());
+	}
+
+	@Override
+	public String toString()
+	{
+		return "ConfiguracaoLayoutDTO{" + "id=" + getId() + ", dataCricao='" + getDataCricao() + "'" + "}";
+	}
+
+	public TipoEstampa getTipoEstampaFrente()
+	{
+		return this.tipoEstampaFrente;
+	}
+
+	public void setTipoEstampaFrente(TipoEstampa tipoEstampaFrente)
+	{
+		this.tipoEstampaFrente = tipoEstampaFrente;
+	}
+
+	public TipoEstampa getTipoEstampaCosta()
+	{
+		return this.tipoEstampaCosta;
+	}
+
+	public void setTipoEstampaCosta(TipoEstampa tipoEstampaCosta)
+	{
+		this.tipoEstampaCosta = tipoEstampaCosta;
+	}
+
+	public TipoEstampa getTipoEstampaMangaDireita()
+	{
+		return this.tipoEstampaMangaDireita;
+	}
+
+	public void setTipoEstampaMangaDireita(TipoEstampa tipoEstampaMangaDireita)
+	{
+		this.tipoEstampaMangaDireita = tipoEstampaMangaDireita;
+	}
+
+	public TipoEstampa getTipoEstampaMangaEsquerda()
+	{
+		return this.tipoEstampaMangaEsquerda;
+	}
+
+	public void setTipoEstampaMangaEsquerda(TipoEstampa tipoEstampaMangaEsquerda)
+	{
+		this.tipoEstampaMangaEsquerda = tipoEstampaMangaEsquerda;
+	}
+
+	public LayoutDTO getLayout()
+	{
+		return this.layout;
+	}
+
+	public void setLayout(LayoutDTO layout)
+	{
+		this.layout = layout;
+	}
 }

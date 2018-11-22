@@ -90,6 +90,12 @@ public class LayoutService
 		return this.layoutMapper.toDto(layout);
 	}
 
+	public Layout getById(Long id)
+	{
+		Layout layout = this.layoutRepository.findOne(id);
+		return layout;
+	}
+
 	/**
 	 * Delete the "id" layout.
 	 *

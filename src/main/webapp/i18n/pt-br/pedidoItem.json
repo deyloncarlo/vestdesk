@@ -16,12 +16,13 @@
             "detail": {
                 "title": "Pedido Item"
             },
-            "nomeRoupa": "Nome Roupa",
+            "nomeRoupa": "Nome Camisa",
+            "clienteCamisa": "Cliente Camisa",
             "telefone": "Telefone",
             "tamanho": "Tamanho",
             "modelo": "Modelo",
             "cor": "Cor",
-            "quantidade": "Quantidade"
+            "quantidade": "Qtd"
         }
     }
 }

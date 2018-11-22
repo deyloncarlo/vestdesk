@@ -2,9 +2,7 @@ package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
@@ -12,7 +10,7 @@ import br.com.vestdesk.domain.enumeration.Tamanho;
 /**
  * A DTO for the Produto entity.
  */
-public class ProdutoDTO implements Serializable
+public class ProdutoMinDTO implements Serializable
 {
 
 	private Long id;
@@ -36,10 +34,6 @@ public class ProdutoDTO implements Serializable
 	private Modelo modelo;
 
 	private Integer quantidadeEstoque;
-
-	private Set<CorDTO> listaCor = new HashSet<>();
-
-	private Set<MaterialTamanhoDTO> listaMaterialTamanho = new HashSet<>();
 
 	private BigDecimal preco;
 
@@ -87,7 +81,7 @@ public class ProdutoDTO implements Serializable
 			return false;
 		}
 
-		ProdutoDTO produtoDTO = (ProdutoDTO) o;
+		ProdutoMinDTO produtoDTO = (ProdutoMinDTO) o;
 		if (produtoDTO.getId() == null || getId() == null)
 		{
 			return false;
@@ -186,26 +180,6 @@ public class ProdutoDTO implements Serializable
 	public void setModelo(Modelo modelo)
 	{
 		this.modelo = modelo;
-	}
-
-	public Set<CorDTO> getListaCor()
-	{
-		return this.listaCor;
-	}
-
-	public void setListaCor(Set<CorDTO> listaCor)
-	{
-		this.listaCor = listaCor;
-	}
-
-	public Set<MaterialTamanhoDTO> getListaMaterialTamanho()
-	{
-		return this.listaMaterialTamanho;
-	}
-
-	public void setListaMaterialTamanho(Set<MaterialTamanhoDTO> listaMaterialTamanho)
-	{
-		this.listaMaterialTamanho = listaMaterialTamanho;
 	}
 
 	public BigDecimal getPreco()

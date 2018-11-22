@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.vestdesk.domain.ConfiguracaoLayout;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.Produto;
@@ -44,15 +45,19 @@ public class PedidoService
 
 	private final ProdutoService produtoService;
 
+	private final ConfiguracaoLayoutService configuracaoLayoutService;
+
 	private EntityManager em;
 
 	public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper,
-			PedidoItemService pedidoItemService, ProdutoService produtoService, EntityManager em)
+			PedidoItemService pedidoItemService, ProdutoService produtoService,
+			ConfiguracaoLayoutService configuracaoLayoutService, EntityManager em)
 	{
 		this.pedidoRepository = pedidoRepository;
 		this.pedidoMapper = pedidoMapper;
 		this.pedidoItemService = pedidoItemService;
 		this.produtoService = produtoService;
+		this.configuracaoLayoutService = configuracaoLayoutService;
 		this.em = em;
 	}
 
@@ -68,6 +73,7 @@ public class PedidoService
 		this.log.debug("Request to save Pedido : {}", pedidoDTO);
 		Pedido pedido = this.pedidoMapper.toEntity(pedidoDTO);
 		Set<PedidoItem> listaPedidoItem = new HashSet<>(pedido.getListaPedidoItem());
+		Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>(pedido.getListaConfiguracaoLayout());
 
 		if (pedido.getStatusPedido().equals(StatusPedido.CONCLUIDO))
 		{
@@ -80,6 +86,7 @@ public class PedidoService
 		if (pedido.getId() != null)
 		{
 			Set<PedidoItem> listaPedidoItemRemovido = new HashSet<>();
+			Set<ConfiguracaoLayout> listaConfiguracaoLayoutRemovido = new HashSet<>();
 			Pedido pedidoEncontrado = this.pedidoRepository.findOne(pedido.getId());
 
 			for (PedidoItem pedidoItem : pedidoEncontrado.getListaPedidoItem())
@@ -94,11 +101,23 @@ public class PedidoService
 			}
 
 			this.pedidoItemService.delete(listaPedidoItemRemovido);
+
+			for (ConfiguracaoLayout configuracaoLayout : pedidoEncontrado.getListaConfiguracaoLayout())
+			{
+				if (!listaConfiguracaoLayout.contains(configuracaoLayout))
+				{
+					listaConfiguracaoLayoutRemovido.add(configuracaoLayout);
+				}
+			}
+			this.configuracaoLayoutService.delete(listaConfiguracaoLayoutRemovido);
 		}
 		else
 		{
 			pedido.setDataCriacao(LocalDate.now());
 		}
+		this.configuracaoLayoutService.save(listaConfiguracaoLayout);
+		pedido.getListaConfiguracaoLayout().clear();
+		pedido.getListaConfiguracaoLayout().addAll(listaConfiguracaoLayout);
 
 		pedido = this.pedidoRepository.save(pedido);
 

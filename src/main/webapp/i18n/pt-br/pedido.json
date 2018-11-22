@@ -24,8 +24,9 @@
             "tipoEstampaMangaDireita": "Direita",
             "tipoEstampaMangaEsquerda": "Esquerda",
             "dataCriacao": "Data Criacao",
-            "nomeRoupa": "Nome na Roupa",
-            "telefone": "telefone",
+            "nomeRoupa": "Nome na Camisa",
+            "observacao": "Observação",
+            "telefone": "Telefone",
             "modelo": "Modelo",
             "tamanho": "Tamanho",
             "cor": "Cor",
@@ -35,7 +36,11 @@
             "produto": "Produto",
             "quantidadeItem": "Quantidade",
             "id": "Código",
-            "layout": "Layout"
+            "layout": "Layout",
+            "clienteCamisa": "Nome",
+            "formaPagamento": "Forma Pagamento",
+            "primeiroPagamento": "Primeiro Pagamento (R$)",
+            "valorProduto": "Valor Restante(R$)"
         }
     }
 }

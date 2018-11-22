@@ -166,12 +166,14 @@ public class ProdutoService
 		return produto;
 	}
 
-	public Produto obterPeloModeloTamanhoCor(Modelo modelo, Tamanho tamanho, Set<Cor> listaCor)
+	public Produto obterPeloModeloTamanhoCor(Modelo modelo, Tamanho tamanho, Cor cor)
 	{
-		Query query = this.em.createQuery(
-				"SELECT produto FROM Produto produto WHERE modelo = :modeloProduto and tamanho = :tamanhoProduto");
+		Query query = this.em.createQuery("SELECT produto FROM Produto produto "
+				+ "WHERE modelo = :modeloProduto and tamanho = :tamanhoProduto and cor.id = :corId");
 		query.setParameter("modeloProduto", modelo);
 		query.setParameter("tamanhoProduto", tamanho);
+		query.setParameter("corId", cor.getId());
+
 		List<Produto> listaProduto = query.getResultList();
 		if (!listaProduto.isEmpty())
 		{

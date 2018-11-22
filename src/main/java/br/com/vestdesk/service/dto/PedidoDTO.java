@@ -2,7 +2,9 @@ package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -46,6 +48,8 @@ public class PedidoDTO implements Serializable
 	private LocalDate dataFim;
 
 	private StatusPedido statusPedido;
+
+	private List<ConfiguracaoLayoutDTO> listaConfiguracaoLayout = new ArrayList<>();
 
 	public Long getId()
 	{
@@ -230,5 +234,15 @@ public class PedidoDTO implements Serializable
 	public void setStatusPedido(StatusPedido statusPedido)
 	{
 		this.statusPedido = statusPedido;
+	}
+
+	public List<ConfiguracaoLayoutDTO> getListaConfiguracaoLayout()
+	{
+		return this.listaConfiguracaoLayout;
+	}
+
+	public void setListaConfiguracaoLayout(List<ConfiguracaoLayoutDTO> listaConfiguracaoLayout)
+	{
+		this.listaConfiguracaoLayout = listaConfiguracaoLayout;
 	}
 }

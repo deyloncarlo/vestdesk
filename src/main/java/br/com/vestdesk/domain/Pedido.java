@@ -86,6 +86,9 @@ public class Pedido implements Serializable
 	@Column(name = "status_pedido")
 	private StatusPedido statusPedido;
 
+	@OneToMany
+	private Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>();
+
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId()
@@ -308,5 +311,15 @@ public class Pedido implements Serializable
 	public void setStatusPedido(StatusPedido statusPedido)
 	{
 		this.statusPedido = statusPedido;
+	}
+
+	public Set<ConfiguracaoLayout> getListaConfiguracaoLayout()
+	{
+		return this.listaConfiguracaoLayout;
+	}
+
+	public void setListaConfiguracaoLayout(Set<ConfiguracaoLayout> listaConfiguracaoLayout)
+	{
+		this.listaConfiguracaoLayout = listaConfiguracaoLayout;
 	}
 }

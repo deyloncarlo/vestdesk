@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 
 import br.com.vestdesk.domain.Produto;
 import br.com.vestdesk.service.dto.ProdutoDTO;
+import br.com.vestdesk.service.dto.ProdutoMinDTO;
 
 /**
  * Mapper for the entity Produto and its DTO ProdutoDTO.
@@ -14,7 +15,11 @@ public interface ProdutoMapper
 
 	ProdutoDTO toDto(Produto produto);
 
+	ProdutoMinDTO toMinDto(Produto produto);
+
 	Produto toEntity(ProdutoDTO produtoDTO);
+
+	Produto toEntity(ProdutoMinDTO produtoDTO);
 
 	default Produto fromId(Long id)
 	{

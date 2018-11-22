@@ -84,8 +84,8 @@ public class PedidoItemService
 			{
 				Modelo modelo = pedidoItem.getProduto().getModelo();
 				Tamanho tamanho = pedidoItem.getProduto().getTamanho();
-				Set<Cor> listaCor = pedidoItem.getProduto().getListaCor();
-				Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, listaCor);
+				Cor cor = pedidoItem.getProduto().getCor();
+				Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
 				if (produtoEncontrado == null)
 				{
 					throw new RuntimeException("error.produto.nenhumProdutoCadastrado");

@@ -15,7 +15,8 @@ import { ConfiguracaoLayout } from './../configuracao-layout';
 })
 export class LayoutInputComponent implements OnInit, OnDestroy {
 
-    layouts: Layout[];
+    lista: ConfiguracaoLayout[];
+    layouts: any[];
     selecionados: ConfiguracaoLayout[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -38,6 +39,7 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         private principal: Principal,
         public activeModal: NgbActiveModal
     ) {
+        
         this.layouts = [];
         this.selecionados = [];
         this.nome = '';
@@ -87,11 +89,28 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     ngOnInit() {
+        debugger
         this.loadAll();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
         this.registerChangeInClientes();
+    }
+
+    preencherSelecionados() {
+        let layouts = this.layouts;
+        this.lista.forEach(function (p_configuracaoProduto) {
+            let listaLayouts = layouts.filter(function (p_layout) {
+                if(p_layout.id == p_configuracaoProduto.layout.id) {
+                    return true;
+                }
+                return false;
+            });
+            debugger
+            listaLayouts[0].selecionado = true;
+            listaLayouts[0].configuracaoLayout = p_configuracaoProduto;
+        });
+        this.selecionados = this.selecionados.concat(this.lista);
     }
 
     ngOnDestroy() {
@@ -111,15 +130,15 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
 
     desselecionar(layout) {
         layout.selecionado = false;
+        let index = this.selecionados.indexOf(layout.configuracaoLayout);
+        this.selecionados.splice(index, 1);
         layout.configuracaoLayout = null;
-        let index = this.selecionados.indexOf(layout);
-        this.selecionados.splice(1, index);
     }
 
     clique(layout) {
-        if(layout.selecionado) {
+        if (layout.selecionado) {
             this.desselecionar(layout);
-        }else {
+        } else {
             debugger
             this.selecionar(layout);
         }
@@ -149,9 +168,9 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {
-            debugger
             this.layouts.push(data[i]);
         }
+        this.preencherSelecionados();
     }
 
     private onError(error) {

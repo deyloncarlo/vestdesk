@@ -29,6 +29,12 @@ public class PedidoItem implements Serializable
 	private String nomeRoupa;
 
 	@Column
+	private String observacao;
+
+	@Column
+	private String clienteCamisa;
+
+	@Column
 	private String telefone;
 
 	@ManyToOne
@@ -134,5 +140,25 @@ public class PedidoItem implements Serializable
 	public void setQuantidade(Integer quantidade)
 	{
 		this.quantidade = quantidade;
+	}
+
+	public String getObservacao()
+	{
+		return this.observacao;
+	}
+
+	public void setObservacao(String observacao)
+	{
+		this.observacao = observacao;
+	}
+
+	public String getClienteCamisa()
+	{
+		return this.clienteCamisa;
+	}
+
+	public void setClienteCamisa(String clienteCamisa)
+	{
+		this.clienteCamisa = clienteCamisa;
 	}
 }

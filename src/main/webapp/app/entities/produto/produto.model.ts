@@ -21,7 +21,7 @@ export class Produto implements BaseEntity {
         public quantidadeEstoque?: number,
         public listaMaterial?: Material[],
         public listaMaterialTamanho?: MaterialTamanho[],
-        public listaCor?: Cor[],
+        public cor?: Cor,
         public nomeRoupa?: string,
         public preco?: number
     ) {

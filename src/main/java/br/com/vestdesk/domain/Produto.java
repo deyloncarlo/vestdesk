@@ -11,9 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -77,9 +76,8 @@ public class Produto implements Serializable
 	@ManyToMany
 	private Set<Cor> listaMaterial = new HashSet<>();
 
-	@ManyToMany
-	@JoinTable(name = "produto_lista_cor", joinColumns = @JoinColumn(name = "produtos_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "lista_cors_id", referencedColumnName = "id"))
-	private Set<Cor> listaCor = new HashSet<>();
+	@ManyToOne
+	private Cor cor;
 
 	@OneToMany(mappedBy = "produto")
 	@JsonIgnore
@@ -248,16 +246,6 @@ public class Produto implements Serializable
 		this.modelo = modelo;
 	}
 
-	public Set<Cor> getListaCor()
-	{
-		return this.listaCor;
-	}
-
-	public void setListaCor(Set<Cor> listaCor)
-	{
-		this.listaCor = listaCor;
-	}
-
 	public Set<Cor> getListaMaterial()
 	{
 		return this.listaMaterial;
@@ -296,6 +284,16 @@ public class Produto implements Serializable
 	public void setPreco(BigDecimal preco)
 	{
 		this.preco = preco;
+	}
+
+	public Cor getCor()
+	{
+		return this.cor;
+	}
+
+	public void setCor(Cor cor)
+	{
+		this.cor = cor;
 	}
 
 }

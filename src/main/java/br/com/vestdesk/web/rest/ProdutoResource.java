@@ -26,8 +26,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
+import br.com.vestdesk.domain.Cor;
+import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.enumeration.Modelo;
+import br.com.vestdesk.domain.enumeration.Tamanho;
+import br.com.vestdesk.service.CorService;
 import br.com.vestdesk.service.ProdutoService;
 import br.com.vestdesk.service.dto.ProdutoDTO;
+import br.com.vestdesk.service.dto.ProdutoMinDTO;
+import br.com.vestdesk.service.mapper.ProdutoMapper;
 import br.com.vestdesk.web.rest.errors.BadRequestAlertException;
 import br.com.vestdesk.web.rest.util.HeaderUtil;
 import br.com.vestdesk.web.rest.util.PaginationUtil;
@@ -47,9 +54,15 @@ public class ProdutoResource
 
 	private final ProdutoService produtoService;
 
-	public ProdutoResource(ProdutoService produtoService)
+	private final CorService corService;
+
+	private final ProdutoMapper produtoMapper;
+
+	public ProdutoResource(ProdutoService produtoService, ProdutoMapper produtoMapper, CorService corService)
 	{
 		this.produtoService = produtoService;
+		this.produtoMapper = produtoMapper;
+		this.corService = corService;
 	}
 
 	/**
@@ -147,4 +160,20 @@ public class ProdutoResource
 		this.produtoService.delete(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
 	}
+
+	@GetMapping("/produtos/obterProduto")
+	@Timed
+	public ResponseEntity<ProdutoMinDTO> obterProduto(@RequestParam(name = "modelo", required = false) Modelo modelo,
+			@RequestParam(name = "corId", required = false) Long corId,
+			@RequestParam(name = "tamanho", required = false) Tamanho tamanho)
+	{
+		Cor cor = null;
+		if (corId != null)
+		{
+			cor = this.corService.getById(corId);
+		}
+		Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(this.produtoMapper.toMinDto(produtoEncontrado)));
+	}
+
 }

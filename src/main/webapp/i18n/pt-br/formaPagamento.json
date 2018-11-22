@@ -16,7 +16,12 @@
             "detail": {
                 "title": "Forma Pagamento"
             },
-            "nome": "Nome"
+            "nome": "Nome",
+            "DINHEIRO": "Dinheiro",
+            "DEBITO": "Débito",
+            "CREDITO": "Crédito",
+            "TRANSFERENCIA": "Transferência",
+            "BOLETO": "Boleto"
         }
     }
 }

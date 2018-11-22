@@ -44,6 +44,9 @@ export class ProdutoDialogComponent implements OnInit {
                 this.listaMateriais = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message));
+        if (this.produto && !this.produto.cor) {
+            this.produto.cor = new Cor();
+        }
     }
 
     clear() {

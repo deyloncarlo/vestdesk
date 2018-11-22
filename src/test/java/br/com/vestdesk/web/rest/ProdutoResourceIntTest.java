@@ -32,6 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.VestdeskApp;
 import br.com.vestdesk.domain.Produto;
 import br.com.vestdesk.repository.ProdutoRepository;
+import br.com.vestdesk.service.CorService;
 import br.com.vestdesk.service.ProdutoService;
 import br.com.vestdesk.service.dto.ProdutoDTO;
 import br.com.vestdesk.service.mapper.ProdutoMapper;
@@ -66,6 +67,9 @@ public class ProdutoResourceIntTest
 	private ProdutoService produtoService;
 
 	@Autowired
+	private CorService corService;
+
+	@Autowired
 	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	@Autowired
@@ -85,7 +89,8 @@ public class ProdutoResourceIntTest
 	public void setup()
 	{
 		MockitoAnnotations.initMocks(this);
-		final ProdutoResource produtoResource = new ProdutoResource(this.produtoService);
+		final ProdutoResource produtoResource = new ProdutoResource(this.produtoService, this.produtoMapper,
+				this.corService);
 		this.restProdutoMockMvc = MockMvcBuilders.standaloneSetup(produtoResource)
 				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setConversionService(createFormattingConversionService())

@@ -9,7 +9,7 @@ import br.com.vestdesk.service.dto.PedidoMinDTO;
 /**
  * Mapper for the entity Pedido and its DTO PedidoDTO.
  */
-@Mapper(componentModel = "spring", uses = { PedidoItemMapper.class })
+@Mapper(componentModel = "spring", uses = { PedidoItemMapper.class, ConfiguracaoLayoutMapper.class })
 public interface PedidoMapper
 {
 	Pedido toEntity(PedidoDTO pedidoDTO);

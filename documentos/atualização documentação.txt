@@ -25,5 +25,24 @@ Deve ser gerado uma Ordem de Produção
 
 
 
-Usuaário
+Usuário
     -> Produção: Pode alterar apenas o Status dos Pedidos Item, mais nada
+
+
+Na Edição/Criação de Pedido:
+ -> Modificar "Cliente da Camisa" para "Nome"
+ -> Adicionar campos "Primeiro pagamento" e "Forma pagamento"
+
+ Formas de pagamento
+ -> Dinheiro
+ -> Débito
+ -> Crédito
+ -> Transferência
+ -> Boleto
+
+
+Tela Pedido adionar colunas:
+    -> Cliente
+    -> Data de Previsão
+
+Na seleção do tipo do Bordado -> Remover a opção "NENHUM", deixar vazio mesmo

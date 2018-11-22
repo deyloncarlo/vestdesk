@@ -25,7 +25,7 @@
             "descricao": "Descrição",
             "quantidadeEstoque": "Quantidade Estoque",
             "configuracaoProduto": "Configuracao Produto",
-            "listaCor": "Lista Cor",
+            "cor": "Cor",
             "modeloVestuario": "Modelo Vestuário",
             "quantidadeMinima": "Quantidade Mínima",
             "botaoCriarMaterialTamanho": "Adicionar Material",

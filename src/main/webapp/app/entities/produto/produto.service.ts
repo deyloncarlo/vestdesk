@@ -38,6 +38,12 @@ export class ProdutoService {
             .map((res: HttpResponse<Produto[]>) => this.convertArrayResponse(res));
     }
 
+    obterProduto(req?: any): Observable<HttpResponse<Produto>> {
+        const options = createRequestOption(req);
+        return this.http.get<Produto>(this.resourceUrl + '/obterProduto', { params: options, observe: 'response' })
+            .map((res: HttpResponse<Produto>) => this.convertResponse(res));
+    }
+
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
