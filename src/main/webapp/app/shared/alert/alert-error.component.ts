@@ -64,7 +64,7 @@ export class JhiAlertErrorComponent implements OnDestroy {
                     break;
 
                 case 404:
-                    this.addErrorAlert('Not found', 'error.url.not.found');
+                    // this.addErrorAlert('Not found', 'error.url.not.found');
                     break;
 
                 case 500:

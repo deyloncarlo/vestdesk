@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -86,7 +87,7 @@ public class Pedido implements Serializable
 	@Column(name = "status_pedido")
 	private StatusPedido statusPedido;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not

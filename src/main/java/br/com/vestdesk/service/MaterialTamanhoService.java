@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -31,11 +34,14 @@ public class MaterialTamanhoService
 
 	private final MaterialTamanhoMapper materialTamanhoMapper;
 
+	private final EntityManager em;
+
 	public MaterialTamanhoService(MaterialTamanhoRepository materialTamanhoRepository,
-			MaterialTamanhoMapper materialTamanhoMapper)
+			MaterialTamanhoMapper materialTamanhoMapper, EntityManager em)
 	{
 		this.materialTamanhoRepository = materialTamanhoRepository;
 		this.materialTamanhoMapper = materialTamanhoMapper;
+		this.em = em;
 	}
 
 	/**
@@ -101,6 +107,16 @@ public class MaterialTamanhoService
 		{
 			this.materialTamanhoRepository.delete(materialTamanho);
 		}
+	}
+
+	public List<MaterialTamanho> obterPeloMaterial(Long id)
+	{
+		Query query = this.em.createQuery(
+				"SELECT materialTamanho FROM MaterialTamanho materialTamanho where material.id = :materialId");
+		query.setParameter("materialId", id);
+
+		List<MaterialTamanho> lista = query.getResultList();
+		return lista;
 	}
 
 }

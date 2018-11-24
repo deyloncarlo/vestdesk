@@ -143,7 +143,6 @@ public class ProdutoService
 
 	public Produto getById(Long id)
 	{
-		this.log.debug("Request to get Produto : {}", id);
 		Produto produto = this.produtoRepository.findOne(id);
 		return produto;
 	}
@@ -155,8 +154,15 @@ public class ProdutoService
 	 */
 	public void delete(Long id)
 	{
-		// this.log.debug("Request to delete Produto : {}", id);
-		this.produtoRepository.delete(id);
+		Produto produtoEncontrado = getById(id);
+		if (produtoEncontrado.getListaPedidoItem().isEmpty())
+		{
+			this.produtoRepository.delete(id);
+		}
+		else
+		{
+			throw new RuntimeException("error.produto.existePedidosReferenciandoEsteProduto");
+		}
 	}
 
 	public Produto save(Produto produto)

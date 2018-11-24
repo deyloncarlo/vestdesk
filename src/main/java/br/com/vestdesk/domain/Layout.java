@@ -1,7 +1,9 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -42,6 +45,9 @@ public class Layout implements Serializable
 
 	@Column(nullable = false)
 	private Modelo modelo;
+
+	@OneToMany(mappedBy = "layout")
+	private Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet();
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -145,5 +151,15 @@ public class Layout implements Serializable
 	public void setModelo(Modelo modelo)
 	{
 		this.modelo = modelo;
+	}
+
+	public Set<ConfiguracaoLayout> getListaConfiguracaoLayout()
+	{
+		return this.listaConfiguracaoLayout;
+	}
+
+	public void setListaConfiguracaoLayout(Set<ConfiguracaoLayout> listaConfiguracaoLayout)
+	{
+		this.listaConfiguracaoLayout = listaConfiguracaoLayout;
 	}
 }

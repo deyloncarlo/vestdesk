@@ -103,6 +103,14 @@ public class LayoutService
 	 */
 	public void delete(Long id)
 	{
-		this.layoutRepository.delete(id);
+		Layout layoutEncontrado = getById(id);
+		if (layoutEncontrado.getListaConfiguracaoLayout().isEmpty())
+		{
+			this.layoutRepository.delete(id);
+		}
+		else
+		{
+			throw new RuntimeException("error.layout.existemPedidosReferenciandoEsteLayout");
+		}
 	}
 }

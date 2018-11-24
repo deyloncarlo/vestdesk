@@ -20,6 +20,7 @@ import { ProdutoInputComponent } from '../produto/produto-input.component';
 import { LayoutPopupService } from '../layout';
 import { LayoutInputComponent } from '../layout/layout-input.component';
 import { ConfiguracaoLayout } from '../configuracao-layout';
+import { JhiAlertErrorComponent } from '../../shared';
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -47,6 +48,7 @@ export class PedidoDialogComponent implements OnInit {
     valorRestantePedido: number;
     esconderCampos: any;
     tamanhoGrid: any;
+    produtoNaoEncontrado: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -80,6 +82,9 @@ export class PedidoDialogComponent implements OnInit {
         }
         if (!this.pedido.listaPedidoItem) {
             this.pedido.listaPedidoItem = [];
+        }
+        if (!this.pedido.id) {
+            this.pedido.tipoPedido = TipoPedido.VENDA;
         }
         this.atualizarTotal();
         this.esconderCampos = false;
@@ -141,7 +146,10 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        this.jhiAlertService.error(error.error.detail, null, null);
+        if(error.status == '404') {
+            this.produtoNaoEncontrado = true;
+            setTimeout(() => this.produtoNaoEncontrado = false, 3000);
+        }
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<Pedido>>) {
@@ -162,6 +170,7 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
+        debugger
         this.adcionarPedidoItem(data);
     }
 
@@ -207,7 +216,7 @@ export class PedidoDialogComponent implements OnInit {
             corId: this.cor.id
         }).subscribe(
             (res: HttpResponse<Produto>) => this.onSuccess(res.body, res.headers),
-            (res: HttpErrorResponse) => this.onError(res.message)
+            (res: HttpErrorResponse) => this.onError(res)
         );
     }
 

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.repository.PedidoItemRepository;
 import br.com.vestdesk.repository.ProdutoRepository;
 import br.com.vestdesk.service.dto.PedidoItemDTO;
@@ -105,6 +106,9 @@ public class PedidoItemService
 	{
 		for (PedidoItem pedidoItem : listaPedidoItemRemovido)
 		{
+			VendaAcumulada vendaAcumulada = pedidoItem.getProduto().getVendaAcumulada();
+			vendaAcumulada.getListaPedidoItemProduzido().remove(pedidoItem);
+			vendaAcumulada.getListaPedidoItemAcumulado().remove(pedidoItem);
 			this.pedidoItemRepository.delete(pedidoItem);
 		}
 

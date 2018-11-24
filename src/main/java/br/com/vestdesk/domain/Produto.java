@@ -92,6 +92,9 @@ public class Produto implements Serializable
 	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
 	private VendaAcumulada vendaAcumulada;
 
+	@OneToMany(mappedBy = "produto")
+	private Set<PedidoItem> listaPedidoItem = new HashSet<>();
+
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId()
@@ -309,6 +312,16 @@ public class Produto implements Serializable
 	public void setVendaAcumulada(VendaAcumulada vendaAcumulada)
 	{
 		this.vendaAcumulada = vendaAcumulada;
+	}
+
+	public Set<PedidoItem> getListaPedidoItem()
+	{
+		return this.listaPedidoItem;
+	}
+
+	public void setListaPedidoItem(Set<PedidoItem> listaPedidoItem)
+	{
+		this.listaPedidoItem = listaPedidoItem;
 	}
 
 }

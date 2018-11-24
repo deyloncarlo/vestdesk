@@ -59,10 +59,8 @@ public class CorService
 		return this.corRepository.findAll(pageable).map(this.corMapper::toDto);
 	}
 
-	@Transactional(readOnly = true)
 	public Cor getById(Long id)
 	{
-		this.log.debug("Request to get Cor : {}", id);
 		return this.corRepository.findOne(id);
 	}
 
@@ -87,7 +85,18 @@ public class CorService
 	 */
 	public void delete(Long id)
 	{
-		this.log.debug("Request to delete Cor : {}", id);
-		this.corRepository.delete(id);
+		Cor corEncontrada = getById(id);
+		if (corEncontrada.getListaMaterial().isEmpty() && corEncontrada.getListaProduto().isEmpty())
+		{
+			this.corRepository.delete(id);
+		}
+		else if (!corEncontrada.getListaMaterial().isEmpty())
+		{
+			throw new RuntimeException("error.cor.existeMateriasReferenciandoEstaCor");
+		}
+		else if (!corEncontrada.getListaProduto().isEmpty())
+		{
+			throw new RuntimeException("error.cor.existeProdutosReferenciandoEstaCor");
+		}
 	}
 }

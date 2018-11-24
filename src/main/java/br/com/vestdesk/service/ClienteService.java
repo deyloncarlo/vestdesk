@@ -95,6 +95,12 @@ public class ClienteService
 		return this.clienteMapper.toDto(cliente);
 	}
 
+	public Cliente getById(Long id)
+	{
+		Cliente cliente = this.clienteRepository.findOne(id);
+		return cliente;
+	}
+
 	/**
 	 * Delete the cliente by id.
 	 *
@@ -103,6 +109,14 @@ public class ClienteService
 	public void delete(Long id)
 	{
 		this.log.debug("Request to delete Cliente : {}", id);
-		this.clienteRepository.delete(id);
+		Cliente clienteEncontrado = getById(id);
+		if (clienteEncontrado.getListaPedido().isEmpty())
+		{
+			this.clienteRepository.delete(id);
+		}
+		else
+		{
+			throw new RuntimeException("error.cliente.existePedidosReferenciandoEsteCliente");
+		}
 	}
 }

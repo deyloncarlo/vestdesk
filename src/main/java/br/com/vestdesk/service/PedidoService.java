@@ -159,8 +159,12 @@ public class PedidoService
 
 		for (VendaAcumulada vendaAcumulada : listaVendaAcumulada.keySet())
 		{
-			vendaAcumulada.setQuantidadeAcumulada(
-					vendaAcumulada.getQuantidadeAcumulada() + listaVendaAcumulada.get(vendaAcumulada));
+			Integer quantidade = vendaAcumulada.getQuantidadeAcumulada();
+			if (quantidade == null)
+			{
+				quantidade = 0;
+			}
+			vendaAcumulada.setQuantidadeAcumulada(quantidade + listaVendaAcumulada.get(vendaAcumulada));
 			this.vendaAcumuladaService.save(vendaAcumulada);
 		}
 	}

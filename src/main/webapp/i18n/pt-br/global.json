@@ -141,7 +141,23 @@
         "internalServerError": "Internal server error",
         "server.not.reachable": "Servidor indisponível",
         "url.not.found": "Not found",
-        "produto.nenhumProdutoCadastrado": "Nenhum Produto cadastrado com tais configurações",
+        "produto" : {
+            "nenhumProdutoCadastrado": "Nenhum Produto cadastrado com tais configurações",
+            "existePedidosReferenciandoEsteProduto": "Existem Pedidos referenciando este Produto"
+        },
+        "material": {
+            "existeProdutosReferenciandoEsteMaterial": "Existem Produtos referenciando este Material"
+        },
+        "cliente": {
+            "existePedidosReferenciandoEsteCliente": "Existem Pedidos referenciando este Cliente"
+        },
+        "layout": {
+            "existemPedidosReferenciandoEsteLayout": "Existem Pedidos referenciando este Layout"
+        },
+        "cor": {
+            "existeMateriasReferenciandoEstaCor": "Existem Materiais referenciando esta Cor",
+            "existeProdutosReferenciandoEstaCor": "Existem Produtos referenciando esta Cor"
+        },
         "NotNull": "O Campo {{fieldName}} não pode ser vazio!",
         "Size": "O campo {{fieldName}} não obedece os requisitos de tamanho mínimo ou máximo!",
         "userexists": "Usuário já existente!",

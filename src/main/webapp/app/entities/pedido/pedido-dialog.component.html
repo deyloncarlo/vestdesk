@@ -6,11 +6,6 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <!-- <div class="form-group" [hidden]="!pedido.id">
-            <label for="id" jhiTranslate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                   [(ngModel)]="pedido.id" readonly />
-        </div> -->
         <ngb-tabset>
             <ngb-tab title="Pedido">
                 <ng-template ngbTabContent>
@@ -55,7 +50,7 @@
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido
                             </label>
                             <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" (change)="limparListaPedidoItem()"
-                                required>
+                                required disabled>
                                 <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
                                 <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
                             </select>
@@ -109,6 +104,9 @@
                             </div>
                             <div [hidden]="esconderCampos">
 
+                                <ngb-alert *ngIf="produtoNaoEncontrado" [type]="'danger'" (close)="produtoNaoEncontrado = false">
+                                    Produto não encontrado.
+                                </ngb-alert>
                                 <!-- PRODUTO -->
                                 <div class="row" [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                     <div class="col-md-6">
@@ -335,7 +333,7 @@
             <span class="fa fa-ban"></span>&nbsp;
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving || pedido.statusPedido == 'CONCLUIDO'" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;
             <span jhiTranslate="entity.action.save">Save</span>
         </button>

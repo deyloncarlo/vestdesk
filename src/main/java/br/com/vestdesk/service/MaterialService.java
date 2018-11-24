@@ -1,5 +1,7 @@
 package br.com.vestdesk.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.vestdesk.domain.Cor;
 import br.com.vestdesk.domain.Material;
+import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.repository.MaterialRepository;
 import br.com.vestdesk.service.dto.MaterialDTO;
 import br.com.vestdesk.service.mapper.MaterialMapper;
@@ -27,13 +30,17 @@ public class MaterialService
 
 	private final MaterialMapper materialMapper;
 
+	private final MaterialTamanhoService materialTamanhoService;
+
 	private final CorService corService;
 
-	public MaterialService(MaterialRepository materialRepository, MaterialMapper materialMapper, CorService corService)
+	public MaterialService(MaterialRepository materialRepository, MaterialMapper materialMapper, CorService corService,
+			MaterialTamanhoService materialTamanhoService)
 	{
 		this.materialRepository = materialRepository;
 		this.materialMapper = materialMapper;
 		this.corService = corService;
+		this.materialTamanhoService = materialTamanhoService;
 	}
 
 	/**
@@ -89,6 +96,14 @@ public class MaterialService
 	public void delete(Long id)
 	{
 		this.log.debug("Request to delete Material : {}", id);
-		this.materialRepository.delete(id);
+		List<MaterialTamanho> listaEncontrada = this.materialTamanhoService.obterPeloMaterial(id);
+		if (listaEncontrada.isEmpty())
+		{
+			this.materialRepository.delete(id);
+		}
+		else
+		{
+			throw new RuntimeException("error.material.existeProdutosReferenciandoEsteMaterial");
+		}
 	}
 }
