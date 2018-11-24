@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.Cor;
 import br.com.vestdesk.domain.MaterialTamanho;
 import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
 import br.com.vestdesk.repository.ProdutoRepository;
@@ -38,17 +39,21 @@ public class ProdutoService
 
 	private final ProdutoMapper produtoMapper;
 
+	private final VendaAcumuladaService vendaAcumuladaService;
+
 	private final MaterialTamanhoService materialTamanhoService;
 
 	private EntityManager em;
 
 	public ProdutoService(ProdutoRepository produtoRepository, ProdutoMapper produtoMapper,
-			MaterialTamanhoService materialTamanhoService, EntityManager em)
+			MaterialTamanhoService materialTamanhoService, EntityManager em,
+			VendaAcumuladaService vendaAcumuladaService)
 	{
 		this.produtoRepository = produtoRepository;
 		this.produtoMapper = produtoMapper;
 		this.materialTamanhoService = materialTamanhoService;
 		this.em = em;
+		this.vendaAcumuladaService = vendaAcumuladaService;
 	}
 
 	/**
@@ -80,7 +85,20 @@ public class ProdutoService
 		produto = this.produtoRepository.save(produto);
 
 		this.materialTamanhoService.save(listaMaterialTamanho, produto);
+		criarEntidadeVendaAcumulada(produto);
 		return this.produtoMapper.toDto(produto);
+
+	}
+
+	private void criarEntidadeVendaAcumulada(Produto produto)
+	{
+		VendaAcumulada vendaAcumuladaEncontrada = this.vendaAcumuladaService.obterPeloProduto(produto);
+		if (vendaAcumuladaEncontrada == null)
+		{
+			VendaAcumulada vendaAcumulada = new VendaAcumulada();
+			vendaAcumulada.setProduto(produto);
+			this.vendaAcumuladaService.save(vendaAcumulada);
+		}
 
 	}
 
@@ -123,11 +141,10 @@ public class ProdutoService
 		return this.produtoMapper.toDto(produto);
 	}
 
-	@Transactional(readOnly = true)
 	public Produto getById(Long id)
 	{
 		this.log.debug("Request to get Produto : {}", id);
-		Produto produto = this.produtoRepository.findOneWithEagerRelationships(id);
+		Produto produto = this.produtoRepository.findOne(id);
 		return produto;
 	}
 
@@ -138,7 +155,7 @@ public class ProdutoService
 	 */
 	public void delete(Long id)
 	{
-		this.log.debug("Request to delete Produto : {}", id);
+		// this.log.debug("Request to delete Produto : {}", id);
 		this.produtoRepository.delete(id);
 	}
 

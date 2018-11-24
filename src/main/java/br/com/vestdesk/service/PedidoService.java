@@ -1,6 +1,7 @@
 package br.com.vestdesk.service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.ConfiguracaoLayout;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
+import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
 import br.com.vestdesk.domain.enumeration.TipoPedido;
@@ -43,22 +45,22 @@ public class PedidoService
 
 	private final PedidoItemService pedidoItemService;
 
-	private final ProdutoService produtoService;
+	private final VendaAcumuladaService vendaAcumuladaService;
 
 	private final ConfiguracaoLayoutService configuracaoLayoutService;
 
 	private EntityManager em;
 
 	public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper,
-			PedidoItemService pedidoItemService, ProdutoService produtoService,
-			ConfiguracaoLayoutService configuracaoLayoutService, EntityManager em)
+			PedidoItemService pedidoItemService, ConfiguracaoLayoutService configuracaoLayoutService, EntityManager em,
+			VendaAcumuladaService vendaAcumuladaService)
 	{
 		this.pedidoRepository = pedidoRepository;
 		this.pedidoMapper = pedidoMapper;
 		this.pedidoItemService = pedidoItemService;
-		this.produtoService = produtoService;
 		this.configuracaoLayoutService = configuracaoLayoutService;
 		this.em = em;
+		this.vendaAcumuladaService = vendaAcumuladaService;
 	}
 
 	/**
@@ -127,7 +129,40 @@ public class PedidoService
 		pedido = this.pedidoRepository.save(pedido);
 
 		this.pedidoItemService.save(listaPedidoItem, pedido, atualizarEstoque);
+		if (atualizarEstoque)
+		{
+			atualizarVendaAcumulada(pedido, listaPedidoItem);
+		}
 		return this.pedidoMapper.toDto(pedido);
+	}
+
+	private void atualizarVendaAcumulada(Pedido pedido, Set<PedidoItem> listaPedidoItem)
+	{
+		HashMap<VendaAcumulada, Integer> listaVendaAcumulada = new HashMap<>();
+
+		for (PedidoItem pedidoItem : listaPedidoItem)
+		{
+			VendaAcumulada vendaAcumuladaEncontrada = this.vendaAcumuladaService
+					.obterPeloProduto(pedidoItem.getProduto());
+			if (!listaVendaAcumulada.containsKey(vendaAcumuladaEncontrada))
+			{
+				listaVendaAcumulada.put(vendaAcumuladaEncontrada, pedidoItem.getQuantidade());
+			}
+			else
+			{
+				Integer quantidade = listaVendaAcumulada.get(vendaAcumuladaEncontrada);
+				listaVendaAcumulada.replace(vendaAcumuladaEncontrada, quantidade,
+						quantidade + pedidoItem.getQuantidade());
+			}
+			vendaAcumuladaEncontrada.getListaPedidoItemAcumulado().add(pedidoItem);
+		}
+
+		for (VendaAcumulada vendaAcumulada : listaVendaAcumulada.keySet())
+		{
+			vendaAcumulada.setQuantidadeAcumulada(
+					vendaAcumulada.getQuantidadeAcumulada() + listaVendaAcumulada.get(vendaAcumulada));
+			this.vendaAcumuladaService.save(vendaAcumulada);
+		}
 	}
 
 	public boolean concluirPedido(Set<PedidoItem> listaPedidoItem)
@@ -185,6 +220,11 @@ public class PedidoService
 		this.log.debug("Request to get Pedido : {}", id);
 		Pedido pedido = this.pedidoRepository.findOne(id);
 		return this.pedidoMapper.toDto(pedido);
+	}
+
+	public Pedido getById(Long id)
+	{
+		return this.pedidoRepository.findOne(id);
 	}
 
 	/**

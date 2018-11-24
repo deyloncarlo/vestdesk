@@ -20,6 +20,7 @@
     <include file="config/liquibase/changelog/20180914015414_added_entity_Cor.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180914015418_added_entity_Usuario.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181115222402_added_entity_ConfiguracaoLayout.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181123125629_added_entity_VendaAcumulada.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180722172709_added_entity_constraints_QuantidadeTamanho.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180722172710_added_entity_constraints_ModeloVestuario.xml" relativeToChangelogFile="false"/>

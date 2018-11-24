@@ -23,6 +23,7 @@
                 "usuario": "Usuario",
                 "pedidoItem": "Pedido Item",
                 "configuracaoLayout": "Configuracao Layout",
+                "vendaAcumulada": "Venda Acumulada",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

@@ -37,6 +37,8 @@ public class PedidoItemDTO implements Serializable
 
 	private StatusPedidoItem status;
 
+	private Boolean retiradoAcumuloVendas;
+
 	public Long getId()
 	{
 		return this.id;
@@ -187,6 +189,16 @@ public class PedidoItemDTO implements Serializable
 	public void setStatus(StatusPedidoItem status)
 	{
 		this.status = status;
+	}
+
+	public Boolean getRetiradoAcumuloVendas()
+	{
+		return this.retiradoAcumuloVendas;
+	}
+
+	public void setRetiradoAcumuloVendas(Boolean retiradoAcumuloVendas)
+	{
+		this.retiradoAcumuloVendas = retiradoAcumuloVendas;
 	}
 
 }

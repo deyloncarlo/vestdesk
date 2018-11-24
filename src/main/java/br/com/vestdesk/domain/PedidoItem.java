@@ -65,6 +65,9 @@ public class PedidoItem implements Serializable
 	@Column
 	private StatusPedidoItem status;
 
+	@Column
+	private Boolean retiradoAcumuloVendas;
+
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
 	public Long getId()
@@ -219,5 +222,15 @@ public class PedidoItem implements Serializable
 	public void setStatus(StatusPedidoItem status)
 	{
 		this.status = status;
+	}
+
+	public Boolean getRetiradoAcumuloVendas()
+	{
+		return this.retiradoAcumuloVendas;
+	}
+
+	public void setRetiradoAcumuloVendas(Boolean retiradoAcumuloVendas)
+	{
+		this.retiradoAcumuloVendas = retiradoAcumuloVendas;
 	}
 }

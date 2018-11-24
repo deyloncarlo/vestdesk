@@ -7,13 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.vestdesk.domain.Cor;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.Produto;
-import br.com.vestdesk.domain.enumeration.Modelo;
-import br.com.vestdesk.domain.enumeration.Tamanho;
 import br.com.vestdesk.repository.PedidoItemRepository;
+import br.com.vestdesk.repository.ProdutoRepository;
 import br.com.vestdesk.service.dto.PedidoItemDTO;
 
 /**
@@ -26,12 +24,12 @@ public class PedidoItemService
 
 	private final PedidoItemRepository pedidoItemRepository;
 
-	private final ProdutoService produtoService;
+	private final ProdutoRepository produtoRepository;
 
-	public PedidoItemService(PedidoItemRepository pedidoItemRepository, ProdutoService produtoService)
+	public PedidoItemService(PedidoItemRepository pedidoItemRepository, ProdutoRepository produtoRepository)
 	{
 		this.pedidoItemRepository = pedidoItemRepository;
-		this.produtoService = produtoService;
+		this.produtoRepository = produtoRepository;
 	}
 
 	/**
@@ -80,22 +78,25 @@ public class PedidoItemService
 	{
 		for (PedidoItem pedidoItem : listaPedidoItem)
 		{
-			Modelo modelo = pedidoItem.getProduto().getModelo();
-			Tamanho tamanho = pedidoItem.getProduto().getTamanho();
-			Cor cor = pedidoItem.getProduto().getCor();
-			Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
-			if (produtoEncontrado == null)
+			if (pedidoItem.getId() == null)
 			{
-				throw new RuntimeException("error.produto.nenhumProdutoCadastrado");
+				pedidoItem.setPedido(pedido);
 			}
+			// Produto produtoEncontrado =
+			// this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho,
+			// cor);
+			// if (produtoEncontrado == null)
+			// {
+			// throw new
+			// RuntimeException("error.produto.nenhumProdutoCadastrado");
+			// }
 			if (atualizarEstoque)
 			{
+				Produto produtoEncontrado = this.produtoRepository.findOne(pedidoItem.getProduto().getId());
 				produtoEncontrado
 						.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - pedidoItem.getQuantidade());
-				this.produtoService.save(produtoEncontrado);
+				this.produtoRepository.save(produtoEncontrado);
 			}
-			pedidoItem.setProduto(produtoEncontrado);
-			pedidoItem.setPedido(pedido);
 			this.pedidoItemRepository.save(pedidoItem);
 		}
 	}
@@ -107,5 +108,10 @@ public class PedidoItemService
 			this.pedidoItemRepository.delete(pedidoItem);
 		}
 
+	}
+
+	public PedidoItem getById(Long id)
+	{
+		return this.pedidoItemRepository.findOne(id);
 	}
 }

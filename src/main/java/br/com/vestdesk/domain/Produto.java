@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -79,13 +81,16 @@ public class Produto implements Serializable
 	@ManyToOne
 	private Cor cor;
 
-	@OneToMany(mappedBy = "produto")
+	@OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
 
 	@NotNull
 	@Column(name = "preco", precision = 10, scale = 2, nullable = false)
 	private BigDecimal preco;
+
+	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+	private VendaAcumulada vendaAcumulada;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -294,6 +299,16 @@ public class Produto implements Serializable
 	public void setCor(Cor cor)
 	{
 		this.cor = cor;
+	}
+
+	public VendaAcumulada getVendaAcumulada()
+	{
+		return this.vendaAcumulada;
+	}
+
+	public void setVendaAcumulada(VendaAcumulada vendaAcumulada)
+	{
+		this.vendaAcumulada = vendaAcumulada;
 	}
 
 }

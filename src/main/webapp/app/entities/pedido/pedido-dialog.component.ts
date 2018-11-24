@@ -78,6 +78,9 @@ export class PedidoDialogComponent implements OnInit {
         if (!this.pedido.listaConfiguracaoLayout) {
             this.pedido.listaConfiguracaoLayout = [];
         }
+        if (!this.pedido.listaPedidoItem) {
+            this.pedido.listaPedidoItem = [];
+        }
         this.atualizarTotal();
         this.esconderCampos = false;
         this.tamanhoGrid = {
@@ -122,7 +125,9 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     limparListaPedidoItem() {
-        this.pedido.listaPedidoItem.splice(0, this.pedido.listaPedidoItem.length);
+        if(this.pedido.listaPedidoItem) {
+            this.pedido.listaPedidoItem.splice(0, this.pedido.listaPedidoItem.length);
+        }
     }
 
     private salvar() {
