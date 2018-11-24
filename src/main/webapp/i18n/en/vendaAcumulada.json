@@ -1,0 +1,22 @@
+
+{
+    "vestdeskApp": {
+        "vendaAcumulada" : {
+            "home": {
+                "title": "Venda Acumuladas",
+                "createLabel": "Create a new Venda Acumulada",
+                "createOrEditLabel": "Create or edit a Venda Acumulada"
+            },
+            "created": "A new Venda Acumulada is created with identifier {{ param }}",
+            "updated": "A Venda Acumulada is updated with identifier {{ param }}",
+            "deleted": "A Venda Acumulada is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Venda Acumulada {{ id }}?"
+            },
+            "detail": {
+                "title": "Venda Acumulada"
+            },
+            "quantidadeAcumulada": "Quantidade Acumulada"
+        }
+    }
+}

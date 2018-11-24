@@ -1,0 +1,9 @@
+
+entity VendaAcumulada {
+	quantidadeAcumulada Integer
+}
+
+// Set pagination options
+paginate * with infinite-scroll
+
+dto * with mapstruct
