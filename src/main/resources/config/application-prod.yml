@@ -20,6 +20,8 @@ logging:
         io.github.jhipster: INFO
 
 spring:
+    liquibase:
+        enabled: false
     devtools:
         restart:
             enabled: false
@@ -27,9 +29,9 @@ spring:
             enabled: false
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
-        url: jdbc:mysql://localhost:3306/vestdesk?useUnicode=true&characterEncoding=utf8&useSSL=false
+        url: jdbc:mysql://localhost:3306/vestecw?useUnicode=true&characterEncoding=utf8&useSSL=false
         username: root
-        password:
+        password: vestecw2019admin
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -39,7 +41,7 @@ spring:
     jpa:
         database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
         database: MYSQL
-        show-sql: false
+        show-sql: true
         properties:
             hibernate.id.new_generator_mappings: true
             hibernate.cache.use_second_level_cache: false
@@ -55,6 +57,7 @@ spring:
 
 liquibase:
     contexts: prod
+    enabled: false
 
 # ===================================================================
 # To enable SSL, generate a certificate using:
@@ -76,7 +79,7 @@ liquibase:
 #        ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
 # ===================================================================
 server:
-    port: 8080
+    port: 80
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
@@ -98,8 +101,8 @@ jhipster:
             # security key (this key should be unique for your application, and kept secret)
             key: b70e9fec8a9d665f5b8fa5ee713e6873046a684f
     mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: vestdesk@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
+        from: deylon.profissional@gmail.com
+        base-url: http://localhost:14737/vestdesk # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         graphite:

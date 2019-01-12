@@ -20,6 +20,8 @@ logging:
         io.github.jhipster: DEBUG
 
 spring:
+    liquibase:
+        enabled: false
     profiles:
         active: dev
         #include: swagger
@@ -62,7 +64,7 @@ spring:
 
 liquibase:
     contexts: dev
-
+    enabled: false
 # ===================================================================
 # To enable SSL, generate a certificate using:
 # keytool -genkey -alias vestdesk -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650

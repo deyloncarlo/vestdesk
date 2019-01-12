@@ -1,9 +1,6 @@
 package br.com.vestdesk.config;
 
-import br.com.vestdesk.security.*;
-
-import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.security.*;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -25,125 +22,112 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CorsFilter;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import javax.annotation.PostConstruct;
+import br.com.vestdesk.security.AuthoritiesConstants;
+import io.github.jhipster.config.JHipsterProperties;
+import io.github.jhipster.security.AjaxAuthenticationFailureHandler;
+import io.github.jhipster.security.AjaxAuthenticationSuccessHandler;
+import io.github.jhipster.security.AjaxLogoutSuccessHandler;
 
 @Configuration
 @Import(SecurityProblemSupport.class)
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter
+{
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    private final UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
 
-    private final JHipsterProperties jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
-    private final RememberMeServices rememberMeServices;
+	private final RememberMeServices rememberMeServices;
 
-    private final CorsFilter corsFilter;
+	private final CorsFilter corsFilter;
 
-    private final SecurityProblemSupport problemSupport;
+	private final SecurityProblemSupport problemSupport;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService,
-        JHipsterProperties jHipsterProperties, RememberMeServices rememberMeServices,CorsFilter corsFilter, SecurityProblemSupport problemSupport) {
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.userDetailsService = userDetailsService;
-        this.jHipsterProperties = jHipsterProperties;
-        this.rememberMeServices = rememberMeServices;
-        this.corsFilter = corsFilter;
-        this.problemSupport = problemSupport;
-    }
+	public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder,
+			UserDetailsService userDetailsService, JHipsterProperties jHipsterProperties,
+			RememberMeServices rememberMeServices, CorsFilter corsFilter, SecurityProblemSupport problemSupport)
+	{
+		this.authenticationManagerBuilder = authenticationManagerBuilder;
+		this.userDetailsService = userDetailsService;
+		this.jHipsterProperties = jHipsterProperties;
+		this.rememberMeServices = rememberMeServices;
+		this.corsFilter = corsFilter;
+		this.problemSupport = problemSupport;
+	}
 
-    @PostConstruct
-    public void init() {
-        try {
-            authenticationManagerBuilder
-                .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-        } catch (Exception e) {
-            throw new BeanInitializationException("Security configuration failed", e);
-        }
-    }
+	@PostConstruct
+	public void init()
+	{
+		try
+		{
+			this.authenticationManagerBuilder.userDetailsService(this.userDetailsService)
+					.passwordEncoder(passwordEncoder());
+		}
+		catch (Exception e)
+		{
+			throw new BeanInitializationException("Security configuration failed", e);
+		}
+	}
 
-    @Bean
-    public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler() {
-        return new AjaxAuthenticationSuccessHandler();
-    }
+	@Bean
+	public AjaxAuthenticationSuccessHandler ajaxAuthenticationSuccessHandler()
+	{
+		return new AjaxAuthenticationSuccessHandler();
+	}
 
-    @Bean
-    public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler() {
-        return new AjaxAuthenticationFailureHandler();
-    }
+	@Bean
+	public AjaxAuthenticationFailureHandler ajaxAuthenticationFailureHandler()
+	{
+		return new AjaxAuthenticationFailureHandler();
+	}
 
-    @Bean
-    public AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler() {
-        return new AjaxLogoutSuccessHandler();
-    }
+	@Bean
+	public AjaxLogoutSuccessHandler ajaxLogoutSuccessHandler()
+	{
+		return new AjaxLogoutSuccessHandler();
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{
+		return new BCryptPasswordEncoder();
+	}
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring()
-            .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/app/**/*.{js,html}")
-            .antMatchers("/i18n/**")
-            .antMatchers("/content/**")
-            .antMatchers("/swagger-ui/index.html")
-            .antMatchers("/test/**");
-    }
+	@Override
+	public void configure(WebSecurity web) throws Exception
+	{
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**").antMatchers("/app/**/*.{js,html}").antMatchers("/i18n/**")
+				.antMatchers("/content/**").antMatchers("/swagger-ui/index.html").antMatchers("/test/**");
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf()
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
-            .addFilterBefore(corsFilter, CsrfFilter.class)
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
-        .and()
-            .rememberMe()
-            .rememberMeServices(rememberMeServices)
-            .rememberMeParameter("remember-me")
-            .key(jHipsterProperties.getSecurity().getRememberMe().getKey())
-        .and()
-            .formLogin()
-            .loginProcessingUrl("/api/authentication")
-            .successHandler(ajaxAuthenticationSuccessHandler())
-            .failureHandler(ajaxAuthenticationFailureHandler())
-            .usernameParameter("j_username")
-            .passwordParameter("j_password")
-            .permitAll()
-        .and()
-            .logout()
-            .logoutUrl("/api/logout")
-            .logoutSuccessHandler(ajaxLogoutSuccessHandler())
-            .permitAll()
-        .and()
-            .headers()
-            .frameOptions()
-            .disable()
-        .and()
-            .authorizeRequests()
-            .antMatchers("/api/register").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
-            .antMatchers("/api/profile-info").permitAll()
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/swagger-resources/configuration/ui").permitAll()
-            .antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
+	@Override
+	protected void configure(HttpSecurity http) throws Exception
+	{
+		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and()
+				.addFilterBefore(this.corsFilter, CsrfFilter.class).exceptionHandling()
+				.authenticationEntryPoint(this.problemSupport).accessDeniedHandler(this.problemSupport).and()
+				.rememberMe().rememberMeServices(this.rememberMeServices).rememberMeParameter("remember-me")
+				.key(this.jHipsterProperties.getSecurity().getRememberMe().getKey()).and().formLogin()
+				.loginProcessingUrl("/api/authentication").successHandler(ajaxAuthenticationSuccessHandler())
+				.failureHandler(ajaxAuthenticationFailureHandler()).usernameParameter("j_username")
+				.passwordParameter("j_password").permitAll().and().logout().logoutUrl("/api/logout")
+				.logoutSuccessHandler(ajaxLogoutSuccessHandler()).permitAll().and().headers()
 
-    }
+				.contentSecurityPolicy(
+						"default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'")
+				.and().frameOptions().sameOrigin().and().authorizeRequests().antMatchers("/api/register").permitAll()
+				.antMatchers("/api/activate").permitAll().antMatchers("/api/authenticate").permitAll()
+				.antMatchers("/api/account/reset-password/init").permitAll()
+				.antMatchers("/api/account/reset-password/finish").permitAll().antMatchers("/api/profile-info")
+				.permitAll().antMatchers("/api/**").authenticated().antMatchers("/management/health").permitAll()
+				.antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN).antMatchers("/v2/api-docs/**")
+				.permitAll().antMatchers("/swagger-resources/configuration/ui").permitAll()
+				.antMatchers("/swagger-ui/index.html").hasAuthority(AuthoritiesConstants.ADMIN);
+
+	}
 
 }

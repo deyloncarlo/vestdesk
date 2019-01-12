@@ -36,6 +36,12 @@
                         </a>
                     </li> -->
                     <li>
+                        <a class="dropdown-item" routerLink="cor" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
+                            <span jhiTranslate="global.menu.entities.cor">Cor</span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="material" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
                             <span jhiTranslate="global.menu.entities.material">Material</span>
@@ -108,12 +114,7 @@
                             <span jhiTranslate="global.menu.entities.materialTamanho">Material Tamanho</span>
                         </a>
                     </li> -->
-                    <li>
-                        <a class="dropdown-item" routerLink="cor" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
-                            <span jhiTranslate="global.menu.entities.cor">Cor</span>
-                        </a>
-                    </li>
+                    
                     <!-- <li>
                         <a class="dropdown-item" routerLink="usuario" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-asterisk" aria-hidden="true"></i>
