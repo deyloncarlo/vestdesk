@@ -17,12 +17,12 @@
             "detail": {
                 "title": "Cliente"
             },
-            "nome": "Nome",
+            "nome": "Nome/Razão Social",
             "endereco": "Endereço",
             "telefone": "Telefone",
             "observacao": "Observação",
             "email": "E-mail",
-            "cpf": "CPF"
+            "cpf": "CPF/CNPJ"
         }
     }
 }

@@ -91,28 +91,28 @@
             </div>
 
             <div class="col-md-2">
-                <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
-                <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
-                    required/>
-                <div [hidden]="!(editForm.controls.quantidadeEstoque?.dirty && editForm.controls.quantidadeEstoque?.invalid)">
-                    <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
-                    <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.number" jhiTranslate="entity.validation.number">
-                        This field should be a number.
-                    </small>
-                </div>
-            </div>
-
-            <div class="col-md-2">
                 <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeInicial" for="field_quantidadeInicial">Quantidade Inicial</label>
-                <input type="number" class="form-control" name="quantidadeInicial" id="field_quantidadeInicial" [(ngModel)]="produto.quantidadeInicial"
+                <input [disabled]="produto.id != null" type="number" class="form-control" name="quantidadeInicial" id="field_quantidadeInicial" [(ngModel)]="produto.quantidadeInicial"
                     required/>
                 <div [hidden]="!(editForm.controls.quantidadeInicial?.dirty && editForm.controls.quantidadeInicial?.invalid)">
                     <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeInicial?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
                     </small>
                     <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeInicial?.errors?.number" jhiTranslate="entity.validation.number">
+                        This field should be a number.
+                    </small>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
+                <input [disabled]="true" type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
+                    required/>
+                <div [hidden]="!(editForm.controls.quantidadeEstoque?.dirty && editForm.controls.quantidadeEstoque?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.required" jhiTranslate="entity.validation.required">
+                        This field is required.
+                    </small>
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.number" jhiTranslate="entity.validation.number">
                         This field should be a number.
                     </small>
                 </div>

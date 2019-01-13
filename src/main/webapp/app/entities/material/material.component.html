@@ -25,8 +25,8 @@
         <table class="table table-striped">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-                    <th jhiSortBy="id">
-                        <span jhiTranslate="global.field.id">ID</span>
+                    <th jhiSortBy="codigo">
+                        <span jhiTranslate="vestdeskApp.material.codigo">Código</span>
                         <span class="fa fa-sort"></span>
                     </th>
                     <th jhiSortBy="nome">
@@ -50,9 +50,7 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let material of materials ;trackBy: trackId">
-                    <td>
-                        <a [routerLink]="['../material', material.id ]">{{material.id}}</a>
-                    </td>
+                    <td>{{material.codigo}}</td>
                     <td>{{material.nome}}</td>
                     <td>{{material.preco}}</td>
                     <td>{{material.quantidadeEstoque}}</td>

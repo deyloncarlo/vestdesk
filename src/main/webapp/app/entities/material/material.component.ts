@@ -55,7 +55,17 @@ export class MaterialComponent implements OnInit, OnDestroy {
     }
 
     filtrar() {
-        this.reset();
+        this.page = 0;
+        this.materials = [];
+        this.materialService.query({
+            page: this.page,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            nome: this.nome
+        }).subscribe(
+            (res: HttpResponse<Material[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     reset() {

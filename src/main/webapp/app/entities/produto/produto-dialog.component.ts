@@ -59,6 +59,7 @@ export class ProdutoDialogComponent implements OnInit {
             this.subscribeToSaveResponse(
                 this.produtoService.update(this.produto));
         } else {
+            this.produto.quantidadeEstoque = this.produto.quantidadeInicial;
             this.subscribeToSaveResponse(
                 this.produtoService.create(this.produto));
         }

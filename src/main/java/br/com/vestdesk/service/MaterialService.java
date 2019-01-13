@@ -2,9 +2,13 @@ package br.com.vestdesk.service;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,13 +38,16 @@ public class MaterialService
 
 	private final CorService corService;
 
+	private EntityManager em;
+
 	public MaterialService(MaterialRepository materialRepository, MaterialMapper materialMapper, CorService corService,
-			MaterialTamanhoService materialTamanhoService)
+			MaterialTamanhoService materialTamanhoService, EntityManager em)
 	{
 		this.materialRepository = materialRepository;
 		this.materialMapper = materialMapper;
 		this.corService = corService;
 		this.materialTamanhoService = materialTamanhoService;
+		this.em = em;
 	}
 
 	/**
@@ -68,10 +75,21 @@ public class MaterialService
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<MaterialDTO> findAll(Pageable pageable)
+	public Page<MaterialDTO> findAll(Pageable pageable, String nome)
 	{
+		if (nome == null)
+		{
+			nome = "";
+		}
+
+		Query query = this.em.createQuery("SELECT material FROM Material material WHERE nome LIKE :nomeMaterial");
+		query.setParameter("nomeMaterial", "%" + nome + "%");
+
+		List<Material> listaMaterial = query.getResultList();
+		Page<Material> page = new PageImpl<>(listaMaterial, pageable, listaMaterial.size());
+
 		this.log.debug("Request to get all Materials");
-		return this.materialRepository.findAll(pageable).map(this.materialMapper::toDto);
+		return page.map(this.materialMapper::toDto);
 	}
 
 	/**
