@@ -65,7 +65,7 @@
                         {{pedido.id}}
                     </td>
                     <td>
-                        {{pedido.cliente.nome}}
+                        {{pedido.cliente != null ? pedido.cliente.nome : pedido.nomeCliente}}
                     </td>
                     <td jhiTranslate="{{'vestdeskApp.TipoPedido.' + pedido.tipoPedido}}">{{pedido.tipoPedido}}</td>
                     <td>{{pedido.statusPedido}} </td>
@@ -78,8 +78,8 @@
                                 <span class="fa fa-pencil"></span>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
-                            <button [disabled] = "pedido.statusPedido == 'CONCLUIDO'" type="submit" [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/delete'} }]" replaceUrl="true" queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
+                            <button [disabled]="pedido.statusPedido == 'CONCLUIDO'" type="submit" [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/delete'} }]"
+                                replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
                                 <span class="fa fa-remove"></span>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                             </button>

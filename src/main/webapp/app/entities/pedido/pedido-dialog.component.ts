@@ -17,7 +17,7 @@ import { PedidoItem, FormaPagamento } from '../pedido-item';
 import { Produto, ProdutoPopupService, ProdutoService } from '../produto';
 import { statSync } from 'fs';
 import { ProdutoInputComponent } from '../produto/produto-input.component';
-import { LayoutPopupService } from '../layout';
+import { LayoutPopupService, Layout } from '../layout';
 import { LayoutInputComponent } from '../layout/layout-input.component';
 import { ConfiguracaoLayout } from '../configuracao-layout';
 import { JhiAlertErrorComponent } from '../../shared';
@@ -49,6 +49,8 @@ export class PedidoDialogComponent implements OnInit {
     esconderCampos: any;
     tamanhoGrid: any;
     produtoNaoEncontrado: boolean;
+    clienteTextoLivre: boolean;
+    clienteNaoSelecionado: boolean;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -72,10 +74,13 @@ export class PedidoDialogComponent implements OnInit {
 
         this.produto = new Produto();
         if (this.pedido.cliente == null) {
+            this.clienteTextoLivre = true;
             this.pedido.cliente = new Cliente();
+        }else {
+            this.clienteTextoLivre = false;
         }
         if (this.pedido.layout == null) {
-            this.pedido.layout = new Cliente();
+            this.pedido.layout = new Layout();
         }
         if (!this.pedido.listaConfiguracaoLayout) {
             this.pedido.listaConfiguracaoLayout = [];
@@ -101,6 +106,12 @@ export class PedidoDialogComponent implements OnInit {
 
     save(content) {
 
+        debugger
+        if (!this.pedido.cliente.id && !this.pedido.nomeCliente) {
+            this.clienteNaoSelecionado = true;
+            setTimeout(() => this.clienteNaoSelecionado = false, 3000);
+            return ;
+        }
         this.isSaving = true;
         if (this.pedido.statusPedido == null || this.pedido.statusPedido == StatusPedido.RASCUNHO) {
             this.ngbModal.open(content).result.then((result) => {
@@ -116,12 +127,12 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     esconder() {
-        if(this.esconderCampos) {
+        if (this.esconderCampos) {
             this.esconderCampos = false;
             this.tamanhoGrid = {
                 height: '350px'
             }
-        }else {
+        } else {
             this.esconderCampos = true;
             this.tamanhoGrid = {
                 height: '500px'
@@ -129,13 +140,20 @@ export class PedidoDialogComponent implements OnInit {
         }
     }
 
+    selecionarClienteTextoLivre(textoClienteLivre) {
+        this.clienteTextoLivre = textoClienteLivre;
+    }
+
     limparListaPedidoItem() {
-        if(this.pedido.listaPedidoItem) {
+        if (this.pedido.listaPedidoItem) {
             this.pedido.listaPedidoItem.splice(0, this.pedido.listaPedidoItem.length);
         }
     }
 
     private salvar() {
+        if (this.clienteTextoLivre) {
+            this.pedido.cliente = null;
+        }
         if (this.pedido.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.pedidoService.update(this.pedido));
@@ -146,7 +164,7 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     private onError(error: any) {
-        if(error.status == '404') {
+        if (error.status == '404') {
             this.produtoNaoEncontrado = true;
             setTimeout(() => this.produtoNaoEncontrado = false, 3000);
         }
@@ -188,7 +206,7 @@ export class PedidoDialogComponent implements OnInit {
             this.pedido.listaPedidoItem = new Array<PedidoItem>();
         }
         const pedidoItem = new PedidoItem();
-        pedidoItem.quantidade = this.quantidade; 
+        pedidoItem.quantidade = this.quantidade;
         if (this.pedido.tipoPedido == TipoPedido.PRODUCAO) {
             if (this.pedido.cliente != null && this.pedido.cliente.telefone) {
                 pedidoItem.telefone = this.pedido.cliente.telefone;

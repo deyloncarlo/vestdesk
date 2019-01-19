@@ -9,14 +9,40 @@
         <ngb-tabset>
             <ngb-tab title="Pedido">
                 <ng-template ngbTabContent>
-
+                    <ngb-alert *ngIf="clienteNaoSelecionado" [type]="'danger'" (close)="clienteNaoSelecionado = false">
+                        Cliente não selecionado.
+                    </ngb-alert>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <label for="">Cliente livre</label>
+                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente1" (click)="selecionarClienteTextoLivre(true)" [checked]="clienteTextoLivre == true"
+                                    />
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="">Selecionar Cliente</label>
+                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente2" (click)="selecionarClienteTextoLivre(false)" [checked]="clienteTextoLivre == false"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6" [hidden]="clienteTextoLivre == false">
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" name="nomeCliente" id="field_cliente" [(ngModel)]="pedido.nomeCliente" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6" [hidden]="clienteTextoLivre == true">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" disabled
-                                    />
+                                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" onkeypress="return false;"
+                                        disabled />
                                 </div>
                                 <button type="button" class="btn btn-primary col-md-2" (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
                             </div>

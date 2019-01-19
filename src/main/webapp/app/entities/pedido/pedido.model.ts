@@ -37,7 +37,8 @@ export class Pedido implements BaseEntity {
         public dataPrevisao?: Date,
         public statusPedido?: any,
         public layout?: Layout,
-        public listaConfiguracaoLayout?: ConfiguracaoLayout[]
+        public listaConfiguracaoLayout?: ConfiguracaoLayout[],
+        public nomeCliente?: string
     ) {
     }
 }

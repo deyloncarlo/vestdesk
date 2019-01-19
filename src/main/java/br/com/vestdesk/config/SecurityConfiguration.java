@@ -118,7 +118,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter
 				.logoutSuccessHandler(ajaxLogoutSuccessHandler()).permitAll().and().headers()
 
 				.contentSecurityPolicy(
-						"default-src 'self'; script-src 'self'; img-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'")
+						"default-src 'self'; script-src 'self'; img-src * 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self'; form-action 'self'")
 				.and().frameOptions().sameOrigin().and().authorizeRequests().antMatchers("/api/register").permitAll()
 				.antMatchers("/api/activate").permitAll().antMatchers("/api/authenticate").permitAll()
 				.antMatchers("/api/account/reset-password/init").permitAll()

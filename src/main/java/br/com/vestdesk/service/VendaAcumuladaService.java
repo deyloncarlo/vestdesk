@@ -36,13 +36,17 @@ public class VendaAcumuladaService
 
 	private final PedidoItemRepository pedidoItemRepository;
 
+	private final ProdutoService produtoService;
+
 	public VendaAcumuladaService(EntityManager em, VendaAcumuladaRepository vendaAcumuladaRepository,
-			VendaAcumuladaMapper vendaAcumuladaMapper, @Lazy PedidoItemRepository pedidoItemRepository)
+			VendaAcumuladaMapper vendaAcumuladaMapper, @Lazy PedidoItemRepository pedidoItemRepository,
+			@Lazy ProdutoService produtoService)
 	{
 		this.em = em;
 		this.vendaAcumuladaRepository = vendaAcumuladaRepository;
 		this.vendaAcumuladaMapper = vendaAcumuladaMapper;
 		this.pedidoItemRepository = pedidoItemRepository;
+		this.produtoService = produtoService;
 	}
 
 	/**
@@ -120,6 +124,10 @@ public class VendaAcumuladaService
 
 		VendaAcumulada vendaAcumalada = getById(vendaAcumuladaDaTela.getId());
 
+		Produto produto = this.produtoService.getById(vendaAcumalada.getProduto().getId());
+		produto.setQuantidadeEstoque(produto.getQuantidadeEstoque() + quantidadeProduzir);
+		this.produtoService.save(produto);
+
 		vendaAcumalada.getListaPedidoItemProduzido().addAll(vendaAcumalada.getListaPedidoItemAcumulado());
 		vendaAcumalada.getListaPedidoItemAcumulado().clear();
 		vendaAcumalada.setQuantidadeAcumulada(vendaAcumalada.getQuantidadeAcumulada() - quantidadeProduzir);
@@ -137,8 +145,8 @@ public class VendaAcumuladaService
 			if (pedidoItemEncontrado.getProduto().equals(produto))
 			{
 				quantidade += pedidoItemEncontrado.getQuantidade();
-				pedidoItem.setRetiradoAcumuloVendas(true);
-				this.pedidoItemRepository.save(pedidoItem);
+				pedidoItemEncontrado.setRetiradoAcumuloVendas(true);
+				this.pedidoItemRepository.save(pedidoItemEncontrado);
 			}
 		}
 		return quantidade;

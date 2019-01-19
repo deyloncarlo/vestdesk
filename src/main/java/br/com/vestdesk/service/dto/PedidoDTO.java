@@ -51,6 +51,8 @@ public class PedidoDTO implements Serializable
 
 	private List<ConfiguracaoLayoutDTO> listaConfiguracaoLayout = new ArrayList<>();
 
+	private String nomeCliente;
+
 	public Long getId()
 	{
 		return this.id;
@@ -244,5 +246,15 @@ public class PedidoDTO implements Serializable
 	public void setListaConfiguracaoLayout(List<ConfiguracaoLayoutDTO> listaConfiguracaoLayout)
 	{
 		this.listaConfiguracaoLayout = listaConfiguracaoLayout;
+	}
+
+	public String getNomeCliente()
+	{
+		return this.nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente)
+	{
+		this.nomeCliente = nomeCliente;
 	}
 }
