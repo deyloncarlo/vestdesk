@@ -101,16 +101,12 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     clear(content) {
-        if (this.pedido.statusPedido == null || this.pedido.statusPedido == StatusPedido.RASCUNHO) {
-            this.ngbModal.open(content).result.then((result) => {
-                if (result == 'SIM') {
-                    this.activeModal.dismiss('cancel');
-                }
-            }, (reason) => {
-            });
-        }else {
-            this.activeModal.dismiss('cancel');
-        }
+        this.ngbModal.open(content).result.then((result) => {
+            if (result == 'SIM') {
+                this.activeModal.dismiss('cancel');
+            }
+        }, (reason) => {
+        });
     }
 
     save(content) {
