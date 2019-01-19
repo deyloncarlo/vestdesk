@@ -76,7 +76,7 @@ export class PedidoDialogComponent implements OnInit {
         if (this.pedido.cliente == null) {
             this.clienteTextoLivre = true;
             this.pedido.cliente = new Cliente();
-        }else {
+        } else {
             this.clienteTextoLivre = false;
         }
         if (this.pedido.layout == null) {
@@ -100,8 +100,17 @@ export class PedidoDialogComponent implements OnInit {
 
     }
 
-    clear() {
-        this.activeModal.dismiss('cancel');
+    clear(content) {
+        if (this.pedido.statusPedido == null || this.pedido.statusPedido == StatusPedido.RASCUNHO) {
+            this.ngbModal.open(content).result.then((result) => {
+                if (result == 'SIM') {
+                    this.activeModal.dismiss('cancel');
+                }
+            }, (reason) => {
+            });
+        }else {
+            this.activeModal.dismiss('cancel');
+        }
     }
 
     save(content) {
@@ -110,7 +119,7 @@ export class PedidoDialogComponent implements OnInit {
         if (!this.pedido.cliente.id && !this.pedido.nomeCliente) {
             this.clienteNaoSelecionado = true;
             setTimeout(() => this.clienteNaoSelecionado = false, 3000);
-            return ;
+            return;
         }
         this.isSaving = true;
         if (this.pedido.statusPedido == null || this.pedido.statusPedido == StatusPedido.RASCUNHO) {
