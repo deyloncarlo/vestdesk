@@ -310,6 +310,7 @@
                                         BORDADO: 'BORDADO', SILKANDO: 'SILKANDO', PRONTO: 'PRONTO',
                                         ENTREGUE: 'ENTREGUE'}[pedidoItem.status]">
                                         <select class="form-control" name="statusPedidoItem + {{indice}}" [(ngModel)]="pedidoItem.status">
+                                            <option [ngValue]="null"></option>
                                             <option value="EM_PRODUCAO">{{'vestdeskApp.StatusPedidoItem.EM_PRODUCAO' | translate}}</option>
                                             <option value="EM_SEPARACAO">{{'vestdeskApp.StatusPedidoItem.EM_SEPARACAO' | translate}}</option>
                                             <option value="BORDADO">{{'vestdeskApp.StatusPedidoItem.BORDADO' | translate}}</option>
