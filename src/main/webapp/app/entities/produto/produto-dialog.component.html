@@ -106,7 +106,7 @@
 
             <div class="col-md-2">
                 <label class="form-control-label" jhiTranslate="vestdeskApp.produto.quantidadeEstoque" for="field_quantidadeEstoque">Quantidade Estoque</label>
-                <input [disabled]="true" type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
+                <input type="number" class="form-control" name="quantidadeEstoque" id="field_quantidadeEstoque" [(ngModel)]="produto.quantidadeEstoque"
                     required/>
                 <div [hidden]="!(editForm.controls.quantidadeEstoque?.dirty && editForm.controls.quantidadeEstoque?.invalid)">
                     <small class="form-text text-danger" [hidden]="!editForm.controls.quantidadeEstoque?.errors?.required" jhiTranslate="entity.validation.required">
