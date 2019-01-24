@@ -8,7 +8,8 @@ import {
     JhiLanguageHelper,
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
-    JhiAlertErrorComponent
+    JhiAlertErrorComponent,
+    SelectField
 } from './';
 
 @NgModule({
@@ -18,7 +19,8 @@ import {
     declarations: [
         FindLanguageFromKeyPipe,
         JhiAlertComponent,
-        JhiAlertErrorComponent
+        JhiAlertErrorComponent,
+        SelectField
     ],
     providers: [
         JhiLanguageHelper,
@@ -32,7 +34,8 @@ import {
         VestdeskSharedLibsModule,
         FindLanguageFromKeyPipe,
         JhiAlertComponent,
-        JhiAlertErrorComponent
+        JhiAlertErrorComponent,
+        SelectField
     ]
 })
 export class VestdeskSharedCommonModule {

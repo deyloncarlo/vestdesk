@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import br.com.vestdesk.domain.enumeration.TipoPedido;
 import br.com.vestdesk.service.PedidoService;
 import br.com.vestdesk.service.dto.PedidoDTO;
 import br.com.vestdesk.web.rest.errors.BadRequestAlertException;
@@ -110,16 +109,25 @@ public class PedidoResource
 	@Timed
 	public ResponseEntity<List<PedidoDTO>> getAllPedidos(Pageable pageable,
 			@RequestParam(name = "id", required = false) String id,
-			@RequestParam(name = "tipoPedido", required = false) TipoPedido tipoPedido)
+			@RequestParam(name = "statusPedido", required = false) String statusPedido)
 	{
 		this.log.debug("REST request to get a page of Pedidos");
 		Long v_id = null;
 		if (id != null && !id.equals("null"))
 		{
 			v_id = Long.parseLong(id);
-
 		}
-		Page<PedidoDTO> page = this.pedidoService.findAll(pageable, v_id, tipoPedido);
+		else
+		{
+			v_id = null;
+		}
+
+		if (statusPedido == null || statusPedido.equals("null"))
+		{
+			statusPedido = null;
+		}
+
+		Page<PedidoDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pedidos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

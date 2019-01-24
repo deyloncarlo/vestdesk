@@ -3,7 +3,7 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 
-import { Pedido, TipoPedido } from './pedido.model';
+import { Pedido, TipoPedido, StatusPedido } from './pedido.model';
 import { PedidoService } from './pedido.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 
@@ -25,7 +25,7 @@ export class PedidoComponent implements OnInit, OnDestroy {
     totalItems: number;
 
     id: number;
-    tipoPedido: TipoPedido;
+    statusPedido: StatusPedido;
 
     constructor(
         private pedidoService: PedidoService,
@@ -62,13 +62,18 @@ export class PedidoComponent implements OnInit, OnDestroy {
         if (!this.id) {
             this.id = null;
         }
+        if (!this.statusPedido) {
+            this.statusPedido = null;
+        }
+
+
 
         this.pedidoService.query({
             page: this.page,
             size: this.itemsPerPage,
             sort: this.sort(),
-            id: this.id
-
+            id: this.id,
+            statusPedido: this.statusPedido
         }).subscribe(
             (res: HttpResponse<Pedido[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)

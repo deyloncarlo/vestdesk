@@ -1,5 +1,4 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save(statusPedido)" #editForm="ngForm">
-
     <div class="modal-header">
         <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear(usurioFechandoTela)">&times;</button>
@@ -28,6 +27,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-md-6" [hidden]="clienteTextoLivre == false">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
@@ -149,28 +149,11 @@
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo" for="field_modelo">Modelo</label>
-                                        <select class="form-control" name="modelo" [(ngModel)]="modelo" id="field_modelo">
-                                            <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
-                                            <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
-                                            <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
-                                        </select>
+                                        <select-field [enum]="'Modelo'" [model]="modelo" (toggledChange)="modelo=$event"></select-field>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho" for="field_tamanho">Tamanho</label>
-                                        <select class="form-control" name="tamanho" [(ngModel)]="tamanho" id="field_tamanho">
-                                            <option value="PP">{{'vestdeskApp.Tamanho.PP' | translate}}</option>
-                                            <option value="P">{{'vestdeskApp.Tamanho.P' | translate}}</option>
-                                            <option value="M">{{'vestdeskApp.Tamanho.M' | translate}}</option>
-                                            <option value="G">{{'vestdeskApp.Tamanho.G' | translate}}</option>
-                                            <option value="GG">{{'vestdeskApp.Tamanho.GG' | translate}}</option>
-                                            <option value="XG">{{'vestdeskApp.Tamanho.XG' | translate}}</option>
-                                            <option value="PPBL">{{'vestdeskApp.Tamanho.PPBL' | translate}}</option>
-                                            <option value="PBL">{{'vestdeskApp.Tamanho.PBL' | translate}}</option>
-                                            <option value="MBL">{{'vestdeskApp.Tamanho.MBL' | translate}}</option>
-                                            <option value="GBL">{{'vestdeskApp.Tamanho.GBL' | translate}}</option>
-                                            <option value="GGBL">{{'vestdeskApp.Tamanho.GGBL' | translate}}</option>
-                                            <option value="XGBL">{{'vestdeskApp.Tamanho.XGBL' | translate}}</option>
-                                        </select>
+                                        <select-field [enum]="'Tamanho'" [model]="tamanho" (toggledChange)="tamanho=$event"></select-field>
                                     </div>
                                     <div class="col-md-2">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor" for="field_cor">Cor</label>
@@ -190,13 +173,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.formaPagamento" for="field_formaPagamento">Forma Pagamento</label>
-                                        <select class="form-control" name="formaPagamento" [(ngModel)]="formaPrimeiroPagamento" id="field_field_formaPagamentomodelo">
-                                            <option value="DINHEIRO">{{'vestdeskApp.formaPagamento.DINHEIRO' | translate}}</option>
-                                            <option value="DEBITO">{{'vestdeskApp.formaPagamento.DEBITO' | translate}}</option>
-                                            <option value="CREDITO">{{'vestdeskApp.formaPagamento.CREDITO' | translate}}</option>
-                                            <option value="TRANSFERENCIA">{{'vestdeskApp.formaPagamento.TRANSFERENCIA' | translate}}</option>
-                                            <option value="BOLETO">{{'vestdeskApp.formaPagamento.BOLETO' | translate}}</option>
-                                        </select>
+                                        <select-field [enum]="'FormaPagamento'" [model]="formaPrimeiroPagamento" (toggledChange)="formaPrimeiroPagamento=$event"></select-field>
                                     </div>
                                 </div>
 
@@ -310,15 +287,8 @@
                                     <td [ngClass]="{EM_PRODUCAO: 'EM_PRODUCAO', EM_SEPARACAO: 'EM_SEPARACAO',
                                         BORDADO: 'BORDADO', SILKANDO: 'SILKANDO', PRONTO: 'PRONTO',
                                         ENTREGUE: 'ENTREGUE'}[pedidoItem.status]">
-                                        <select class="form-control" name="statusPedidoItem + {{indice}}" [(ngModel)]="pedidoItem.status">
-                                            <option [ngValue]="null"></option>
-                                            <option value="EM_PRODUCAO">{{'vestdeskApp.StatusPedidoItem.EM_PRODUCAO' | translate}}</option>
-                                            <option value="EM_SEPARACAO">{{'vestdeskApp.StatusPedidoItem.EM_SEPARACAO' | translate}}</option>
-                                            <option value="BORDADO">{{'vestdeskApp.StatusPedidoItem.BORDADO' | translate}}</option>
-                                            <option value="SILKANDO">{{'vestdeskApp.StatusPedidoItem.SILKANDO' | translate}}</option>
-                                            <option value="PRONTO">{{'vestdeskApp.StatusPedidoItem.PRONTO' | translate}}</option>
-                                            <option value="ENTREGUE">{{'vestdeskApp.StatusPedidoItem.ENTREGUE' | translate}}</option>
-                                        </select>
+                                        <select-field [enum]="'StatusPedidoItem'" [model]="pedidoItem.status" (toggledChange)="pedidoItem.status=$event"
+                                        [fieldName]="indice"></select-field>
                                     </td>
                                     <td [hidden]="pedido.tipoPedido == 'PRODUCAO' " class="text-right">
                                         <div class="btn-group flex-btn-group-container">
@@ -357,7 +327,7 @@
 
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear(usurioFechandoTela)">
             <span class="fa fa-ban"></span>&nbsp;
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>

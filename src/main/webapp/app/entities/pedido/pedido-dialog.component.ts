@@ -95,9 +95,8 @@ export class PedidoDialogComponent implements OnInit {
         this.esconderCampos = false;
         this.tamanhoGrid = {
             height: '350px'
-        }
+        };
         // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
-
     }
 
     clear(content) {
@@ -111,7 +110,6 @@ export class PedidoDialogComponent implements OnInit {
 
     save(content) {
 
-        debugger
         if (!this.pedido.cliente.id && !this.pedido.nomeCliente) {
             this.clienteNaoSelecionado = true;
             setTimeout(() => this.clienteNaoSelecionado = false, 3000);
@@ -124,8 +122,7 @@ export class PedidoDialogComponent implements OnInit {
                 this.salvar();
             }, (reason) => {
             });
-        }
-        else {
+        } else {
             this.salvar();
         }
 
@@ -136,12 +133,12 @@ export class PedidoDialogComponent implements OnInit {
             this.esconderCampos = false;
             this.tamanhoGrid = {
                 height: '350px'
-            }
+            };
         } else {
             this.esconderCampos = true;
             this.tamanhoGrid = {
                 height: '500px'
-            }
+            };
         }
     }
 
@@ -193,7 +190,6 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     private onSuccess(data, headers) {
-        debugger
         this.adcionarPedidoItem(data);
     }
 

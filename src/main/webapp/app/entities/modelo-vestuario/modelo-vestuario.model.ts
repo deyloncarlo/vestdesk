@@ -1,7 +1,7 @@
 import { BaseEntity } from './../../shared';
 import { ConfiguracaoProduto } from '../configuracao-produto/configuracao-produto.model';
 
-export const enum Modelo {
+export enum Modelo {
     'MOLETOM',
     'POLO',
     'CAMISA'

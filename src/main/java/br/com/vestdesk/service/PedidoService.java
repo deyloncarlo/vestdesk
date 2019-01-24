@@ -1,13 +1,17 @@
 package br.com.vestdesk.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +27,6 @@ import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
-import br.com.vestdesk.domain.enumeration.TipoPedido;
 import br.com.vestdesk.repository.PedidoRepository;
 import br.com.vestdesk.service.dto.PedidoDTO;
 import br.com.vestdesk.service.mapper.PedidoMapper;
@@ -192,21 +195,44 @@ public class PedidoService
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<PedidoDTO> findAll(Pageable pageable, Long id, TipoPedido tipoPedido)
+	public Page<PedidoDTO> findAll(Pageable pageable, Long id, String statusPedido)
+	{
+
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Pedido> criteria = criteriaBuilder.createQuery(Pedido.class);
+		Root<Pedido> root = criteria.from(Pedido.class);
+
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		if (id != null)
+		{
+			predicates.add((criteriaBuilder.equal(root.get("id"), id)));
+		}
+		if (statusPedido != null)
+		{
+			predicates.add(criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.valueOf(statusPedido)));
+		}
+
+		criteria.where(criteriaBuilder.and(predicates.toArray(new Predicate[] {})));
+
+		List<Pedido> listaPedido = this.em.createQuery(criteria).getResultList();
+		Page<Pedido> page = new PageImpl<>(listaPedido, pageable, listaPedido.size());
+
+		return page.map(this.pedidoMapper::toDto);
+	}
+
+	@Transactional(readOnly = true)
+	public Page<PedidoDTO> findAll(Pageable pageable)
 	{
 		this.log.debug("Request to get all Pedidos");
 
-		if (id == null)
-		{
-			return this.pedidoRepository.findAll(pageable).map(this.pedidoMapper::toDto);
-		}
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Pedido> criteria = criteriaBuilder.createQuery(Pedido.class);
+		Root<Pedido> root = criteria.from(Pedido.class);
+		criteria.select(root);
 
-		Query query = this.em
-				.createQuery("select pedido from Pedido pedido where id = :idPedido and tipoPedido = :tipoPedido");
-		query.setParameter("idPedido", id);
-		query.setParameter("tipoPedido", tipoPedido);
+		criteria.where(criteriaBuilder.equal(root.get("statusPedido"), "EM_ANDAMENTO"));
 
-		List<Pedido> listaPedido = query.getResultList();
+		List<Pedido> listaPedido = this.em.createQuery(criteria).getResultList();
 		Page<Pedido> page = new PageImpl<>(listaPedido, pageable, listaPedido.size());
 
 		return page.map(this.pedidoMapper::toDto);

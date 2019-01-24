@@ -15,12 +15,11 @@
             <input type="number" class="form-control" name="pedido_id" id="field_id" [(ngModel)]="id" />
         </div>
         <div class="col-md-4">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido" for="field_tipoPedido">Status Pedido
             </label>
-            <select class="form-control" name="tipoPedido" [(ngModel)]="tipoPedido" id="field_tipoPedido" required>
-                <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
-                <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
-            </select>
+            <select-field [enum]="'StatusPedido'" [model]="statusPedido" (toggledChange)="statusPedido=$event">
+
+            </select-field>
         </div>
     </div>
     <div class="row">
