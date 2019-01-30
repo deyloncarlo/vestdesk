@@ -3,7 +3,7 @@
         <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear(usurioFechandoTela)">&times;</button>
     </div>
-    <div class="modal-body">
+    <div class="modal-body" style="height: 600px; overflow-y: auto;">
         <jhi-alert-error></jhi-alert-error>
         <ngb-tabset>
             <ngb-tab title="Pedido">
@@ -98,20 +98,41 @@
                                 </span> -->
                             </div>
                         </div>
+
+                        <!-- Exibindo Layouts -->
+                        
                         <div class="col-md-12">
                             <div class="container-fluid pedido-resumo">
-                                <div class="col-md-3" style="font-weight: bold">
-                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
-                                    </label>: {{pedido.statusPedido}}
-                                </div>
-                                <div class="col-md-3" style="font-weight: bold">
-                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
-                                    </label>: {{valorTotalPedido | currency:'BRL':true}}
-                                </div>
-                                <div class="col-md-3" style="font-weight: bold">
-                                    <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
-                                    </label>: {{valorRestantePedido | currency:'BRL':true}}
-                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-12" style="font-weight: bold">
+                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
+                                            </label>: {{pedido.statusPedido}}
+                                        </div>
+                                        <div class="col-md-12" style="font-weight: bold">
+                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
+                                            </label>: {{valorTotalPedido | currency:'BRL':true}}
+                                        </div>
+                                        <div class="col-md-12" style="font-weight: bold">
+                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
+                                            </label>: {{valorRestantePedido | currency:'BRL':true}}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5" >
+                                        <div class="row">
+                                            <label style="font-weight: bold" class="form-control-label" jhiTranslate="vestdeskApp.pedido.layoutSelecionado"></label>
+                                        </div>
+                                        <div class="row" style="overflow-x: auto; width: 600px; padding: 5px;">
+                                            <div style="display: inline-flex;">
+                                                <div style="margin-right: 5px;" *ngFor="let configuracaoLayout of pedido.listaConfiguracaoLayout">
+                                                    <div>
+                                                        <img [src]="'data:image/jpg;base64,' + configuracaoLayout.layout.imagem" width="150px;" alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
                             </div>
                         </div>
                     </div>

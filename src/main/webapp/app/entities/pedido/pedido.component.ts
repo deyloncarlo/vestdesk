@@ -2,10 +2,12 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs/Subscription';
 import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
+import { ActivatedRoute } from '@angular/router';
 
 import { Pedido, TipoPedido, StatusPedido } from './pedido.model';
 import { PedidoService } from './pedido.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import { flushMicrotasks } from '@angular/core/testing';
 
 @Component({
     selector: 'jhi-pedido',
@@ -26,13 +28,15 @@ export class PedidoComponent implements OnInit, OnDestroy {
 
     id: number;
     statusPedido: StatusPedido;
+    fechaEm10Dias: boolean;
 
     constructor(
         private pedidoService: PedidoService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
-        private principal: Principal
+        private principal: Principal,
+        private route: ActivatedRoute
     ) {
         this.pedidos = [];
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -73,7 +77,8 @@ export class PedidoComponent implements OnInit, OnDestroy {
             size: this.itemsPerPage,
             sort: this.sort(),
             id: this.id,
-            statusPedido: this.statusPedido
+            statusPedido: this.statusPedido,
+            fechaEm10Dias: this.fechaEm10Dias
         }).subscribe(
             (res: HttpResponse<Pedido[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -91,7 +96,9 @@ export class PedidoComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     ngOnInit() {
-        this.loadAll();
+        this.obterParamentrosUrl();
+        // this.loadAll();
+        this.filtrar();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
@@ -107,6 +114,14 @@ export class PedidoComponent implements OnInit, OnDestroy {
     }
     registerChangeInPedidos() {
         this.eventSubscriber = this.eventManager.subscribe('pedidoListModification', (response) => this.reset());
+    }
+
+    obterParamentrosUrl() {
+        let obtendoParametros = this.route.params.subscribe(params => {
+            debugger
+            this.statusPedido = params['statusPedido']; // (+) converts string 'id' to a number
+            this.fechaEm10Dias = params['fechaEm10Dias'] == "true"; // (+) converts string 'id' to a number
+        });
     }
 
     sort() {

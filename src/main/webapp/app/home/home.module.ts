@@ -5,10 +5,15 @@ import { VestdeskSharedModule } from '../shared';
 
 import { HOME_ROUTE, HomeComponent } from './';
 
+import {
+    pedidoRoute,
+    pedidoPopupRoute,
+} from './../entities/pedido';
+
 @NgModule({
     imports: [
         VestdeskSharedModule,
-        RouterModule.forChild([ HOME_ROUTE ])
+        RouterModule.forChild([ HOME_ROUTE, ...pedidoRoute, ...pedidoPopupRoute ])
     ],
     declarations: [
         HomeComponent,

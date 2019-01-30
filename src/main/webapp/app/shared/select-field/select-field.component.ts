@@ -11,7 +11,7 @@ export class SelectField implements OnInit, OnDestroy{
     @Input() fieldName: string;
     @Output() toggledChange = new EventEmitter<string>();
 
-    private lista = [null];
+    lista = [null];
     ngOnInit() {
 
         if (this.enum != null) {

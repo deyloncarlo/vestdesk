@@ -44,6 +44,15 @@ export class PedidoService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response'});
     }
 
+    obterQuantidadePedidoStatusRascunho(): Observable<Number> {
+        let url = this.resourceUrl + '/quantidadePedidoStatusRascunho';
+        return this.http.get<Number>(url, {observe: 'response'}).map((res: any) => this.convertNumber(res));
+    }
+    obterQuantidadePedidoSeraoFechados10Dias(): Observable<Number> {
+        let url = this.resourceUrl + '/obterQuantidadePedidoSeraoFechados10Dias';
+        return this.http.get<Number>(url, {observe: 'response'}).map((res: any) => this.convertNumber(res));
+    }
+
     private convertResponse(res: EntityResponseType): EntityResponseType {
         const body: Pedido = this.convertItemFromServer(res.body);
         return res.clone({body});
@@ -77,4 +86,9 @@ export class PedidoService {
             .convertLocalDateToServer(pedido.dataCriacao);
         return copy;
     }
+
+    private convertNumber(quantidade: any): Number {
+        return quantidade.body;
+    }
+
 }

@@ -109,7 +109,8 @@ public class PedidoResource
 	@Timed
 	public ResponseEntity<List<PedidoDTO>> getAllPedidos(Pageable pageable,
 			@RequestParam(name = "id", required = false) String id,
-			@RequestParam(name = "statusPedido", required = false) String statusPedido)
+			@RequestParam(name = "statusPedido", required = false) String statusPedido,
+			@RequestParam(name = "fechaEm10Dias", required = false) boolean fechaEm10Dias)
 	{
 		this.log.debug("REST request to get a page of Pedidos");
 		Long v_id = null;
@@ -127,7 +128,7 @@ public class PedidoResource
 			statusPedido = null;
 		}
 
-		Page<PedidoDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido);
+		Page<PedidoDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido, fechaEm10Dias);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pedidos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
@@ -146,6 +147,22 @@ public class PedidoResource
 		this.log.debug("REST request to get Pedido : {}", id);
 		PedidoDTO pedidoDTO = this.pedidoService.findOne(id);
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(pedidoDTO));
+	}
+
+	@GetMapping("/pedidos/quantidadePedidoStatusRascunho")
+	@Timed
+	public ResponseEntity<Long> obterQuantidadePedidoStatusRascunho()
+	{
+		Long quantidade = this.pedidoService.obterQuantidadePedidoStatusRascunho();
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(quantidade));
+	}
+
+	@GetMapping("/pedidos/obterQuantidadePedidoSeraoFechados10Dias")
+	@Timed
+	public ResponseEntity<Long> obterQuantidadePedidoSeraoFechados10Dias()
+	{
+		Long quantidade = this.pedidoService.obterQuantidadePedidoSeraoFechados10Dias();
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(quantidade));
 	}
 
 	/**

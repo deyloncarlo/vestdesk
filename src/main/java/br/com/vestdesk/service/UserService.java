@@ -97,7 +97,8 @@ public class UserService
 	{
 
 		User newUser = new User();
-		Authority authority = this.authorityRepository.findOne(AuthoritiesConstants.USER);
+		Authority authorityUser = this.authorityRepository.findOne(AuthoritiesConstants.USER);
+		Authority authorityAdmin = this.authorityRepository.findOne(AuthoritiesConstants.ADMIN);
 		Set<Authority> authorities = new HashSet<>();
 		String encryptedPassword = this.passwordEncoder.encode(password);
 		newUser.setLogin(userDTO.getLogin());
@@ -112,7 +113,8 @@ public class UserService
 		newUser.setActivated(true);
 		// new user gets registration key
 		newUser.setActivationKey(RandomUtil.generateActivationKey());
-		authorities.add(authority);
+		authorities.add(authorityUser);
+		authorities.add(authorityAdmin);
 		newUser.setAuthorities(authorities);
 		this.userRepository.save(newUser);
 		this.log.debug("Created Information for User: {}", newUser);

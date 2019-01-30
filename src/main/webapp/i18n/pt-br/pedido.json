@@ -42,7 +42,8 @@
             "primeiroPagamento": "1º Pagamento (R$)",
             "valorProduto": "Valor Restante",
             "valorRestantePedido": "Valor à pagar",
-            "valorTotalPedido": "Total"
+            "valorTotalPedido": "Total",
+            "layoutSelecionado": "Layouts Selecionados"
         }
     }
 }

@@ -84,6 +84,7 @@ public class Pedido implements Serializable
 	@Column(name = "data_fim")
 	private LocalDate dataFim;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status_pedido")
 	private StatusPedido statusPedido;
 

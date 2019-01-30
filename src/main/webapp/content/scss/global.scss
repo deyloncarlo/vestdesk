@@ -270,4 +270,17 @@ ui bootstrap tweaks
 .ENTREGUE {
     background-color: green;
 }
+
+.box-info {
+    height: 120px;
+    padding: 10px;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+    transition: 0.6 linear;
+}
+
+.box-info :hover {
+    border-radius: 15px;
+}
 /* jhipster-needle-scss-add-main JHipster will add new css style */

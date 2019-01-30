@@ -195,7 +195,7 @@ public class PedidoService
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<PedidoDTO> findAll(Pageable pageable, Long id, String statusPedido)
+	public Page<PedidoDTO> findAll(Pageable pageable, Long id, String statusPedido, boolean fechaEm10Dias)
 	{
 
 		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
@@ -211,7 +211,15 @@ public class PedidoService
 		{
 			predicates.add(criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.valueOf(statusPedido)));
 		}
+		if (fechaEm10Dias)
+		{
+			Predicate predicate1 = criteriaBuilder.between(root.<LocalDate>get("dataPrevisao"), LocalDate.now(),
+					LocalDate.now().plusDays(10L));
+			predicates.add(predicate1);
 
+			Predicate predicate2 = criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.EM_ANDAMENTO);
+			predicates.add(predicate2);
+		}
 		criteria.where(criteriaBuilder.and(predicates.toArray(new Predicate[] {})));
 
 		List<Pedido> listaPedido = this.em.createQuery(criteria).getResultList();
@@ -221,7 +229,7 @@ public class PedidoService
 	}
 
 	@Transactional(readOnly = true)
-	public Page<PedidoDTO> findAll(Pageable pageable)
+	public Page<PedidoDTO> findAll(Pageable pageable, Long v_id, String statusPedido)
 	{
 		this.log.debug("Request to get all Pedidos");
 
@@ -271,6 +279,51 @@ public class PedidoService
 		this.pedidoItemService.delete(pedidoEncontrado.getListaPedidoItem());
 
 		this.pedidoRepository.delete(id);
+	}
+
+	/**
+	 * Método que obtém a quantidade de Pedidos com Status igual a RASCUNHO
+	 * 
+	 * @return
+	 */
+	public Long obterQuantidadePedidoStatusRascunho()
+	{
+
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		Root<Pedido> root = criteria.from(Pedido.class);
+		criteria.select(criteriaBuilder.count(root));
+		criteria.where(criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.RASCUNHO)).distinct(true);
+
+		Long quantidade = (long) this.em.createQuery(criteria).getSingleResult();
+		return quantidade;
+	}
+
+	/**
+	 * Método que obtém a quantidade de Pedidos que serão fechados em 10 dias.
+	 * 
+	 * @return
+	 */
+	public Long obterQuantidadePedidoSeraoFechados10Dias()
+	{
+
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		Root<Pedido> root = criteria.from(Pedido.class);
+		criteria.select(criteriaBuilder.count(root));
+		Predicate predicate0 = criteriaBuilder.between(root.<LocalDate>get("dataPrevisao"), LocalDate.now(),
+				LocalDate.now().plusDays(10L));
+
+		// Predicate predicate1 =
+		// criteriaBuilder.lessThanOrEqualTo(root.<LocalDate>get("dataPrevisao"),
+		// LocalDate.now().plusDays(10L));
+
+		Predicate predicate2 = criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.EM_ANDAMENTO);
+
+		criteria.where(predicate0, predicate2).distinct(true);
+
+		Long quantidade = (long) this.em.createQuery(criteria).getSingleResult();
+		return quantidade;
 	}
 
 }
