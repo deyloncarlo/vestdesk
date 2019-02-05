@@ -62,15 +62,12 @@ export class PedidoComponent implements OnInit, OnDestroy {
     filtrar() {
         this.page = 0;
         this.pedidos = [];
-
         if (!this.id) {
             this.id = null;
         }
         if (!this.statusPedido) {
             this.statusPedido = null;
         }
-
-
 
         this.pedidoService.query({
             page: this.page,
@@ -133,6 +130,7 @@ export class PedidoComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
+        // this.pedidos = [];
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {

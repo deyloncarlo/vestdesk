@@ -85,8 +85,7 @@ public class Produto implements Serializable
 	@JsonIgnore
 	private Set<MaterialTamanho> listaMaterialTamanho = new HashSet<>();
 
-	@NotNull
-	@Column(name = "preco", precision = 10, scale = 2, nullable = false)
+	@Column(name = "preco", precision = 10, scale = 2, nullable = true)
 	private BigDecimal preco;
 
 	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)

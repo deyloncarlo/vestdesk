@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.service.dto.PedidoDTO;
+import br.com.vestdesk.service.dto.PedidoGridDTO;
 import br.com.vestdesk.service.dto.PedidoMinDTO;
 
 /**
@@ -19,6 +20,8 @@ public interface PedidoMapper
 	PedidoDTO toDto(Pedido pedido);
 
 	PedidoMinDTO toMinDto(Pedido pedido);
+
+	PedidoGridDTO toGridDto(Pedido pedido);
 
 	default Pedido fromId(Long id)
 	{

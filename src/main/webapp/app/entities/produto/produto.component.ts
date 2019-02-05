@@ -59,6 +59,7 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     }
 
     loadPage(page) {
+        debugger
         this.page = page;
         this.loadAll();
     }
@@ -90,6 +91,7 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data, headers) {
+        debugger
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {

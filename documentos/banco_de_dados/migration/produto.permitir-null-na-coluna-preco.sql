@@ -1,0 +1,1 @@
+alter table produto modify preco decimal(10,2) null;

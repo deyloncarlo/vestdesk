@@ -4,7 +4,8 @@ import { ConfiguracaoProduto } from '../configuracao-produto/configuracao-produt
 export enum Modelo {
     'MOLETOM',
     'POLO',
-    'CAMISA'
+    'CAMISA',
+    'COLLEGE'
 }
 
 export class ModeloVestuario implements BaseEntity {

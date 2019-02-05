@@ -5,5 +5,5 @@ package br.com.vestdesk.domain.enumeration;
  */
 public enum Modelo
 {
-	MOLETOM, POLO, CAMISA
+	MOLETOM, POLO, CAMISA, COLLEGE;
 }

@@ -1,9 +1,14 @@
 package br.com.vestdesk.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,13 +82,26 @@ public class MaterialService
 	@Transactional(readOnly = true)
 	public Page<MaterialDTO> findAll(Pageable pageable, String nome)
 	{
-		if (nome == null)
+		if (nome == "")
 		{
-			nome = "";
+			nome = null;
 		}
 
-		Query query = this.em.createQuery("SELECT material FROM Material material WHERE nome LIKE :nomeMaterial");
-		query.setParameter("nomeMaterial", "%" + nome + "%");
+		CriteriaBuilder criteriaBuider = this.em.getCriteriaBuilder();
+		CriteriaQuery<Material> criteria = criteriaBuider.createQuery(Material.class);
+		Root<Material> root = criteria.from(Material.class);
+		List<Predicate> predicates = new ArrayList<Predicate>();
+		if (nome != null)
+		{
+			predicates.add(criteriaBuider.like(root.get("nome"), "%" + nome + "%"));
+
+		}
+		criteria.where(predicates.toArray(new Predicate[] {}));
+
+		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
+		TypedQuery<Material> query = this.em.createQuery(criteria);
+		query.setFirstResult(primeiroRegistro);
+		query.setMaxResults(pageable.getPageSize());
 
 		List<Material> listaMaterial = query.getResultList();
 		Page<Material> page = new PageImpl<>(listaMaterial, pageable, listaMaterial.size());

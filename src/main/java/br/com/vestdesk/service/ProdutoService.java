@@ -6,6 +6,10 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -117,9 +121,18 @@ public class ProdutoService
 			descricao = "";
 		}
 
-		Query query = this.em.createQuery("SELECT produto FROM Produto produto WHERE descricao LIKE :descricaoProduto");
-		query.setParameter("descricaoProduto", "%" + descricao + "%");
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Produto> criteria = criteriaBuilder.createQuery(Produto.class);
+		Root<Produto> root = criteria.from(Produto.class);
 
+		// Query query = this.em.createQuery("SELECT produto FROM Produto
+		// produto WHERE descricao LIKE :descricaoProduto");
+		// query.setParameter("descricaoProduto", "%" + descricao + "%");
+
+		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
+		TypedQuery<Produto> query = this.em.createQuery(criteria);
+		query.setFirstResult(primeiroRegistro);
+		query.setMaxResults(pageable.getPageSize());
 		List<Produto> listaProduto = query.getResultList();
 		Page<Produto> page = new PageImpl<>(listaProduto, pageable, listaProduto.size());
 

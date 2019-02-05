@@ -1,3 +1,3 @@
-<select class="form-control" name="{{fieldName}}" [(ngModel)]="model" (ngModelChange)="onChange()">
+<select class="form-control" name="{{fieldName}}" [(ngModel)]="model" (ngModelChange)="onChange()" [required]="isRequired">
     <option *ngFor="let option of lista" [ngValue]="option">{{option}}</option> 
 </select>

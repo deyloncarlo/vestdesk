@@ -29,11 +29,7 @@
 
             <div class="col-md-2">
                 <label class="form-control-label" jhiTranslate="vestdeskApp.produto.modelo" for="field_modelo">Modelo</label>
-                <select class="form-control" name="modelo" [(ngModel)]="produto.modelo" id="field_modelo" required>
-                    <option value="MOLETOM">{{'vestdeskApp.Modelo.MOLETOM' | translate}}</option>
-                    <option value="POLO">{{'vestdeskApp.Modelo.POLO' | translate}}</option>
-                    <option value="CAMISA">{{'vestdeskApp.Modelo.CAMISA' | translate}}</option>
-                </select>
+                <select-field name="modelo" id="field_modelo" [enum]="'Modelo'" [isRequired]="true" [model]="produto.modelo" (toggledChange)="produto.modelo=$event"></select-field>
                 <div [hidden]="!(editForm.controls.modelo?.dirty && editForm.controls.modelo?.invalid)">
                     <small class="form-text text-danger" [hidden]="!editForm.controls.modelo?.errors?.required" jhiTranslate="entity.validation.required">
                         This field is required.
@@ -79,11 +75,8 @@
 
             <div class="col-md-2">
                 <label class="form-control-label" jhiTranslate="vestdeskApp.produto.preco" for="field_preco">Preço</label>
-                <input type="number" class="form-control" name="preco" id="field_preco" [(ngModel)]="produto.preco" required/>
+                <input type="number" class="form-control" name="preco" id="field_preco" [(ngModel)]="produto.preco"/>
                 <div [hidden]="!(editForm.controls.preco?.dirty && editForm.controls.preco?.invalid)">
-                    <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.required" jhiTranslate="entity.validation.required">
-                        This field is required.
-                    </small>
                     <small class="form-text text-danger" [hidden]="!editForm.controls.preco?.errors?.number" jhiTranslate="entity.validation.number">
                         This field should be a number.
                     </small>

@@ -25,7 +25,8 @@
             <th></th>
             </tr>
             </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="0"
+                [infiniteScrollThrottle]="50">
             <tr *ngFor="let produto of produtos ;trackBy: trackId">
                 <td>{{produto.codigo}}</td>
                 <td>{{produto.descricao}}</td>

@@ -9,6 +9,7 @@ export class SelectField implements OnInit, OnDestroy{
     @Input() enum: string;
     @Input() model: string;
     @Input() fieldName: string;
+    @Input() isRequired: boolean;
     @Output() toggledChange = new EventEmitter<string>();
 
     lista = [null];

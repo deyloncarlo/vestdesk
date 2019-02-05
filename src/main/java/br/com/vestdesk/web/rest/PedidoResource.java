@@ -27,6 +27,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import br.com.vestdesk.service.PedidoService;
 import br.com.vestdesk.service.dto.PedidoDTO;
+import br.com.vestdesk.service.dto.PedidoGridDTO;
 import br.com.vestdesk.web.rest.errors.BadRequestAlertException;
 import br.com.vestdesk.web.rest.util.HeaderUtil;
 import br.com.vestdesk.web.rest.util.PaginationUtil;
@@ -107,7 +108,7 @@ public class PedidoResource
 	 */
 	@GetMapping("/pedidos")
 	@Timed
-	public ResponseEntity<List<PedidoDTO>> getAllPedidos(Pageable pageable,
+	public ResponseEntity<List<PedidoGridDTO>> getAllPedidos(Pageable pageable,
 			@RequestParam(name = "id", required = false) String id,
 			@RequestParam(name = "statusPedido", required = false) String statusPedido,
 			@RequestParam(name = "fechaEm10Dias", required = false) boolean fechaEm10Dias)
@@ -128,7 +129,7 @@ public class PedidoResource
 			statusPedido = null;
 		}
 
-		Page<PedidoDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido, fechaEm10Dias);
+		Page<PedidoGridDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido, fechaEm10Dias);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pedidos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

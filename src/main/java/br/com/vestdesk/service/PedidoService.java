@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -29,6 +30,7 @@ import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
 import br.com.vestdesk.repository.PedidoRepository;
 import br.com.vestdesk.service.dto.PedidoDTO;
+import br.com.vestdesk.service.dto.PedidoGridDTO;
 import br.com.vestdesk.service.mapper.PedidoMapper;
 
 /**
@@ -195,7 +197,7 @@ public class PedidoService
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<PedidoDTO> findAll(Pageable pageable, Long id, String statusPedido, boolean fechaEm10Dias)
+	public Page<PedidoGridDTO> findAll(Pageable pageable, Long id, String statusPedido, boolean fechaEm10Dias)
 	{
 
 		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
@@ -221,11 +223,15 @@ public class PedidoService
 			predicates.add(predicate2);
 		}
 		criteria.where(criteriaBuilder.and(predicates.toArray(new Predicate[] {})));
+		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
+		TypedQuery<Pedido> query = this.em.createQuery(criteria);
+		query.setFirstResult(primeiroRegistro);
+		query.setMaxResults(pageable.getPageSize());
 
-		List<Pedido> listaPedido = this.em.createQuery(criteria).getResultList();
+		List<Pedido> listaPedido = query.getResultList();
 		Page<Pedido> page = new PageImpl<>(listaPedido, pageable, listaPedido.size());
 
-		return page.map(this.pedidoMapper::toDto);
+		return page.map(this.pedidoMapper::toGridDto);
 	}
 
 	@Transactional(readOnly = true)
