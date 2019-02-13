@@ -6,6 +6,7 @@ Bootstrap tweaks
 
 body, h1, h2, h3, h4 {
     font-weight: 300;
+    zoom: 90%;
 }
 
 a {
@@ -237,7 +238,7 @@ ui bootstrap tweaks
 
 @media (min-width: 992px) {
     .modal-lg {
-        max-width: 99%;
+        max-width: 95%;
     }
 }
 

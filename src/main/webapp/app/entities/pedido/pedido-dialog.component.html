@@ -105,17 +105,39 @@
                             <div class="container-fluid pedido-resumo">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="col-md-12" style="font-weight: bold">
-                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
-                                            </label>: {{pedido.statusPedido}}
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                                {{tipo}}
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                                {{valorVenda[tipo] | currency:'BRL':true}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                        <div class="col-md-12" style="font-weight: bold">
-                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
-                                            </label>: {{valorTotalPedido | currency:'BRL':true}}
-                                        </div>
-                                        <div class="col-md-12" style="font-weight: bold">
-                                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
-                                            </label>: {{valorRestantePedido | currency:'BRL':true}}
+                                        <div class="row">
+                                            <div class="col-md-12" style="font-weight: bold">
+                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
+                                                </label>: {{pedido.statusPedido}}
+                                            </div>
+                                            <div class="col-md-12" style="font-weight: bold">
+                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
+                                                </label>: {{valorTotalPedido | currency:'BRL':true}}
+                                            </div>
+                                            <div class="col-md-12" style="font-weight: bold">
+                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
+                                                </label>: {{valorRestantePedido | currency:'BRL':true}}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-5" >
@@ -182,6 +204,11 @@
                                             <option [ngValue]="null"></option>
                                             <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
                                         </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorVenda" for="field_valorVenda">Valor Venda</label>
+                                        <input type="number" class="form-control" name="pedido_valorVenda" id="field_valorVenda" [(ngModel)]="valorVenda[modelo]"
+                                        />
                                     </div>
                                     <div class="col-md-3">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.quantidadeItem" for="field_quantidade">Quantidade</label>
@@ -303,7 +330,7 @@
                                         {{pedidoItem.formaPrimeiroPagamento}}
                                     </td>
                                     <td style="font-weight: bold; color: red">
-                                        {{pedidoItem.valor | currency:'BRL':true}}
+                                        {{ (pedidoItem.quantidade * this.valorVenda[pedidoItem.produto.modelo]) - pedidoItem.primeiroPagamento | currency:'BRL':true}}
                                     </td>
                                     <td [ngClass]="{EM_PRODUCAO: 'EM_PRODUCAO', EM_SEPARACAO: 'EM_SEPARACAO',
                                         BORDADO: 'BORDADO', SILKANDO: 'SILKANDO', PRONTO: 'PRONTO',

@@ -21,6 +21,7 @@ import { LayoutPopupService, Layout } from '../layout';
 import { LayoutInputComponent } from '../layout/layout-input.component';
 import { ConfiguracaoLayout } from '../configuracao-layout';
 import { JhiAlertErrorComponent } from '../../shared';
+import { ENUM } from '../../shared/enum'
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -51,6 +52,8 @@ export class PedidoDialogComponent implements OnInit {
     produtoNaoEncontrado: boolean;
     clienteTextoLivre: boolean;
     clienteNaoSelecionado: boolean;
+    valorVenda: any[];
+    listaEnum;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -69,6 +72,8 @@ export class PedidoDialogComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.valorVenda = [];
+        this.listaEnum = ENUM;
         this.corService.query()
             .subscribe((res: HttpResponse<Cor[]>) => { this.listaCor = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
 
@@ -90,6 +95,12 @@ export class PedidoDialogComponent implements OnInit {
         }
         if (!this.pedido.id) {
             this.pedido.tipoPedido = TipoPedido.VENDA;
+        }else {
+            this.pedido.listaPedidoItem.forEach((pedidoItem) => {
+                if (this.valorVenda[pedidoItem.produto.modelo] == null || this.valorVenda[pedidoItem.produto.modelo] == "") {
+                    this.valorVenda[pedidoItem.produto.modelo] = pedidoItem.valor;
+                }
+            });
         }
         this.atualizarTotal();
         this.esconderCampos = false;
@@ -197,8 +208,8 @@ export class PedidoDialogComponent implements OnInit {
         this.valorRestantePedido = 0;
         this.valorTotalPedido = 0;
         this.pedido.listaPedidoItem.forEach(element => {
-            this.valorRestantePedido += element.valor;
-            this.valorTotalPedido += element.produto.preco * element.quantidade;
+            this.valorRestantePedido += ( (element.valor*element.quantidade) - element.primeiroPagamento);
+            this.valorTotalPedido += element.valor*element.quantidade;
         });
     }
 
@@ -222,7 +233,7 @@ export class PedidoDialogComponent implements OnInit {
             pedidoItem.produto = p_produto;
             pedidoItem.primeiroPagamento = this.primeiroPagamento;
             pedidoItem.formaPrimeiroPagamento = this.formaPrimeiroPagamento;
-            pedidoItem.valor = (pedidoItem.quantidade * pedidoItem.produto.preco) - pedidoItem.primeiroPagamento;
+            pedidoItem.valor = this.valorVenda[pedidoItem.produto.modelo];
         }
         this.pedido.listaPedidoItem.push(pedidoItem);
         this.atualizarTotal();

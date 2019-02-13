@@ -1,0 +1,9 @@
+Realizar migration para recalcular o valor da dos PedidoItem.
+Antigamente o valor do PedidoItem era definido da seguinte forma:
+pedidoItem.valor = (pedidoItem.quantidade * pedidoItem.produto.preco) - pedidoItem.primeiroPagamento;
+
+Agora o valor do PedidoItem é definido da seguinte forma:
+pedidoItem.valor = this.valorVenda[pedidoItem.produto.modelo];
+
+Ou seja, deve ser realizada uma migration, para recalcular o valor do Pedido Item.
+pedidoItem.valor = pedidoItem.produto.preco;
