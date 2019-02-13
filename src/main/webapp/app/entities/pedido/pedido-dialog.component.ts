@@ -250,6 +250,18 @@ export class PedidoDialogComponent implements OnInit {
         );
     }
 
+    atuliazandoValorVendaModelo() {
+        if (this.modelo) {
+            let selecionados = this.pedido.listaPedidoItem.filter((pedidoItem) => {
+                return pedidoItem.produto.modelo == this.modelo;
+            });
+
+            selecionados.forEach((pedidoItem) => {
+                pedidoItem.valor = this.valorVenda[this.modelo];
+            });
+        }
+    }
+
     criarProduto() {
         const produto = new Produto();
         produto.tamanho = this.tamanho;

@@ -208,6 +208,7 @@
                                     <div class="col-md-3">
                                         <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorVenda" for="field_valorVenda">Valor Venda</label>
                                         <input type="number" class="form-control" name="pedido_valorVenda" id="field_valorVenda" [(ngModel)]="valorVenda[modelo]"
+                                        (change)="atuliazandoValorVendaModelo()"
                                         />
                                     </div>
                                     <div class="col-md-3">
