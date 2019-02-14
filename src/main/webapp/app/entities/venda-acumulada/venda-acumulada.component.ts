@@ -7,6 +7,8 @@ import { VendaAcumulada } from './venda-acumulada.model';
 import { VendaAcumuladaService } from './venda-acumulada.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { Observable } from 'rxjs/Observable';
+import { ProdutoService, Produto } from '../produto';
+import { ENUM } from "./../../shared/enum";
 
 @Component({
     selector: 'jhi-venda-acumulada',
@@ -24,6 +26,8 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
     queryCount: any;
     reverse: any;
     totalItems: number;
+    listaPorModelo: any[];
+    listaTamanho: any[];
 
     constructor(
         private vendaAcumuladaService: VendaAcumuladaService,
@@ -31,9 +35,12 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
         private eventManager: JhiEventManager,
         private parseLinks: JhiParseLinks,
         private principal: Principal,
-        private ngbModal: NgbModal
+        private ngbModal: NgbModal,
+        private produtoService: ProdutoService
     ) {
+        this.listaPorModelo = [];
         this.vendaAcumuladas = [];
+        this.listaTamanho = ENUM['Tamanho'];
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.page = 0;
         this.links = {
@@ -72,9 +79,51 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
         this.registerChangeInVendaAcumuladas();
     }
 
+    obterVendaAcumuladaPorModeloCor() {
+        this.vendaAcumuladas.forEach((vendaAcumulada) => {
+            let modeloEncontrado = this.listaPorModelo.filter((modelo) => {
+                return modelo.nomeModelo == vendaAcumulada.produto.modelo;
+            });
+            if (modeloEncontrado.length == 0) {
+                let novo = {
+                    nomeModelo: vendaAcumulada.produto.modelo,
+                    array: [],
+                    listaCor: [],
+                    listaTamanho: []
+                };
+                modeloEncontrado[0] = novo;
+                this.listaPorModelo.push(modeloEncontrado[0]);
+                // this.listaPorModelo[vendaAcumulada.produto.modelo] = [];
+                // this.listaPorModelo[vendaAcumulada.produto.modelo].nomeModelo = vendaAcumulada.produto.modelo;
+                // this.listaPorModelo[vendaAcumulada.produto.modelo].array = [];
+                // this.listaPorModelo[vendaAcumulada.produto.modelo].listaCor = [];
+                // this.listaPorModelo[vendaAcumulada.produto.modelo].listaTamanho = [];
+            }
+            let corId = vendaAcumulada.produto.cor.id;
+            let tamanho = vendaAcumulada.produto.tamanho;
+
+            modeloEncontrado[0].array.push(vendaAcumulada);
+            if (modeloEncontrado[0].listaCor.indexOf(corId) == -1) {
+                modeloEncontrado[0].listaCor.push(corId);
+            }
+            if (modeloEncontrado[0].listaTamanho.indexOf(tamanho) == -1) {
+                modeloEncontrado[0].listaTamanho.push(tamanho);
+            }
+
+            // this.listaPorModelo[vendaAcumulada.produto.modelo].array.push(vendaAcumulada);
+            // if(this.listaPorModelo[vendaAcumulada.produto.modelo].listaCor.indexOf(corId) == -1) {
+            //     this.listaPorModelo[vendaAcumulada.produto.modelo].listaCor.push(corId);
+            // }
+            // if(this.listaPorModelo[vendaAcumulada.produto.modelo].listaTamanho.indexOf(tamanho) == -1) {
+            //     this.listaPorModelo[vendaAcumulada.produto.modelo].listaTamanho.push(tamanho);
+            // }
+        });
+        debugger
+    }
+
     produzir(content, vendaAcumulada) {
         this.ngbModal.open(content).result.then((result) => {
-            if(result == "SIM") {
+            if (result == "SIM") {
                 this.subscribeToSaveResponse(this.vendaAcumuladaService.produzir(vendaAcumulada));
             }
         }, (reason) => {
@@ -91,7 +140,7 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
     }
 
     private onSaveSuccess(result: VendaAcumulada) {
-        this.eventManager.broadcast({ name: 'vendaAcumuladaListModification', content: 'OK'});
+        this.eventManager.broadcast({ name: 'vendaAcumuladaListModification', content: 'OK' });
         debugger
     }
 
@@ -120,6 +169,8 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
         for (let i = 0; i < data.length; i++) {
             this.vendaAcumuladas.push(data[i]);
         }
+
+        this.obterVendaAcumuladaPorModeloCor();
     }
 
     private onError(error) {

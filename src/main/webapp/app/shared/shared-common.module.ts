@@ -10,6 +10,7 @@ import {
     JhiAlertComponent,
     JhiAlertErrorComponent,
     SelectField,
+    TableResume,
     BoxInfo
 } from './';
 
@@ -22,7 +23,8 @@ import {
         JhiAlertComponent,
         JhiAlertErrorComponent,
         SelectField,
-        BoxInfo
+        BoxInfo,
+        TableResume
     ],
     providers: [
         JhiLanguageHelper,
@@ -38,7 +40,8 @@ import {
         JhiAlertComponent,
         JhiAlertErrorComponent,
         SelectField,
-        BoxInfo
+        BoxInfo,
+        TableResume
     ]
 })
 export class VestdeskSharedCommonModule {

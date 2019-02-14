@@ -1,0 +1,36 @@
+<div class="container-fluid">
+    <div class="row table-resume-title text-center">
+        <p class="col-md-12">{{resumeTitle}}</p>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="table-resume-cell"></th>
+                    <th *ngFor="let column of columnList" class="table-resume-cell">{{column}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of rowHeader">
+                    <td class="table-resume-cell">
+                        {{row}}
+                    </td>
+                    <td *ngFor="let column of columnList" class="table-resume-cell">
+                        <div *ngFor="let data of dataList">
+                            <div *ngIf="data.produto.tamanho == column && data.produto.cor.id == row">
+                                <div class="col-md-12">
+                                    {{data.produto.descricao}}
+                                    {{data.produto.tamanho}}
+                                    {{data.quantidadeAcumulada}}
+                                </div>
+                                <div class="col-md-12">
+                                    -
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
