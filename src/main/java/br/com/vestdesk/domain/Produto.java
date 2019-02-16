@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,10 +68,12 @@ public class Produto implements Serializable
 
 	@NotNull
 	@Column(name = "tamanho")
+	@Enumerated(EnumType.STRING)
 	private Tamanho tamanho;
 
 	@NotNull
 	@Column(name = "modelo")
+	@Enumerated(EnumType.STRING)
 	private Modelo modelo;
 
 	@Column(name = "quantidade_estoque", nullable = false)

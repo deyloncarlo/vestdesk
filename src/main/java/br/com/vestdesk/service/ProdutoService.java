@@ -1,5 +1,6 @@
 package br.com.vestdesk.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
@@ -26,6 +30,7 @@ import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.Modelo;
 import br.com.vestdesk.domain.enumeration.Tamanho;
 import br.com.vestdesk.repository.ProdutoRepository;
+import br.com.vestdesk.service.dto.CorDTO;
 import br.com.vestdesk.service.dto.ProdutoDTO;
 import br.com.vestdesk.service.mapper.ProdutoMapper;
 
@@ -70,6 +75,7 @@ public class ProdutoService
 	{
 		this.log.debug("Request to save Produto : {}", produtoDTO);
 		Produto produto = this.produtoMapper.toEntity(produtoDTO);
+		validarProduto(produtoDTO);
 		Set<MaterialTamanho> listaMaterialTamanho = produto.getListaMaterialTamanho();
 
 		if (produto.getId() != null)
@@ -92,6 +98,17 @@ public class ProdutoService
 		criarEntidadeVendaAcumulada(produto);
 		return this.produtoMapper.toDto(produto);
 
+	}
+
+	private void validarProduto(ProdutoDTO produtoDTO)
+	{
+
+		List<Produto> listaProduto = obterProdutoJaCadastrados(produtoDTO.getDescricao(), produtoDTO.getCodigo(),
+				produtoDTO.getCor(), produtoDTO.getModelo(), produtoDTO.getTamanho());
+		if (!listaProduto.isEmpty())
+		{
+			throw new RuntimeException("error.produto.existeProdutoComMesmaConfiguracao");
+		}
 	}
 
 	private void criarEntidadeVendaAcumulada(Produto produto)
@@ -125,10 +142,6 @@ public class ProdutoService
 		CriteriaQuery<Produto> criteria = criteriaBuilder.createQuery(Produto.class);
 		Root<Produto> root = criteria.from(Produto.class);
 
-		// Query query = this.em.createQuery("SELECT produto FROM Produto
-		// produto WHERE descricao LIKE :descricaoProduto");
-		// query.setParameter("descricaoProduto", "%" + descricao + "%");
-
 		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
 		TypedQuery<Produto> query = this.em.createQuery(criteria);
 		query.setFirstResult(primeiroRegistro);
@@ -138,6 +151,38 @@ public class ProdutoService
 
 		this.log.debug("Request to get all Produtos");
 		return page.map(this.produtoMapper::toDto);
+	}
+
+	@Transactional(readOnly = true)
+	public List<Produto> obterProdutoJaCadastrados(String descricao, String codigo, CorDTO cor, Modelo modelo,
+			Tamanho tamanho)
+	{
+
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Produto> criteria = criteriaBuilder.createQuery(Produto.class);
+		Root<Produto> root = criteria.from(Produto.class);
+
+		List<Predicate> listaPredicate = new ArrayList<>();
+
+		Predicate descricaoPredicate = criteriaBuilder.equal(root.<String>get("descricao"), descricao);
+		Predicate codigoPredicate = criteriaBuilder.equal(root.<String>get("codigo"), codigo);
+		Predicate modeloPredicate = criteriaBuilder.equal(root.<String>get("modelo"), modelo);
+		Predicate tamanhoPredicate = criteriaBuilder.equal(root.<Modelo>get("tamanho"), tamanho);
+
+		Join<Produto, Cor> joinCor = root.join("cor");
+		Path<Long> corId = joinCor.get("id");
+		Predicate corPredicate = criteriaBuilder.isTrue(corId.in(cor.getId()));
+
+		Predicate descricaoOuCodigo = criteriaBuilder.or(descricaoPredicate, codigoPredicate);
+		Predicate modeloTamanhoCor = criteriaBuilder.and(modeloPredicate, tamanhoPredicate, corPredicate);
+
+		Predicate finalPredicate = criteriaBuilder.or(descricaoOuCodigo, modeloTamanhoCor);
+
+		criteria.where(finalPredicate);
+		TypedQuery<Produto> query = this.em.createQuery(criteria);
+		List<Produto> listaProduto = query.getResultList();
+
+		return listaProduto;
 	}
 
 	/**

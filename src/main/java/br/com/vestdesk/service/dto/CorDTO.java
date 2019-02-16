@@ -3,15 +3,12 @@ package br.com.vestdesk.service.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * A DTO for the Cor entity.
  */
 public class CorDTO implements Serializable
 {
 
-	@NotNull
 	private String nome;
 
 	private String codigo;
