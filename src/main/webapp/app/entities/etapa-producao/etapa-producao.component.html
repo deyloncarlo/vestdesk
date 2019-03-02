@@ -22,8 +22,8 @@
             <th></th>
             </tr>
             </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="0"
-                    [infiniteScrollThrottle]="50">
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="1">
             <tr *ngFor="let etapaProducao of etapaProducaos ;trackBy: trackId">
                 <td><a [routerLink]="['../etapa-producao', etapaProducao.id ]">{{etapaProducao.id}}</a></td>
                 <td>{{etapaProducao.nome}}</td>

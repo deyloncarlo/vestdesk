@@ -33,7 +33,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
         private principal: Principal
     ) {
         this.layouts = [];
-        this.itemsPerPage = ITEMS_PER_PAGE;
+        this.itemsPerPage = 10;
         this.page = 0;
         this.links = {
             last: 0

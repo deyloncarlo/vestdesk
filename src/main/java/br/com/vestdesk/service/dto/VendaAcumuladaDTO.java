@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import br.com.vestdesk.domain.enumeration.StatusVendaAcumulada;
+
 /**
  * A DTO for the VendaAcumulada entity.
  */
@@ -18,6 +20,8 @@ public class VendaAcumuladaDTO implements Serializable
 	private ProdutoMinDTO produto;
 
 	private List<PedidoItemMinDTO> listaPedidoItemAcumulado = new ArrayList<>();
+
+	private StatusVendaAcumulada status;
 
 	public Long getId()
 	{
@@ -89,5 +93,15 @@ public class VendaAcumuladaDTO implements Serializable
 	public void setListaPedidoItemAcumulado(List<PedidoItemMinDTO> listaPedidoItemAcumulado)
 	{
 		this.listaPedidoItemAcumulado = listaPedidoItemAcumulado;
+	}
+
+	public StatusVendaAcumulada getStatus()
+	{
+		return this.status;
+	}
+
+	public void setStatus(StatusVendaAcumulada status)
+	{
+		this.status = status;
 	}
 }

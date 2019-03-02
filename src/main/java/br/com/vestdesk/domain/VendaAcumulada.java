@@ -7,12 +7,18 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import br.com.vestdesk.domain.enumeration.StatusVendaAcumulada;
 
 /**
  * A VendaAcumulada.
@@ -31,17 +37,21 @@ public class VendaAcumulada implements Serializable
 	@Column(name = "quantidade_acumulada")
 	private Integer quantidadeAcumulada;
 
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Produto.class)
 	private Produto produto;
 
 	// @ManyToMany
 	// private Set<Pedido> listaPedido = new HashSet<Pedido>();
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private Set<PedidoItem> listaPedidoItemProduzido = new HashSet<PedidoItem>();
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	private Set<PedidoItem> listaPedidoItemAcumulado = new HashSet<PedidoItem>();
+
+	@Enumerated(EnumType.STRING)
+	@NotNull
+	private StatusVendaAcumulada status;
 
 	// jhipster-needle-entity-add-field - JHipster will add fields here, do not
 	// remove
@@ -132,5 +142,15 @@ public class VendaAcumulada implements Serializable
 	public void setListaPedidoItemAcumulado(Set<PedidoItem> listaPedidoItemAcumulado)
 	{
 		this.listaPedidoItemAcumulado = listaPedidoItemAcumulado;
+	}
+
+	public StatusVendaAcumulada getStatus()
+	{
+		return this.status;
+	}
+
+	public void setStatus(StatusVendaAcumulada status)
+	{
+		this.status = status;
 	}
 }

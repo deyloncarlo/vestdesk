@@ -3,7 +3,7 @@ export let ENUM = {
         'MOLETOM', 'POLO', 'CAMISA', 'COLLEGE'
     ],
     'Tamanho': [
-        'P', 'PP', 'M', 'G', 'GG', 'XG', 'PPBL', 'PBL', 'MBL', 'GBL', 'GGBL', 'XGBL'
+        'PP', 'P', 'M', 'G', 'GG', 'XG', 'PPBL', 'PBL', 'MBL', 'GBL', 'GGBL', 'XGBL'
     ],
     'FormaPagamento': [
         'DINHEIRO', 'DEBITO', 'CREDITO', 'TRANSFERENCIA', 'BOLETO'

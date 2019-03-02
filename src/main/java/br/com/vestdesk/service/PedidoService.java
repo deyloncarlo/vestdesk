@@ -28,6 +28,7 @@ import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
+import br.com.vestdesk.domain.enumeration.StatusVendaAcumulada;
 import br.com.vestdesk.repository.PedidoRepository;
 import br.com.vestdesk.service.dto.PedidoDTO;
 import br.com.vestdesk.service.dto.PedidoGridDTO;
@@ -148,7 +149,24 @@ public class PedidoService
 		for (PedidoItem pedidoItem : listaPedidoItem)
 		{
 			VendaAcumulada vendaAcumuladaEncontrada = this.vendaAcumuladaService
-					.obterPeloProduto(pedidoItem.getProduto());
+					.obterVendaAcumuladaSemStatusProduto(pedidoItem.getProduto());
+			if (vendaAcumuladaEncontrada == null)
+			{
+				for (VendaAcumulada vendaNaLista : listaVendaAcumulada.keySet())
+				{
+					if (vendaNaLista.getProduto().getId().equals(pedidoItem.getProduto().getId()))
+					{
+						vendaAcumuladaEncontrada = vendaNaLista;
+						break;
+					}
+				}
+				if (vendaAcumuladaEncontrada == null)
+				{
+					vendaAcumuladaEncontrada = new VendaAcumulada();
+					vendaAcumuladaEncontrada.setProduto(pedidoItem.getProduto());
+					vendaAcumuladaEncontrada.setStatus(StatusVendaAcumulada.SEM_STATUS);
+				}
+			}
 			if (!listaVendaAcumulada.containsKey(vendaAcumuladaEncontrada))
 			{
 				listaVendaAcumulada.put(vendaAcumuladaEncontrada, pedidoItem.getQuantidade());
@@ -281,6 +299,23 @@ public class PedidoService
 		this.log.debug("Request to delete Pedido : {}", id);
 
 		Pedido pedidoEncontrado = this.pedidoRepository.findOne(id);
+
+		List<VendaAcumulada> listaVendaAcumulada = this.vendaAcumuladaService
+				.obterPorListaPedidoItemAcumulado(pedidoEncontrado.getListaPedidoItem());
+		List<VendaAcumulada> listaVendaProduzido = this.vendaAcumuladaService
+				.obterPorListaPedidoItemProduzido(pedidoEncontrado.getListaPedidoItem());
+
+		for (VendaAcumulada vendaAcumulada : listaVendaAcumulada)
+		{
+			vendaAcumulada.getListaPedidoItemAcumulado().removeAll(pedidoEncontrado.getListaPedidoItem());
+			this.vendaAcumuladaService.save(vendaAcumulada);
+		}
+
+		for (VendaAcumulada vendaAcumulada : listaVendaProduzido)
+		{
+			vendaAcumulada.getListaPedidoItemProduzido().removeAll(pedidoEncontrado.getListaPedidoItem());
+			this.vendaAcumuladaService.save(vendaAcumulada);
+		}
 
 		this.pedidoItemService.delete(pedidoEncontrado.getListaPedidoItem());
 

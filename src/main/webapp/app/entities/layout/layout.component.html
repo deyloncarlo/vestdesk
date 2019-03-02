@@ -22,8 +22,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="0"
-                    [infiniteScrollThrottle]="50">
+            <div infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="2"
+                    [infiniteScrollThrottle]="1">
                 <div class="col-md-12">
 
                     <div style="display: inline-block" class="col-md-4" *ngFor="let layout of layouts ;trackBy: trackId">

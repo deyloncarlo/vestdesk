@@ -33,6 +33,12 @@ export class VendaAcumuladaService {
             .map((res: EntityResponseType) => this.convertResponse(res));
     }
 
+    concluir(vendaAcumulada: VendaAcumulada): Observable<EntityResponseType> {
+        const copy = this.convert(vendaAcumulada);
+        return this.http.post<VendaAcumulada>(this.resourceUrl + '/concluir', copy, { observe: 'response' })
+            .map((res: EntityResponseType) => this.convertResponse(res));
+    }
+
     find(id: number): Observable<EntityResponseType> {
         return this.http.get<VendaAcumulada>(`${this.resourceUrl}/${id}`, { observe: 'response'})
             .map((res: EntityResponseType) => this.convertResponse(res));

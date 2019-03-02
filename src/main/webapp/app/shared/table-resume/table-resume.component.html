@@ -3,31 +3,26 @@
         <p class="col-md-12">{{resumeTitle}}</p>
     </div>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th class="table-resume-cell"></th>
-                    <th *ngFor="let column of columnList" class="table-resume-cell">{{column}}</th>
+                    <th class="table-resume-header"></th>
+                    <th *ngFor="let column of columnList" class="table-resume-header align-middle">{{column}}</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let row of rowHeader">
-                    <td class="table-resume-cell">
-                        {{row}}
+                    <td class="table-resume-header align-middle">
+                        {{row.nome}}
                     </td>
-                    <td *ngFor="let column of columnList" class="table-resume-cell">
-                        <div *ngFor="let data of dataList">
-                            <div *ngIf="data.produto.tamanho == column && data.produto.cor.id == row">
+                    <td *ngFor="let column of columnList" class="table-resume-cell align-middle">
+                        <a *ngFor="let data of dataList" (click)="cellClick(data)">
+                            <div *ngIf="data.produto.tamanho == column && data.produto.cor.id == row.id">
                                 <div class="col-md-12">
-                                    {{data.produto.descricao}}
-                                    {{data.produto.tamanho}}
                                     {{data.quantidadeAcumulada}}
                                 </div>
-                                <div class="col-md-12">
-                                    -
-                                </div>
                             </div>
-                        </div>
+                        </a>
                     </td>
                 </tr>
             </tbody>

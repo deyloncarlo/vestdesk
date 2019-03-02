@@ -1,6 +1,5 @@
 package br.com.vestdesk.service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,7 +94,7 @@ public class ProdutoService
 		produto = this.produtoRepository.save(produto);
 
 		this.materialTamanhoService.save(listaMaterialTamanho, produto);
-		criarEntidadeVendaAcumulada(produto);
+		// criarEntidadeVendaAcumulada(produto);
 		return this.produtoMapper.toDto(produto);
 
 	}
@@ -107,7 +106,10 @@ public class ProdutoService
 				produtoDTO.getCor(), produtoDTO.getModelo(), produtoDTO.getTamanho());
 		if (!listaProduto.isEmpty())
 		{
-			throw new RuntimeException("error.produto.existeProdutoComMesmaConfiguracao");
+			if (produtoDTO.getId() == null || !listaProduto.get(0).getId().equals(produtoDTO.getId()))
+			{
+				throw new RuntimeException("error.produto.existeProdutoComMesmaConfiguracao");
+			}
 		}
 	}
 
@@ -162,8 +164,6 @@ public class ProdutoService
 		CriteriaQuery<Produto> criteria = criteriaBuilder.createQuery(Produto.class);
 		Root<Produto> root = criteria.from(Produto.class);
 
-		List<Predicate> listaPredicate = new ArrayList<>();
-
 		Predicate descricaoPredicate = criteriaBuilder.equal(root.<String>get("descricao"), descricao);
 		Predicate codigoPredicate = criteriaBuilder.equal(root.<String>get("codigo"), codigo);
 		Predicate modeloPredicate = criteriaBuilder.equal(root.<String>get("modelo"), modelo);
@@ -176,7 +176,7 @@ public class ProdutoService
 		Predicate descricaoOuCodigo = criteriaBuilder.or(descricaoPredicate, codigoPredicate);
 		Predicate modeloTamanhoCor = criteriaBuilder.and(modeloPredicate, tamanhoPredicate, corPredicate);
 
-		Predicate finalPredicate = criteriaBuilder.or(descricaoOuCodigo, modeloTamanhoCor);
+		Predicate finalPredicate = criteriaBuilder.or(descricaoPredicate, codigoPredicate, modeloTamanhoCor);
 
 		criteria.where(finalPredicate);
 		TypedQuery<Produto> query = this.em.createQuery(criteria);

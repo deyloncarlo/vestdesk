@@ -1,64 +1,71 @@
-<!-- <div>
+<div>
     <h2>
         <span jhiTranslate="vestdeskApp.vendaAcumulada.home.title">Venda Acumuladas</span>
     </h2>
     <jhi-alert></jhi-alert>
+
     <div class="row">
-    </div>
-    <br/>
-    <div class="table-responsive" *ngIf="vendaAcumuladas">
-        <table class="table table-striped">
-            <thead>
-                <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-                    <th>
-                        <span jhiTranslate="vestdeskApp.vendaAcumulada.codigoProduto">Código Produto</th>
-                    <th>
-                        <span jhiTranslate="vestdeskApp.vendaAcumulada.produto">Produto</th>
-                    <th jhiSortBy="quantidadeAcumulada">
-                        <span jhiTranslate="vestdeskApp.vendaAcumulada.quantidadeAcumulada">Quantidade Acumulada</span>
-                        <span class="fa fa-sort"></span>
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="0"
-                    [infiniteScrollThrottle]="50">
-                <tr *ngFor="let vendaAcumulada of vendaAcumuladas ;trackBy: trackId">
-                    <td>{{vendaAcumulada.produto.codigo}}</td>
-                    <td>{{vendaAcumulada.produto.descricao}}</td>
-                    <td>{{vendaAcumulada.quantidadeAcumulada}}</td>
-                    <td class="text-right">
-                        <button [disabled]="vendaAcumulada.quantidadeAcumulada < 1" class="btn btn-primary" (click)="produzir(ordemProducao, vendaAcumulada)">
-                            Produzir
-                        </button>
-                        <div class="btn-group flex-btn-group-container">
+        <div class="col-md-10">
+            <div *ngFor="let modelo of listaPorModelo">
+                <table-resume [resumeTitle]="modelo.nomeModelo" [columnList]="listaTamanho" [rowHeader]="listaCor"
+                    [dataList]="modelo.array" (cellFunction)="produz($event)" [cellFunctionTemplate]="ordemProducao"></table-resume>
+            </div>
+        </div>
+        <div class="col-md-2 text-center" style="border-left: 1px solid #ccc;">
+            <h1>Em Produção</h1>
+            <div style="overflow-y: auto;">
+                <div *ngFor="let emProducao of vendaAcumuladaEmProducao" class="emproducao-resume">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12" style="font-family: 16px; font-weight: bold; margin-bottom: 10px;">
+                                {{emProducao.produto.modelo}}
+                                {{emProducao.produto.cor.nome}}
+                                {{emProducao.produto.tamanho}}
+                            </div>
+                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                Quantidade: {{emProducao.quantidadeAcumulada}}
+                            </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <div class="row">
+                            <button type="button" class="btn btn-primary btn-block" (click)="concluir(concluirProducao, emProducao)">Concluir</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
     <ng-template #ordemProducao let-d="dismiss" let-c="close">
-            <div class="modal-header">
-                <h4 class="modal-title" id="modal-basic-title">Produzir</h4>
-                <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p> Tem certeza ? </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" (click)="c('SIM')">Sim</button>
-                <button type="button" class="btn btn-primary" (click)="c('NAO')">Não</button>
-            </div>
-        </ng-template>
-</div> -->
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Produzir</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p> Tem certeza ? </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="c('SIM')">Sim</button>
+            <button type="button" class="btn btn-primary" (click)="c('NAO')">Não</button>
+        </div>
+    </ng-template>
 
-<div *ngFor="let modelo of listaPorModelo">
-    <table-resume [resumeTitle]="modelo.nomeModelo"
-     [columnList]="listaTamanho" 
-     [rowHeader]="modelo.listaCor" 
-     [dataList]="modelo.array"></table-resume>
+    <ng-template #concluirProducao let-d="dismiss" let-c="close">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Concluir</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p> Tem certeza que deseja concluir ? Assim que for concluído, a quantidade será adicionada no estoque. </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="c('SIM')">Sim</button>
+            <button type="button" class="btn btn-primary" (click)="c('NAO')">Não</button>
+        </div>
+    </ng-template>
+
 </div>

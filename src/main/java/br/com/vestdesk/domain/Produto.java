@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -91,9 +90,6 @@ public class Produto implements Serializable
 
 	@Column(name = "preco", precision = 10, scale = 2, nullable = true)
 	private BigDecimal preco;
-
-	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
-	private VendaAcumulada vendaAcumulada;
 
 	@OneToMany(mappedBy = "produto")
 	private Set<PedidoItem> listaPedidoItem = new HashSet<>();
@@ -305,16 +301,6 @@ public class Produto implements Serializable
 	public void setCor(Cor cor)
 	{
 		this.cor = cor;
-	}
-
-	public VendaAcumulada getVendaAcumulada()
-	{
-		return this.vendaAcumulada;
-	}
-
-	public void setVendaAcumulada(VendaAcumulada vendaAcumulada)
-	{
-		this.vendaAcumulada = vendaAcumulada;
 	}
 
 	public Set<PedidoItem> getListaPedidoItem()

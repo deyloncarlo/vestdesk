@@ -22,7 +22,6 @@ export class SelectField implements OnInit, OnDestroy{
     }
 
     onChange() {
-        debugger
         this.toggledChange.emit(this.model);
     }
 

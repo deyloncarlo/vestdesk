@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
 import br.com.vestdesk.domain.VendaAcumulada;
+import br.com.vestdesk.domain.enumeration.StatusVendaAcumulada;
 import br.com.vestdesk.repository.VendaAcumuladaRepository;
 import br.com.vestdesk.service.VendaAcumuladaService;
 import br.com.vestdesk.service.dto.VendaAcumuladaDTO;
@@ -125,6 +127,15 @@ public class VendaAcumuladaResource
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "")).body(null);
 	}
 
+	@PostMapping("/venda-acumuladas/concluir")
+	@Timed
+	public ResponseEntity<VendaAcumuladaDTO> concluir(@RequestBody VendaAcumuladaDTO vendaAcumuladaDTO)
+
+	{
+		VendaAcumulada vendaAcumulada = this.vendaAcumuladaService.concluir(vendaAcumuladaDTO);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "")).body(null);
+	}
+
 	/**
 	 * GET /venda-acumuladas : get all the vendaAcumuladas.
 	 *
@@ -134,10 +145,11 @@ public class VendaAcumuladaResource
 	 */
 	@GetMapping("/venda-acumuladas")
 	@Timed
-	public ResponseEntity<List<VendaAcumuladaDTO>> getAllVendaAcumuladas(Pageable pageable)
+	public ResponseEntity<List<VendaAcumuladaDTO>> getAllVendaAcumuladas(Pageable pageable,
+			@RequestParam(name = "status", required = false) StatusVendaAcumulada status)
 	{
 		this.log.debug("REST request to get a page of VendaAcumuladas");
-		Page<VendaAcumuladaDTO> page = this.vendaAcumuladaService.findAll(pageable);
+		Page<VendaAcumuladaDTO> page = this.vendaAcumuladaService.findAll(pageable, status);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/venda-acumuladas");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
