@@ -13,11 +13,11 @@ export class TableResume implements OnInit, OnDestroy{
     @Input() rowHeader: any[];
     @Input() columnList: any[]; 
     @Input() dataList: any[];
+    @Input() atributeToDisplay: string;
     @Input() cellFunctionTemplate: TemplateRef<String>;
     @Output() cellFunction = new EventEmitter<AnimationKeyframe>();
 
     constructor(private ngbModal: NgbModal) {
-
     }
 
     ngOnInit() {
@@ -27,11 +27,12 @@ export class TableResume implements OnInit, OnDestroy{
     }
 
     cellClick(data) {
-        debugger
-        this.ngbModal.open(this.cellFunctionTemplate).result.then((result)=> {
-            this.cellFunction.emit({result: result, data: data});
-        }, (reason) => {
-        });
+        if (this.cellFunction.observers.length > 0) {
+            this.ngbModal.open(this.cellFunctionTemplate).result.then((result)=> {
+                this.cellFunction.emit({result: result, data: data});
+            }, (reason) => {
+            });
+        }
     }
 
 }

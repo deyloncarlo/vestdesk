@@ -8,7 +8,8 @@
         <div class="col-md-10">
             <div *ngFor="let modelo of listaPorModelo">
                 <table-resume [resumeTitle]="modelo.nomeModelo" [columnList]="listaTamanho" [rowHeader]="listaCor"
-                    [dataList]="modelo.array" (cellFunction)="produz($event)" [cellFunctionTemplate]="ordemProducao"></table-resume>
+                    [dataList]="modelo.array" (cellFunction)="produz($event)" [cellFunctionTemplate]="ordemProducao"
+                    [atributeToDisplay]="'quantidadeAcumulada'"></table-resume>
             </div>
         </div>
         <div class="col-md-2 text-center" style="border-left: 1px solid #ccc;">

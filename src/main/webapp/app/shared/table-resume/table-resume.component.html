@@ -19,7 +19,7 @@
                         <a *ngFor="let data of dataList" (click)="cellClick(data)">
                             <div *ngIf="data.produto.tamanho == column && data.produto.cor.id == row.id">
                                 <div class="col-md-12">
-                                    {{data.quantidadeAcumulada}}
+                                    {{data[atributeToDisplay]}}
                                 </div>
                             </div>
                         </a>

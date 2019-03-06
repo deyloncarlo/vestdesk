@@ -175,5 +175,4 @@ public class ProdutoResource
 		Produto produtoEncontrado = this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho, cor);
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(this.produtoMapper.toMinDto(produtoEncontrado)));
 	}
-
 }

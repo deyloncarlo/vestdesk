@@ -1,0 +1,15 @@
+<div>
+    <h2>
+        <span jhiTranslate="vestdeskApp.resumoEstoque.home.title">Resumo Estoque</span>
+    </h2>
+    <jhi-alert></jhi-alert>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div *ngFor="let modelo of listaPorModelo">
+                <table-resume [resumeTitle]="modelo.nomeModelo" [columnList]="listaTamanho" [rowHeader]="listaCor"
+                    [dataList]="modelo.array" [atributeToDisplay]="'quantidadeEstoque'"></table-resume>
+            </div>
+        </div>
+    </div>
+</div>

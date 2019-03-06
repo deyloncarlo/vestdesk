@@ -24,6 +24,7 @@
                 "pedidoItem": "Pedido Item",
                 "configuracaoLayout": "Configuracao Layout",
                 "vendaAcumulada": "Venda Acumulada",
+                "resumoEstoque": "Resumo Estoque",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
