@@ -202,6 +202,17 @@ export class PedidoDialogComponent implements OnInit {
 
     private onSuccess(data, headers) {
         this.adcionarPedidoItem(data);
+        this.limparCampos();
+    }
+
+    private limparCampos() {
+        this.modelo = null;
+        this.cor = null;
+        this.modelo = null;
+        this.tamanho = null;
+        this.primeiroPagamento = null;
+        this.formaPrimeiroPagamento = null;
+        this.quantidade = null;
     }
 
     private atualizarTotal() {
