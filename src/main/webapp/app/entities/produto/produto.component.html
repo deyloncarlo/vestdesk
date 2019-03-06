@@ -27,7 +27,8 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="2"
                 [infiniteScrollThrottle]="1">
-            <tr *ngFor="let produto of produtos ;trackBy: trackId">
+            <tr *ngFor="let produto of produtos ;trackBy: trackId" 
+                [style.background-color]="produto.estoqueAbaixoQuantidadeMinima ? '#ff8888' : 'inherit'">
                 <td>{{produto.codigo}}</td>
                 <td>{{produto.descricao}}</td>
                 <td>{{produto.modelo}}</td>

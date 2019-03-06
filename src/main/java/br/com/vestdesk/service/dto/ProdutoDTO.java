@@ -45,6 +45,8 @@ public class ProdutoDTO implements Serializable
 
 	private CorDTO cor;
 
+	private Boolean estoqueAbaixoQuantidadeMinima;
+
 	public Long getId()
 	{
 		return this.id;
@@ -226,6 +228,25 @@ public class ProdutoDTO implements Serializable
 	public void setCor(CorDTO cor)
 	{
 		this.cor = cor;
+	}
+
+	public Boolean getEstoqueAbaixoQuantidadeMinima()
+	{
+		if (getQuantidadeMinima() != null && getQuantidadeEstoque() != null
+				&& getQuantidadeMinima() >= getQuantidadeEstoque())
+		{
+			this.estoqueAbaixoQuantidadeMinima = true;
+		}
+		else
+		{
+			this.estoqueAbaixoQuantidadeMinima = false;
+		}
+		return this.estoqueAbaixoQuantidadeMinima;
+	}
+
+	public void setEstoqueAbaixoQuantidadeMinima(Boolean estoqueAbaixoQuantidadeMinima)
+	{
+		this.estoqueAbaixoQuantidadeMinima = estoqueAbaixoQuantidadeMinima;
 	}
 
 }
