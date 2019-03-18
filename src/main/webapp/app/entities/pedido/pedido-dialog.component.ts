@@ -97,7 +97,7 @@ export class PedidoDialogComponent implements OnInit {
         }
         if (!this.pedido.id) {
             this.pedido.tipoPedido = TipoPedido.VENDA;
-        }else {
+        } else {
             this.pedido.listaPedidoItem.forEach((pedidoItem) => {
                 if (this.valorVenda[pedidoItem.produto.modelo] == null || this.valorVenda[pedidoItem.produto.modelo] == "") {
                     this.valorVenda[pedidoItem.produto.modelo] = pedidoItem.valor;
@@ -223,8 +223,8 @@ export class PedidoDialogComponent implements OnInit {
         this.valorTotalRecebido = 0;
         this.pedido.listaPedidoItem.forEach(element => {
             this.valorTotalRecebido += element.primeiroPagamento;
-            this.valorRestantePedido += ( (element.valor*element.quantidade) - element.primeiroPagamento);
-            this.valorTotalPedido += element.valor*element.quantidade;
+            this.valorRestantePedido += ((element.valor * element.quantidade) - element.primeiroPagamento);
+            this.valorTotalPedido += element.valor * element.quantidade;
         });
     }
 
@@ -232,29 +232,25 @@ export class PedidoDialogComponent implements OnInit {
         if (!this.pedido.listaPedidoItem) {
             this.pedido.listaPedidoItem = new Array<PedidoItem>();
         }
-        const pedidoItem = new PedidoItem();
-        pedidoItem.quantidade = this.quantidade;
-        if (this.pedido.tipoPedido == TipoPedido.PRODUCAO) {
-            if (this.pedido.cliente != null && this.pedido.cliente.telefone) {
-                pedidoItem.telefone = this.pedido.cliente.telefone;
-            }
-            pedidoItem.produto = this.produto;
-
-        } else {
-            pedidoItem.telefone = this.telefone;
-            pedidoItem.clienteCamisa = this.clienteCamisa;
-            pedidoItem.nomeRoupa = this.nomeRoupa;
-            // pedidoItem.produto = this.criarProduto();
-            pedidoItem.produto = p_produto;
-            pedidoItem.primeiroPagamento = this.primeiroPagamento;
-            pedidoItem.formaPrimeiroPagamento = this.formaPrimeiroPagamento;
-            pedidoItem.valor = this.valorVenda[pedidoItem.produto.modelo];
-        }
-        this.pedido.listaPedidoItem.push(pedidoItem);
+        const pedidoItem = this.createNewPedidoItem(p_produto);
+        this.pedido.listaPedidoItem.unshift(pedidoItem);
         this.atualizarTotal();
     }
 
-    inserir() {
+    private createNewPedidoItem(p_produto: any) {
+        const pedidoItem = new PedidoItem();
+        pedidoItem.quantidade = this.quantidade;
+        pedidoItem.telefone = this.telefone;
+        pedidoItem.clienteCamisa = this.clienteCamisa;
+        pedidoItem.nomeRoupa = this.nomeRoupa;
+        pedidoItem.produto = p_produto;
+        pedidoItem.primeiroPagamento = this.primeiroPagamento;
+        pedidoItem.formaPrimeiroPagamento = this.formaPrimeiroPagamento;
+        pedidoItem.valor = this.valorVenda[pedidoItem.produto.modelo];
+        return pedidoItem;
+    }
+
+    onClickInsert() {
         this.produtoService.obterProduto({
             modelo: this.modelo,
             tamanho: this.tamanho,
