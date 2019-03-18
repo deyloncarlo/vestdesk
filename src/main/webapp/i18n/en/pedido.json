@@ -22,7 +22,8 @@
             "tipoEstampaCosta": "Tipo Estampa Costa",
             "tipoEstampaMangaDireita": "Tipo Estampa Manga Direita",
             "tipoEstampaMangaEsquerda": "Tipo Estampa Manga Esquerda",
-            "dataCriacao": "Data Criacao"
+            "dataCriacao": "Data Criacao",
+            "valorTotalRecebido": "Valor Recebido (R$)"
         }
     }
 }

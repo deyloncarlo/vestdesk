@@ -44,7 +44,8 @@
             "valorRestantePedido": "Valor à pagar",
             "valorTotalPedido": "Total",
             "layoutSelecionado": "Layouts Selecionados",
-            "valorVenda": "Valor de Venda (R$)"
+            "valorVenda": "Valor de Venda (R$)",
+            "valorTotalRecebido": "Valor Recebido (R$)"
         }
     }
 }

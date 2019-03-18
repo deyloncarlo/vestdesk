@@ -29,6 +29,8 @@ import { ENUM } from '../../shared/enum'
 })
 export class PedidoDialogComponent implements OnInit {
 
+    listaCor: Cor[];
+
     pedido: Pedido;
     isSaving: boolean;
     dataCriacaoDp: any;
@@ -37,7 +39,6 @@ export class PedidoDialogComponent implements OnInit {
     telefone: string;
     modelo: Modelo;
     tamanho: Tamanho;
-    listaCor: Cor[];
     cor: Cor;
     produto: Produto;
     quantidade: number;
@@ -54,6 +55,7 @@ export class PedidoDialogComponent implements OnInit {
     clienteNaoSelecionado: boolean;
     valorVenda: any[];
     listaEnum;
+    valorTotalRecebido: number;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -218,7 +220,9 @@ export class PedidoDialogComponent implements OnInit {
     private atualizarTotal() {
         this.valorRestantePedido = 0;
         this.valorTotalPedido = 0;
+        this.valorTotalRecebido = 0;
         this.pedido.listaPedidoItem.forEach(element => {
+            this.valorTotalRecebido += element.primeiroPagamento;
             this.valorRestantePedido += ( (element.valor*element.quantidade) - element.primeiroPagamento);
             this.valorTotalPedido += element.valor*element.quantidade;
         });
