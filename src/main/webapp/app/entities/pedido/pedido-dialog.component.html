@@ -106,10 +106,11 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <table class="table table-striped">
+                                            <div class="col-md-12" [hidden]="pedido.listaPedidoItem.length <= 0">
+                                                <table class="table table-striped table-bordered">
                                                     <thead>
                                                         <tr>
+                                                            <th></th>
                                                             <th *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
                                                                 {{tipo}}
                                                             </th>
@@ -117,8 +118,17 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr>
+                                                            <td style="font-weight: bold; width: 20px">Valor (R$)</td>
                                                             <td *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
                                                                 {{valorVenda[tipo] | currency:'BRL':true}}
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="font-weight: bold; width: 20px">
+                                                                Quantidade
+                                                            </td>
+                                                            <td *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                                {{getAmountByModelo(tipo)}}
                                                             </td>
                                                         </tr>
                                                     </tbody>

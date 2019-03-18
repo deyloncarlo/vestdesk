@@ -317,6 +317,16 @@ export class PedidoDialogComponent implements OnInit {
     removerPedidoItem(indice) {
         this.pedido.listaPedidoItem.splice(indice, 1);
     }
+
+    getAmountByModelo (modelo) {
+        let amount = 0;
+        this.pedido.listaPedidoItem.forEach((pedidoItem) => {
+            if (pedidoItem.produto.modelo == modelo) {
+                amount += pedidoItem.quantidade;
+            }
+        });
+        return amount;
+    }
 }
 
 @Component({
