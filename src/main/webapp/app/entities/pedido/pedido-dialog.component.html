@@ -273,8 +273,16 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO'" 
+                                    [ngClass]="{false: '', true:'filtered'}[nameGridFilter != null && nameGridFilter != '']">
+                                        <div [hidden]="openedFilter !== 'NOME_CAMISA'" style="position: relative;">
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                            " (focusout)="onBlurFilter()">
+                                                <input #nameSearch name="nameGridFilter" type="text" class="col-md-12" [(ngModel)]="nameGridFilter">
+                                            </div>
+                                        </div> 
                                         <span jhiTranslate="vestdeskApp.pedido.clienteCamisa">Cliente Casmisa</span>
+                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('NOME_CAMISA')"></i>
                                     </th>
                                     <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                         <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
@@ -282,14 +290,44 @@
                                     <th>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.telefone">Telefone</span>
                                     </th>
-                                    <th>
+                                    <th [ngClass]="{false: '', true:'filtered'}[tamanhoGridFilter != null && tamanhoGridFilter != '']">
+                                        <div [hidden]="openedFilter !== 'TAMANHO'" style="position: relative;">
+                                                <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                                    " (focusout)="onBlurFilter()">
+                                                <select #tamanhoSearch name="tamanhoGridFilter" [(ngModel)]="tamanhoGridFilter" style="width: 200px;">
+                                                        <option [ngValue]="null"></option>
+                                                        <option [ngValue]="tamanho" *ngFor="let tamanho of listaEnum.Tamanho;">{{tamanho}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
+                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('TAMANHO')"></i>
                                     </th>
-                                    <th>
+                                    <th [ngClass]="{false: '', true:'filtered'}[modeloGridFilter != null && modeloGridFilter != '']">
+                                        <div [hidden]="openedFilter !== 'MODELO'" style="position: relative;">
+                                                <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                                    " (focusout)="onBlurFilter()">
+                                                <select #modeloSearch name="modeloGridFilter" [(ngModel)]="modeloGridFilter" style="width: 200px;">
+                                                        <option [ngValue]="null"></option>
+                                                        <option [ngValue]="modelo" *ngFor="let modelo of listaEnum.Modelo;">{{modelo}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
+                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('MODELO')"></i>
                                     </th>
-                                    <th>
+                                    <th [ngClass]="{false: '', true:'filtered'}[corGridFilter != null && corGridFilter != '']">
+                                        <div [hidden]="openedFilter !== 'COR'" style="position: relative;">
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                                " (focusout)="onBlurFilter()">
+                                            <select #corSearch name="corGridFilter" [(ngModel)]="corGridFilter" style="width: 200px;">
+                                                    <option [ngValue]="null"></option>
+                                                    <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
+                                            </select>
+                                            </div>
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
+                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('COR')"></i>
                                     </th>
                                     <th>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.quantidade">Quantidade</span>
@@ -312,7 +350,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let pedidoItem of pedido.listaPedidoItem; index as indice">
+                                <tr *ngFor="let pedidoItem of getListFiltered(); index as indice">
                                     <td [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                         {{pedidoItem.clienteCamisa}}
                                     </td>

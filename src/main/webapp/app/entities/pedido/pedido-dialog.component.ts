@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
@@ -29,6 +29,10 @@ import { ENUM } from '../../shared/enum'
 })
 export class PedidoDialogComponent implements OnInit {
 
+    @ViewChild('nameSearch') nameSearch: ElementRef;
+    @ViewChild('corSearch') corSearch: ElementRef;
+    @ViewChild('tamanhoSearch') tamanhoSearch: ElementRef;
+    @ViewChild('modeloSearch') modeloSearch: ElementRef;
     listaCor: Cor[];
 
     pedido: Pedido;
@@ -56,6 +60,12 @@ export class PedidoDialogComponent implements OnInit {
     valorVenda: any[];
     listaEnum;
     valorTotalRecebido: number;
+
+    openedFilter: any;
+    nameGridFilter: any;
+    corGridFilter: Cor;
+    tamanhoGridFilter: Tamanho;
+    modeloGridFilter: Modelo;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -318,7 +328,7 @@ export class PedidoDialogComponent implements OnInit {
         this.pedido.listaPedidoItem.splice(indice, 1);
     }
 
-    getAmountByModelo (modelo) {
+    getAmountByModelo(modelo) {
         let amount = 0;
         this.pedido.listaPedidoItem.forEach((pedidoItem) => {
             if (pedidoItem.produto.modelo == modelo) {
@@ -326,6 +336,45 @@ export class PedidoDialogComponent implements OnInit {
             }
         });
         return amount;
+    }
+
+    onClickFilter(filter) {
+        this.openedFilter = filter;
+        setTimeout(() => { // this will make the execution after the above boolean has changed
+            this.nameSearch.nativeElement.focus();
+            this.corSearch.nativeElement.focus();
+            this.tamanhoSearch.nativeElement.focus();
+            this.modeloSearch.nativeElement.focus();
+        }, 0);
+    }
+
+    onBlurFilter() {
+        this.openedFilter = null;
+    }
+
+    getListFiltered() {
+        return this.pedido.listaPedidoItem.filter((pedidoItem) => {
+            let filter1 = true;
+            let filter2 = true;
+            let filter3 = true;
+            let filter4 = true;
+            if (this.nameGridFilter != null && this.nameGridFilter != undefined) {
+                filter1 = pedidoItem.clienteCamisa.includes(this.nameGridFilter.toLowerCase());
+            }
+
+            if (this.corGridFilter != null && this.corGridFilter != undefined) {
+                filter2 = pedidoItem.produto.cor.id == this.corGridFilter.id;
+            }
+            
+            if (this.tamanhoGridFilter != null && this.tamanhoGridFilter != undefined) {
+                filter3 = pedidoItem.produto.tamanho == this.tamanhoGridFilter;
+            }
+            
+            if (this.modeloGridFilter != null && this.modeloGridFilter != undefined) {
+                filter4 = pedidoItem.produto.modelo == this.modeloGridFilter;
+            }
+            return filter1 && filter2 && filter3 && filter4;
+        });
     }
 }
 
