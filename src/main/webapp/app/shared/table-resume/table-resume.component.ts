@@ -16,14 +16,36 @@ export class TableResume implements OnInit, OnDestroy{
     @Input() atributeToDisplay: string;
     @Input() cellFunctionTemplate: TemplateRef<String>;
     @Output() cellFunction = new EventEmitter<AnimationKeyframe>();
+    verticalTotal: any[];
+    horizontalTotal: any[];
 
     constructor(private ngbModal: NgbModal) {
     }
 
     ngOnInit() {
+        this.verticalTotal = [];
+        this.horizontalTotal = [];
+        this.dataList.forEach((data) => {
+            if (this.verticalTotal[data.produto.tamanho] == null) {
+                this.verticalTotal[data.produto.tamanho] = 0;
+                this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];
+            }else {
+                this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];
+            }
+
+            debugger
+            if (this.horizontalTotal[data.produto.cor.id] == null) {
+                this.horizontalTotal[data.produto.cor.id] = 0;
+                this.horizontalTotal[data.produto.cor.id] += data[this.atributeToDisplay];
+            }else {
+                this.horizontalTotal[data.produto.cor.id] += data[this.atributeToDisplay];
+            }
+
+        });
     }
 
     ngOnDestroy() {
+
     }
 
     cellClick(data) {

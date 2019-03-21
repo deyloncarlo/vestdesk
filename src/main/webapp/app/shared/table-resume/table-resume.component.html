@@ -8,6 +8,7 @@
                 <tr>
                     <th class="table-resume-header"></th>
                     <th *ngFor="let column of columnList" class="table-resume-header align-middle">{{column}}</th>
+                    <th class="table-resume-header align-middle table-resume-total">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,25 @@
                             </div>
                         </a>
                     </td>
+                    <td class="align-middle table-resume-total">
+                        <a>
+                            <div class="col-md-12">
+                                {{horizontalTotal[row.id]}}
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table-resume-header align-middle table-resume-total">
+                        Total
+                    </td>
+                    <td *ngFor="let column of columnList" class="align-middle table-resume-total">
+                        <a>
+                            <div class="col-md-12">
+                                {{verticalTotal[column]}}
+                            </div>
+                        </a>
+                    </td> 
                 </tr>
             </tbody>
         </table>
