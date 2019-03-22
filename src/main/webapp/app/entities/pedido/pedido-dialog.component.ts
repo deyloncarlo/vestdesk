@@ -66,6 +66,7 @@ export class PedidoDialogComponent implements OnInit {
     corGridFilter: Cor;
     tamanhoGridFilter: Tamanho;
     modeloGridFilter: Modelo;
+    sort: string;
 
     constructor(
         public activeModal: NgbActiveModal,
@@ -353,29 +354,46 @@ export class PedidoDialogComponent implements OnInit {
     }
 
     getListFiltered() {
-        return this.pedido.listaPedidoItem.filter((pedidoItem) => {
+        let filtered = this.pedido.listaPedidoItem.filter((pedidoItem) => {
             let filter1 = true;
             let filter2 = true;
             let filter3 = true;
             let filter4 = true;
             if (this.nameGridFilter != null && this.nameGridFilter != undefined) {
-                filter1 = pedidoItem.clienteCamisa.includes(this.nameGridFilter.toLowerCase());
+                filter1 = pedidoItem.clienteCamisa.toLowerCase().includes(this.nameGridFilter.toLowerCase());
             }
 
             if (this.corGridFilter != null && this.corGridFilter != undefined) {
                 filter2 = pedidoItem.produto.cor.id == this.corGridFilter.id;
             }
-            
+
             if (this.tamanhoGridFilter != null && this.tamanhoGridFilter != undefined) {
                 filter3 = pedidoItem.produto.tamanho == this.tamanhoGridFilter;
             }
-            
+
             if (this.modeloGridFilter != null && this.modeloGridFilter != undefined) {
                 filter4 = pedidoItem.produto.modelo == this.modeloGridFilter;
             }
             return filter1 && filter2 && filter3 && filter4;
         });
+
+        if (this.sort != null) {
+            filtered.sort((p1: PedidoItem, p2: PedidoItem): number => {
+                return p1.clienteCamisa.localeCompare(p2.clienteCamisa);
+            });
+        }
+
+        return filtered;
     }
+
+    orderList() {
+        if (this.sort == null) {
+            this.sort = "ASC";
+        } else {
+            this.sort = null;
+        }
+    }
+
 }
 
 @Component({
