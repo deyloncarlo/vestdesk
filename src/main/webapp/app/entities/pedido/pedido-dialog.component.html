@@ -275,7 +275,7 @@
                                 <tr>
                                     <th [hidden]="pedido.tipoPedido == 'PRODUCAO'" 
                                     [ngClass]="{false: '', true:'filtered'}[nameGridFilter != null && nameGridFilter != '']">
-                                        <i ngClass="fa fa-sort"aria-hidden="true" (click)="orderList()"></i>
+                                        <a ngClass="fa fa-sort"aria-hidden="true" (click)="changeSort()"></a>
                                         <div [hidden]="openedFilter !== 'NOME_CAMISA'" style="position: relative;">
                                             <div style="position: absolute;  left: 100%; top: 0; width: 200px;
                                             " (focusout)="onBlurFilter()">
@@ -283,7 +283,7 @@
                                             </div>
                                         </div> 
                                         <span jhiTranslate="vestdeskApp.pedido.clienteCamisa">Cliente Casmisa</span>
-                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('NOME_CAMISA')"></i>
+                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('NOME_CAMISA')"></a>
                                     </th>
                                     <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                         <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
@@ -302,7 +302,7 @@
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
-                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('TAMANHO')"></i>
+                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('TAMANHO')"></a>
                                     </th>
                                     <th [ngClass]="{false: '', true:'filtered'}[modeloGridFilter != null && modeloGridFilter != '']">
                                         <div [hidden]="openedFilter !== 'MODELO'" style="position: relative;">
@@ -315,7 +315,7 @@
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
-                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('MODELO')"></i>
+                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('MODELO')"></a>
                                     </th>
                                     <th [ngClass]="{false: '', true:'filtered'}[corGridFilter != null && corGridFilter != '']">
                                         <div [hidden]="openedFilter !== 'COR'" style="position: relative;">
@@ -328,7 +328,7 @@
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
-                                        <i class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('COR')"></i>
+                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('COR')"></a>
                                     </th>
                                     <th>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.quantidade">Quantidade</span>

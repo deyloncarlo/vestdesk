@@ -377,20 +377,23 @@ export class PedidoDialogComponent implements OnInit {
             return filter1 && filter2 && filter3 && filter4;
         });
 
-        if (this.sort != null) {
-            filtered.sort((p1: PedidoItem, p2: PedidoItem): number => {
-                return p1.clienteCamisa.localeCompare(p2.clienteCamisa);
-            });
-        }
-
+        this.orderList(filtered);
         return filtered;
     }
 
-    orderList() {
+    changeSort() {
         if (this.sort == null) {
             this.sort = "ASC";
         } else {
             this.sort = null;
+        }
+    }
+
+    orderList (list) {
+        if (this.sort != null) {
+            list.sort((p1: PedidoItem, p2: PedidoItem): number => {
+                return p1.clienteCamisa.localeCompare(p2.clienteCamisa);
+            });
         }
     }
 
