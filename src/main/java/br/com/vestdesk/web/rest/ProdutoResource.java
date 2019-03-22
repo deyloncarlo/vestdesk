@@ -122,10 +122,13 @@ public class ProdutoResource
 	@GetMapping("/produtos")
 	@Timed
 	public ResponseEntity<List<ProdutoDTO>> getAllProdutos(Pageable pageable,
-			@RequestParam(name = "descricao", required = false) String descricao)
+			@RequestParam(name = "descricao", required = false) String descricao,
+			@RequestParam(name = "codigo", required = false) String codigo,
+			@RequestParam(name = "tamanho", required = false) Tamanho tamanho,
+			@RequestParam(name = "modelo", required = false) Modelo modelo)
 	{
 		this.log.debug("REST request to get a page of Produtos");
-		Page<ProdutoDTO> page = this.produtoService.findAll(pageable, descricao);
+		Page<ProdutoDTO> page = this.produtoService.findAll(pageable, codigo, descricao, tamanho, modelo);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/produtos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

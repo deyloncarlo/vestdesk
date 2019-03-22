@@ -1,27 +1,22 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
-import { Observable } from 'rxjs/Observable';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
-
-import { Pedido, StatusPedido, TipoPedido } from './pedido.model';
-import { PedidoPopupService } from './pedido-popup.service';
-import { PedidoService } from './pedido.service';
-import { ClientePopupService, ClienteInputComponent, Cliente } from '../cliente';
-import { Modelo } from '../modelo-vestuario';
-import { Tamanho } from '../configuracao-produto';
-import { Cor, CorService } from '../cor';
-import { PedidoItem, FormaPagamento } from '../pedido-item';
-import { Produto, ProdutoPopupService, ProdutoService } from '../produto';
-import { statSync } from 'fs';
-import { ProdutoInputComponent } from '../produto/produto-input.component';
-import { LayoutPopupService, Layout } from '../layout';
-import { LayoutInputComponent } from '../layout/layout-input.component';
-import { ConfiguracaoLayout } from '../configuracao-layout';
-import { JhiAlertErrorComponent } from '../../shared';
-import { ENUM } from '../../shared/enum'
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { HttpResponse, HttpErrorResponse } from "@angular/common/http";
+import { Observable } from "rxjs/Observable";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { JhiEventManager, JhiParseLinks, JhiAlertService } from "ng-jhipster";
+import { Pedido, StatusPedido, TipoPedido } from "./pedido.model";
+import { PedidoPopupService } from "./pedido-popup.service";
+import { PedidoService } from "./pedido.service";
+import { ClientePopupService, ClienteInputComponent, Cliente } from "../cliente";
+import { Modelo } from "../modelo-vestuario";
+import { Tamanho } from "../configuracao-produto";
+import { Cor, CorService } from "../cor";
+import { PedidoItem, FormaPagamento } from "../pedido-item";
+import { Produto, ProdutoPopupService, ProdutoService } from "../produto";
+import { ProdutoInputComponent } from "../produto/produto-input.component";
+import { LayoutPopupService, Layout } from "../layout";
+import { LayoutInputComponent } from "../layout/layout-input.component";
+import { ENUM } from "../../shared/enum"
 
 @Component({
     selector: 'jhi-pedido-dialog',

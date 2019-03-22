@@ -1,5 +1,6 @@
 package br.com.vestdesk.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.base.Strings;
 
 import br.com.vestdesk.domain.Cor;
 import br.com.vestdesk.domain.MaterialTamanho;
@@ -130,19 +133,41 @@ public class ProdutoService
 	 *
 	 * @param pageable the pagination information
 	 * @param descricao
+	 * @param modelo
+	 * @param tamanho
+	 * @param descricao2
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<ProdutoDTO> findAll(Pageable pageable, String descricao)
+	public Page<ProdutoDTO> findAll(Pageable pageable, String codigo, String descricao, Tamanho tamanho, Modelo modelo)
 	{
-		if (descricao == null)
-		{
-			descricao = "";
-		}
-
 		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
 		CriteriaQuery<Produto> criteria = criteriaBuilder.createQuery(Produto.class);
 		Root<Produto> root = criteria.from(Produto.class);
+
+		List<Predicate> listPredicate = new ArrayList<>();
+
+		if (!Strings.isNullOrEmpty(codigo))
+		{
+			listPredicate.add((criteriaBuilder.like(root.get("codigo"), "%" + codigo + "%")));
+		}
+
+		if (!Strings.isNullOrEmpty(descricao))
+		{
+			listPredicate.add((criteriaBuilder.like(root.get("descricao"), "%" + descricao + "%")));
+		}
+
+		if (tamanho != null)
+		{
+			listPredicate.add((criteriaBuilder.equal(root.get("tamanho"), tamanho)));
+		}
+
+		if (modelo != null)
+		{
+			listPredicate.add((criteriaBuilder.equal(root.get("modelo"), modelo)));
+		}
+
+		criteria.where(criteriaBuilder.and(listPredicate.toArray(new Predicate[] {})));
 
 		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
 		TypedQuery<Produto> query = this.em.createQuery(criteria);

@@ -104,7 +104,10 @@
         "ribbon": {
             "dev":"Development"
         },
-        "item-count": "Mostrando {{first}} - {{second}} de {{total}} resultados."
+        "item-count": "Mostrando {{first}} - {{second}} de {{total}} resultados.",
+        "filterForm": {
+            "filterButton": "Filtrar"
+        }
     },
     "entity": {
         "action": {

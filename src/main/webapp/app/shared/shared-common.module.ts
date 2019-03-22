@@ -11,7 +11,8 @@ import {
     JhiAlertErrorComponent,
     SelectField,
     TableResume,
-    BoxInfo
+    BoxInfo,
+    FilterForm
 } from './';
 
 @NgModule({
@@ -24,7 +25,8 @@ import {
         JhiAlertErrorComponent,
         SelectField,
         BoxInfo,
-        TableResume
+        TableResume,
+        FilterForm
     ],
     providers: [
         JhiLanguageHelper,
@@ -41,7 +43,8 @@ import {
         JhiAlertErrorComponent,
         SelectField,
         BoxInfo,
-        TableResume
+        TableResume,
+        FilterForm
     ]
 })
 export class VestdeskSharedCommonModule {

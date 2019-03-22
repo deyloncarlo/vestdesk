@@ -13,6 +13,9 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 })
 export class ProdutoComponent implements OnInit, OnDestroy {
 
+    private filterSettings: any;
+    private fieldList: any[];
+    private filterData: {};
     produtos: Produto[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -41,30 +44,9 @@ export class ProdutoComponent implements OnInit, OnDestroy {
         this.reverse = true;
     }
 
-    loadAll() {
-        this.produtoService.query({
-            page: this.page,
-            size: this.itemsPerPage,
-            sort: this.sort()
-        }).subscribe(
-            (res: HttpResponse<Produto[]>) => this.onSuccess(res.body, res.headers),
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-    }
-
-    reset() {
-        this.page = 0;
-        this.produtos = [];
-        this.loadAll();
-    }
-
-    loadPage(page) {
-        debugger
-        this.page = page;
-        this.loadAll();
-    }
     ngOnInit() {
-        this.loadAll();
+        this.configureFilterForm();
+        setTimeout(()=>{this.loadAll()}, 1);
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
@@ -75,11 +57,68 @@ export class ProdutoComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: Produto) {
-        return item.id;
+    loadAll() {
+        this.produtoService.query({
+            page: this.page,
+            size: this.itemsPerPage,
+            sort: this.sort(),
+            codigo: this.filterData["codigo"],
+            descricao: this.filterData["descricao"],
+            modelo: this.filterData["modelo"],
+            tamanho: this.filterData["tamanho"]
+        }).subscribe(
+            (res: HttpResponse<Produto[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
-    registerChangeInProdutos() {
-        this.eventSubscriber = this.eventManager.subscribe('produtoListModification', (response) => this.reset());
+
+    private filter(event) {
+        this.reset();
+    }
+
+    reset() {
+        this.page = 0;
+        this.produtos = [];
+        this.loadAll();
+    }
+
+    loadPage(page) {
+        this.page = page;
+        this.loadAll();
+    }
+
+    private configureFilterForm() {
+        this.filterData = {};
+
+        this.filterSettings = {
+            hideFilterButton: true,
+            filterOnFieldValueChange: true
+        };
+
+        this.fieldList = [
+            {
+                name: "codigo",
+                type: "text",
+                label: "vestdeskApp.produto.codigo"
+            },
+            {
+                name: "descricao",
+                type: "text",
+                label: "vestdeskApp.produto.descricao"
+            },
+            {
+                name: "modelo",
+                type: "select",
+                label: "vestdeskApp.produto.modelo",
+                enumName: "Modelo"
+            },
+            {
+                name: "tamanho",
+                type: "select",
+                label: "vestdeskApp.produto.tamanho",
+                enumName: "Tamanho"
+            }
+        ]
     }
 
     sort() {
@@ -88,6 +127,10 @@ export class ProdutoComponent implements OnInit, OnDestroy {
             result.push('id');
         }
         return result;
+    }
+
+    trackId(index: number, item: Produto) {
+        return item.id;
     }
 
     private onSuccess(data, headers) {
@@ -100,5 +143,9 @@ export class ProdutoComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.jhiAlertService.error(error.message, null, null);
+    }
+
+    registerChangeInProdutos() {
+        this.eventSubscriber = this.eventManager.subscribe('produtoListModification', (response) => this.reset());
     }
 }
