@@ -12,6 +12,7 @@ import { ProdutoService } from './produto.service';
 import { Cor, CorService } from '../cor';
 import { MaterialService, Material } from '../material';
 import { MaterialTamanho } from '../material-tamanho';
+import { EVENT_MANAGER_BROADCAST } from "../../app.constants";
 
 @Component({
     selector: 'jhi-produto-dialog',
@@ -101,7 +102,7 @@ export class ProdutoDialogComponent implements OnInit {
     }
 
     private onSaveSuccess(result: Produto) {
-        this.eventManager.broadcast({ name: 'produtoListModification', content: 'OK' });
+        this.eventManager.broadcast({ name: 'produtoListModification', content: EVENT_MANAGER_BROADCAST.content.NOT_RELOAD });
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }

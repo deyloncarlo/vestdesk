@@ -6,6 +6,7 @@ import { JhiEventManager, JhiParseLinks, JhiAlertService } from 'ng-jhipster';
 import { Produto } from './produto.model';
 import { ProdutoService } from './produto.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
+import { EVENT_MANAGER_BROADCAST } from "../../app.constants";
 
 @Component({
     selector: 'jhi-produto',
@@ -58,6 +59,7 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
+        debugger
         this.produtoService.query({
             page: this.page,
             size: this.itemsPerPage,
@@ -146,6 +148,10 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     }
 
     registerChangeInProdutos() {
-        this.eventSubscriber = this.eventManager.subscribe('produtoListModification', (response) => this.reset());
+        this.eventSubscriber = this.eventManager.subscribe('produtoListModification', (response) => {
+            if (response.content != EVENT_MANAGER_BROADCAST.content.NOT_RELOAD) {
+                this.reset();
+            }
+        });
     }
 }
