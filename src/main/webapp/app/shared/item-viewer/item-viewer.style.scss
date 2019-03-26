@@ -1,0 +1,23 @@
+.item-viewer { 
+    background-color: rgb(245, 245, 245);
+    box-shadow: 4px 5px 13px -7px;
+}
+
+.item-viewer-title {
+    font-weight: 900;
+    color: #888;
+    padding: 10px;
+}
+
+.painel-item-list {
+    height: 500px;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.item-list {
+    min-height: 50px;
+    padding: 15px;
+    margin-top: 5px;
+    background-color: #e8e8e8;
+}

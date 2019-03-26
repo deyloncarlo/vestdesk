@@ -4,6 +4,7 @@ export * from './alert/alert.component';
 export * from './alert/alert-error.component';
 export * from './select-field/select-field.component';
 export * from './table-resume/table-resume.component';
+export * from './item-viewer/item-viewer.component';
 export * from './filter-form/filter-form.component';
 export * from './box-info/box-info.component';
 export * from './auth/csrf.service';

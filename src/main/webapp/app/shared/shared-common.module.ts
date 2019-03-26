@@ -12,7 +12,8 @@ import {
     SelectField,
     TableResume,
     BoxInfo,
-    FilterForm
+    FilterForm,
+    ItemViewer
 } from './';
 
 @NgModule({
@@ -26,7 +27,8 @@ import {
         SelectField,
         BoxInfo,
         TableResume,
-        FilterForm
+        FilterForm,
+        ItemViewer
     ],
     providers: [
         JhiLanguageHelper,
@@ -44,7 +46,8 @@ import {
         SelectField,
         BoxInfo,
         TableResume,
-        FilterForm
+        FilterForm,
+        ItemViewer
     ]
 })
 export class VestdeskSharedCommonModule {

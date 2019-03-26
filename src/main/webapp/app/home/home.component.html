@@ -1,10 +1,11 @@
 <div class="row">
-    <div class="col-md-3"></div>
-    <box-info *ngIf="isAuthenticated()" [routerLink]="[ '/pedido', {statusPedido: 'RASCUNHO'}]" queryParamsHandling="merge"
-        [number]="quantidadePedidosStatusRascunho" [text]="'RASCUNHO'" class="col-md-2 box-info" style="margin: 5px;background-color: #66ff52"></box-info>
-    <box-info *ngIf="isAuthenticated()" class="col-md-2 box-info" style="margin: 5px;background-color: #ff5252"
-        [routerLink]="[ '/pedido', {fechaEm10Dias: true}]" queryParamsHandling="merge" [number]="quantidadePedidosSeraoFechados10Dias"
-        [text]="'PEDIDOS QUE IRÃO FECHAR'"></box-info>
+
+    <box-info *ngIf="isAuthenticated()" [routerLink]="[ '/pedido', {statusPedido: 'RASCUNHO'}]"
+        queryParamsHandling="merge" [number]="quantidadePedidosStatusRascunho" [text]="'Rascunhos'"
+        class="col-md-3 box-info" style="margin-right: 5px; background-color: #66ff52;"></box-info>
+    <box-info *ngIf="isAuthenticated()" class="col-md-3 box-info" style="background-color: #ff5252"
+        [routerLink]="[ '/pedido', {fechaEm10Dias: true}]" queryParamsHandling="merge"
+        [number]="quantidadePedidosSeraoFechados10Dias" [text]="'Pedidos que irão fechar'"></box-info>
     <!-- <box-info *ngIf="isAuthenticated()" class="col-md-2 box-info" style="margin: 5px;background-color: #5552ff"></box-info> -->
     <!-- <div class="row">
         <div class="col-md-4"></div>
@@ -48,4 +49,7 @@
             <span jhiTranslate="home.like">If you like JHipster, don't forget to give us a star on</span> <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener" jhiTranslate="home.github">GitHub</a>!
         </p>
     </div> -->
+</div>
+<div class="row" style="margin-top: 50px;">
+    <item-viewer class="col-md-6"></item-viewer>
 </div>
