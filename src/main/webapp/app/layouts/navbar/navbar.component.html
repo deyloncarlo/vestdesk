@@ -208,6 +208,14 @@
                     </li>
                 </ul>
             </li> -->
+            <li class="nav-item pointer" [hidden]="isAuthenticated() == false">
+                <div class="nav-link">
+                    <span class="badge badge-danger" style="position: absolute">{{amountUnreadNotification}}</span>
+                    <div class="col-md-12 align-middle">
+                        <i class="fa fa-bell" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </li>
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                   <span *ngIf="!getImageUrl()">

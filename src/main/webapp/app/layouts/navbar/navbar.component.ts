@@ -7,6 +7,7 @@ import { ProfileService } from '../profiles/profile.service';
 import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
 
 import { VERSION } from '../../app.constants';
+import { NotificacaoService } from '../../entities/notificacao/notificacao.service';
 
 @Component({
     selector: 'jhi-navbar',
@@ -22,6 +23,8 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
+    private amountUnreadNotification: Number;
+
 
     constructor(
         private loginService: LoginService,
@@ -30,7 +33,8 @@ export class NavbarComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private profileService: ProfileService,
-        private router: Router
+        private router: Router,
+        private notificacaoService: NotificacaoService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -45,6 +49,8 @@ export class NavbarComponent implements OnInit {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+
+        this.getAmountUnreadNotification();
     }
 
     changeLanguage(languageKey: string) {
@@ -75,5 +81,18 @@ export class NavbarComponent implements OnInit {
 
     getImageUrl() {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
+    }
+
+    getAmountUnreadNotification () {
+        if (this.isAuthenticated()) {
+            this.notificacaoService.getAmountOfUnreadNotifications().subscribe((response) => {
+                if (response != null) {
+                    this.amountUnreadNotification = response;
+                }
+                setTimeout(this.getAmountUnreadNotification.bind(this), 5000);
+            });
+        }else {
+            setTimeout(this.getAmountUnreadNotification.bind(this), 1000);
+        }
     }
 }

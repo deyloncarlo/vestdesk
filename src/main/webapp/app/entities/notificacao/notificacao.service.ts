@@ -25,6 +25,11 @@ export class NotificacaoService {
             .map((res: HttpResponse<any>) => this.convertArrayResponse(res));
     }
 
+    getAmountOfUnreadNotifications(): Observable<Number> {
+        let url = this.resourceUrl + '/getAmountOfUnreadNotifications';
+        return this.http.get<Number>(url, {observe: 'response'}).map((res: any) => this.convertNumber(res));
+    }
+
     private convertArrayResponse(res: HttpResponse<Notificacao[]>): HttpResponse<Notificacao[]> {
         const jsonResponse: Notificacao[] = res.body;
         const body: Notificacao[] = [];
@@ -37,6 +42,10 @@ export class NotificacaoService {
     private convertItemFromServer(notificacao: Notificacao): Notificacao {
         const copy: Notificacao = Object.assign({}, notificacao);
         return copy;
+    }
+
+    private convertNumber(quantidade: any): Number {
+        return quantidade.body;
     }
 
     private convert(listNotification: Notificacao[]): Notificacao[] {

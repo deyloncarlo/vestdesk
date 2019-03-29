@@ -59,7 +59,7 @@ public class NotificacaoService
 		Predicate userPredicate = criteriaBuilder.equal(root.get("usuario"), this.userService.getCurrentUser());
 
 		Predicate datePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("dataCriacao"),
-				LocalDateTime.now().minusDays(5));
+				LocalDateTime.now().minusDays(1));
 		criteria.where(userPredicate, datePredicate)
 				.orderBy(Arrays.asList(criteriaBuilder.desc(root.get("dataCriacao"))));
 		List<Notificacao> listNotificacao = this.em.createQuery(criteria).getResultList();
@@ -103,6 +103,19 @@ public class NotificacaoService
 	public Notificacao getById(Long id)
 	{
 		return this.notificacaoRepository.findOne(id);
+	}
+
+	public Long getAmoutOfUnreadNotifications()
+	{
+		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
+		CriteriaQuery<Long> criteria = criteriaBuilder.createQuery(Long.class);
+		Root<Notificacao> root = criteria.from(Notificacao.class);
+		criteria.select(criteriaBuilder.count(root));
+		criteria.where(criteriaBuilder.equal(root.get("visualizado"), false),
+				criteriaBuilder.equal(root.get("usuario"), this.userService.getCurrentUser())).distinct(true);
+
+		Long quantidade = (long) this.em.createQuery(criteria).getSingleResult();
+		return quantidade;
 	}
 
 }

@@ -58,4 +58,13 @@ public class NotificacaoResource
 		return new ResponseEntity<>(notificationDTO, HttpStatus.OK);
 	}
 
+	@GetMapping("/notificacaos/getAmountOfUnreadNotifications")
+	@Timed
+	public ResponseEntity<Long> getAmountOfUnreadNotifications()
+	{
+		this.log.debug("REST request to get a page of Notifications");
+		Long amountOfUnreadNotifications = this.notificacaoService.getAmoutOfUnreadNotifications();
+		return new ResponseEntity<>(amountOfUnreadNotifications, HttpStatus.OK);
+	}
+
 }
