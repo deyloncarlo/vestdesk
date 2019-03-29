@@ -133,7 +133,6 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
 
     concluir (template, vendaAcumulada) {
         this.ngbModal.open(template).result.then((result)=> {
-            debugger
             if (result == "SIM") {
                 this.subscribeToSaveResponse(this.vendaAcumuladaService.concluir(vendaAcumulada));
             }
@@ -147,7 +146,6 @@ export class VendaAcumuladaComponent implements OnInit, OnDestroy {
     }
 
     private onSaveError() {
-        debugger
     }
 
     public onSaveSuccess(result: VendaAcumulada) {

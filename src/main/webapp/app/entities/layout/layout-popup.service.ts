@@ -21,7 +21,6 @@ export class LayoutPopupService {
     openLista(component: Component, lista?: any | any): Promise<NgbModalRef> {
         return new Promise<NgbModalRef>((resolve, reject) => {
             const isOpen = this.ngbModalRef !== null;
-            debugger
             if (isOpen) {
                 resolve(this.ngbModalRef);
             }
@@ -38,7 +37,6 @@ export class LayoutPopupService {
     open(component: Component, id?: number | any): Promise<NgbModalRef> {
         return new Promise<NgbModalRef>((resolve, reject) => {
             const isOpen = this.ngbModalRef !== null;
-            debugger
             if (isOpen) {
                 resolve(this.ngbModalRef);
             }

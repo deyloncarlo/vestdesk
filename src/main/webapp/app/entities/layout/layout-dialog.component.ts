@@ -88,7 +88,6 @@ export class LayoutPopupComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        debugger
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
                 this.layoutPopupService

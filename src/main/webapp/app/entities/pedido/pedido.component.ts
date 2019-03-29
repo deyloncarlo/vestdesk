@@ -115,7 +115,6 @@ export class PedidoComponent implements OnInit, OnDestroy {
 
     obterParamentrosUrl() {
         let obtendoParametros = this.route.params.subscribe(params => {
-            debugger
             this.statusPedido = params['statusPedido']; // (+) converts string 'id' to a number
             this.fechaEm10Dias = params['fechaEm10Dias'] == "true"; // (+) converts string 'id' to a number
         });

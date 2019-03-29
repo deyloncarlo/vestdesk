@@ -95,14 +95,6 @@ public class PedidoItemService
 			{
 				pedidoItem.setPedido(pedido);
 			}
-			// Produto produtoEncontrado =
-			// this.produtoService.obterPeloModeloTamanhoCor(modelo, tamanho,
-			// cor);
-			// if (produtoEncontrado == null)
-			// {
-			// throw new
-			// RuntimeException("error.produto.nenhumProdutoCadastrado");
-			// }
 			if (atualizarEstoque)
 			{
 				Produto produtoEncontrado = this.produtoRepository.findOne(pedidoItem.getProduto().getId());

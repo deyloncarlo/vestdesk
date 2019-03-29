@@ -145,7 +145,7 @@ public class PedidoService
 			order.setStatusPedido(StatusPedido.CONCLUIDO);
 		}
 
-		throwNotificationIfOrderStatusChange(orderDTO, orderFromDatabase);
+		throwNotificationIfOrderStatusChange(order, orderFromDatabase);
 		order = this.pedidoRepository.save(order);
 		throwNotificationIfNewOrder(order, orderDTO);
 
@@ -158,15 +158,14 @@ public class PedidoService
 		return this.pedidoMapper.toDto(order);
 	}
 
-	private void throwNotificationIfOrderStatusChange(PedidoDTO orderDTO, Pedido orderFromDatabase)
+	private void throwNotificationIfOrderStatusChange(Pedido order, Pedido orderFromDatabase)
 	{
-		if (!orderFromDatabase.getStatusPedido().equals(orderDTO.getStatusPedido()))
+		if (!orderFromDatabase.getStatusPedido().equals(order.getStatusPedido()))
 		{
 			User currentUser = this.userService.getCurrentUser();
 			Locale locale = Locale.forLanguageTag(currentUser.getLangKey());
 			String titleNotification = this.messageSource.getMessage("notification.orderStatusChanged",
-					new Object[] { orderFromDatabase.getId().toString(), orderDTO.getStatusPedido().toString() },
-					locale);
+					new Object[] { orderFromDatabase.getId().toString(), order.getStatusPedido().toString() }, locale);
 			this.notificationService.generateNotifications(titleNotification);
 		}
 	}

@@ -1,7 +1,8 @@
 package br.com.vestdesk.service;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -57,15 +58,25 @@ public class NotificacaoService
 
 		Predicate userPredicate = criteriaBuilder.equal(root.get("usuario"), this.userService.getCurrentUser());
 
-		criteria.where(userPredicate);
+		Predicate datePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("dataCriacao"),
+				LocalDateTime.now().minusDays(5));
+		criteria.where(userPredicate, datePredicate)
+				.orderBy(Arrays.asList(criteriaBuilder.desc(root.get("dataCriacao"))));
 		List<Notificacao> listNotificacao = this.em.createQuery(criteria).getResultList();
 		Page<Notificacao> page = new PageImpl<>(listNotificacao, pageable, listNotificacao.size());
 		return page.map(this.notificacaoMapper::toDto);
 	}
 
-	public Page<NotificacaoDTO> setReadNotifications(List<NotificacaoDTO> list)
+	public NotificacaoDTO setReadNotification(NotificacaoDTO notification)
 	{
-		return new PageImpl<>(new ArrayList());
+		if (notification != null && notification.getId() != null)
+		{
+			notification.setVisualizado(true);
+			Notificacao notificationFromDatabase = getById(notification.getId());
+			notificationFromDatabase.setVisualizado(true);
+			this.notificacaoRepository.save(notificationFromDatabase);
+		}
+		return notification;
 	}
 
 	public void generateNotifications(String notificationTitle)
@@ -79,7 +90,7 @@ public class NotificacaoService
 			{
 				Notificacao newNotification = new Notificacao();
 				newNotification.setTextoNotificacao(notificationTitle);
-				newNotification.setDataCriacao(LocalDate.now());
+				newNotification.setDataCriacao(LocalDateTime.now());
 				newNotification.setVisualizado(false);
 				newNotification.setUsuario(user);
 				listNotification.add(newNotification);
@@ -87,6 +98,11 @@ public class NotificacaoService
 		});
 
 		this.notificacaoRepository.save(listNotification);
+	}
+
+	public Notificacao getById(Long id)
+	{
+		return this.notificacaoRepository.findOne(id);
 	}
 
 }

@@ -6,6 +6,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Account, LoginModalService, Principal } from '../shared';
 import { PedidoService } from '../entities/pedido/pedido.service';
 import { NotificacaoService } from '../entities/notificacao/notificacao.service';
+import { Notificacao } from '../entities/notificacao/notificacao.model';
 
 @Component({
     selector: 'jhi-home',
@@ -80,10 +81,12 @@ export class HomeComponent implements OnInit {
             }else {
                 this.listNotificacao = [];
             }
+            setTimeout(this.getListNotificacao.bind(this), 60000);
         });
     }
 
-    async onReadNotificacao (listNotifications) {
-        return this.notificacaoService.setReadNotifications(listNotifications);
+    public onReadNotificacao (notification: Notificacao) {
+        return this.notificacaoService.setReadNotifications(notification).subscribe((response) => {
+        });
     }
 }

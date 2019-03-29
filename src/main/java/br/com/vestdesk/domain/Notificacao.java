@@ -1,7 +1,7 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,8 +36,9 @@ public class Notificacao implements Serializable
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User usuario;
 
+	@NotNull
 	@Column
-	private LocalDate dataCriacao;
+	private LocalDateTime dataCriacao;
 
 	public Long getId()
 	{
@@ -79,12 +80,12 @@ public class Notificacao implements Serializable
 		this.usuario = usuario;
 	}
 
-	public LocalDate getDataCriacao()
+	public LocalDateTime getDataCriacao()
 	{
 		return this.dataCriacao;
 	}
 
-	public void setDataCriacao(LocalDate dataCriacao)
+	public void setDataCriacao(LocalDateTime dataCriacao)
 	{
 		this.dataCriacao = dataCriacao;
 	}

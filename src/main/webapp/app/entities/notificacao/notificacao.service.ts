@@ -20,10 +20,9 @@ export class NotificacaoService {
             .map((res: HttpResponse<Notificacao[]>) => this.convertArrayResponse(res));
     }
 
-    setReadNotifications(listNotification: Notificacao[]): Observable<HttpResponse<Notificacao[]>> {
-        const copy = this.convert(listNotification);
-        return this.http.post<Notificacao[]>(this.resourceUrl + '/setReadNotifications', copy, { observe: 'response' })
-            .map((res: HttpResponse<Notificacao[]>) => this.convertArrayResponse(res));
+    setReadNotifications(notification: Notificacao): Observable<HttpResponse<any>> {
+        return this.http.post<any>(this.resourceUrl + '/setReadNotifications', notification, { observe: 'response' })
+            .map((res: HttpResponse<any>) => this.convertArrayResponse(res));
     }
 
     private convertArrayResponse(res: HttpResponse<Notificacao[]>): HttpResponse<Notificacao[]> {

@@ -55,7 +55,6 @@ export class VendaAcumuladaService {
     }
 
     private convertResponse(res: EntityResponseType): EntityResponseType {
-        debugger
         const body: VendaAcumulada = this.convertItemFromServer(res.body);
         return res.clone({body});
     }

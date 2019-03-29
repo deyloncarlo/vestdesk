@@ -33,7 +33,6 @@ export class TableResume implements OnInit, OnDestroy{
                 this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];
             }
 
-            debugger
             if (this.horizontalTotal[data.produto.cor.id] == null) {
                 this.horizontalTotal[data.produto.cor.id] = 0;
                 this.horizontalTotal[data.produto.cor.id] += data[this.atributeToDisplay];

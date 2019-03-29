@@ -59,7 +59,6 @@ export class ProdutoComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        debugger
         this.produtoService.query({
             page: this.page,
             size: this.itemsPerPage,

@@ -7,10 +7,10 @@
             [ngClass]="{true: '', false: 'item-viewer-not-read'} [item[attributeToSetRead]]"
             (click)="onClickItemView(item)">
             <div class="row">
-                <div class="col-md-2 offset-md-10 text-center item-list-head">
+                <div class="col-md-3 offset-md-9 text-center item-list-head">
                         <i [hidden]="item[attributeToSetRead] == true" class="fa fa-circle"
                         aria-hidden="true"></i>
-                    {{item.dataCriacao}}
+                    {{item.dataCriacao | date: 'dd/MM/yy H:mm'}}
                 </div>
             </div>
             <div class="row item-list">

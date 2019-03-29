@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,13 +50,12 @@ public class NotificacaoResource
 
 	@PostMapping("/notificacaos/setReadNotifications")
 	@Timed
-	public ResponseEntity<List<NotificacaoDTO>> setReadNotifications(Pageable pageable,
-			@RequestParam(name = "listNotification", required = false) List<NotificacaoDTO> list)
+	public ResponseEntity<NotificacaoDTO> setReadNotifications(Pageable pageable,
+			@RequestBody NotificacaoDTO notificationDTO)
 	{
 		this.log.debug("REST request to get a page of Notifications");
-		Page<NotificacaoDTO> page = this.notificacaoService.setReadNotifications(list);
-		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/notificacaos");
-		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		notificationDTO = this.notificacaoService.setReadNotification(notificationDTO);
+		return new ResponseEntity<>(notificationDTO, HttpStatus.OK);
 	}
 
 }

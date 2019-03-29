@@ -26,11 +26,10 @@ export class ItemViewer implements OnInit, OnDestroy {
     }
 
     async onClickItemView (item) {
-        if (this.listClickedItem.indexOf(item) == -1) {
+        if (item[this.attributeToSetRead] != true) {
             item[this.attributeToSetRead] = true;
-            this.listClickedItem.push(item);
             if (this.onItemClickFunction) {
-                let promise: Promise<any> = this.onItemClickFunction(this.listClickedItem);
+                this.onItemClickFunction(item);
             }
         }
 
