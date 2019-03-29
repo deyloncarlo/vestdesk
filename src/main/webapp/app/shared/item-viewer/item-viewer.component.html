@@ -3,41 +3,21 @@
         <h1>Notificações</h1>
     </div>
     <div class="row painel-item-list">
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1
-        </div>
-        <div class="col-md-12 item-list">
-            Notificação 1 2222
+        <div *ngFor="let item of list" class="col-md-12"
+            [ngClass]="{true: '', false: 'item-viewer-not-read'} [item[attributeToSetRead]]"
+            (click)="onClickItemView(item)">
+            <div class="row">
+                <div class="col-md-2 offset-md-10 text-center item-list-head">
+                        <i [hidden]="item[attributeToSetRead] == true" class="fa fa-circle"
+                        aria-hidden="true"></i>
+                    {{item.dataCriacao}}
+                </div>
+            </div>
+            <div class="row item-list">
+                <span class="col-md-12">
+                    {{item[attributeToDisplay]}}
+                </span>
+            </div>
         </div>
     </div>
 </div>

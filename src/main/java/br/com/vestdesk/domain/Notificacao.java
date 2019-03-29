@@ -1,11 +1,15 @@
 package br.com.vestdesk.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -21,13 +25,19 @@ public class Notificacao implements Serializable
 	private Long id;
 
 	@NotNull
+	@Column
 	private String textoNotificacao;
 
 	@NotNull
+	@Column
 	private Boolean visualizado;
 
 	@NotNull
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User usuario;
+
+	@Column
+	private LocalDate dataCriacao;
 
 	public Long getId()
 	{
@@ -67,6 +77,16 @@ public class Notificacao implements Serializable
 	public void setUsuario(User usuario)
 	{
 		this.usuario = usuario;
+	}
+
+	public LocalDate getDataCriacao()
+	{
+		return this.dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDate dataCriacao)
+	{
+		this.dataCriacao = dataCriacao;
 	}
 
 }

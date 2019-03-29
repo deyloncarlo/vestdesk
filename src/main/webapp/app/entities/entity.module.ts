@@ -19,6 +19,7 @@ import { VestdeskPedidoItemModule } from './pedido-item/pedido-item.module';
 import { VestdeskConfiguracaoLayoutModule } from './configuracao-layout/configuracao-layout.module';
 import { VestdeskVendaAcumuladaModule } from './venda-acumulada/venda-acumulada.module';
 import { VestdeskResumoEstoqueModule } from './resumo-estoque/resumo-estoque.module';
+import { VestdeskNotificacaoModule } from './notificacao/notificacao-module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -41,7 +42,8 @@ import { VestdeskResumoEstoqueModule } from './resumo-estoque/resumo-estoque.mod
         VestdeskPedidoItemModule,
         VestdeskConfiguracaoLayoutModule,
         VestdeskVendaAcumuladaModule,
-        VestdeskResumoEstoqueModule
+        VestdeskResumoEstoqueModule,
+        VestdeskNotificacaoModule
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

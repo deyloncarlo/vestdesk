@@ -1,7 +1,9 @@
 package br.com.vestdesk.service;
 
+import java.util.Locale;
 import java.util.Set;
 
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
 import br.com.vestdesk.domain.Produto;
+import br.com.vestdesk.domain.User;
 import br.com.vestdesk.repository.PedidoItemRepository;
 import br.com.vestdesk.repository.ProdutoRepository;
 import br.com.vestdesk.service.dto.PedidoItemDTO;
@@ -26,10 +29,20 @@ public class PedidoItemService
 
 	private final ProdutoRepository produtoRepository;
 
-	public PedidoItemService(PedidoItemRepository pedidoItemRepository, ProdutoRepository produtoRepository)
+	private final UserService userService;
+
+	private final MessageSource messageSource;
+
+	private final NotificacaoService notificationService;
+
+	public PedidoItemService(PedidoItemRepository pedidoItemRepository, ProdutoRepository produtoRepository,
+			UserService userService, MessageSource messageSource, NotificacaoService notificationService)
 	{
 		this.pedidoItemRepository = pedidoItemRepository;
 		this.produtoRepository = produtoRepository;
+		this.userService = userService;
+		this.messageSource = messageSource;
+		this.notificationService = notificationService;
 	}
 
 	/**
@@ -96,8 +109,22 @@ public class PedidoItemService
 				produtoEncontrado
 						.setQuantidadeEstoque(produtoEncontrado.getQuantidadeEstoque() - pedidoItem.getQuantidade());
 				this.produtoRepository.save(produtoEncontrado);
+				throwNotificationIfMinimunQuantityReached(produtoEncontrado);
 			}
 			this.pedidoItemRepository.save(pedidoItem);
+		}
+	}
+
+	public void throwNotificationIfMinimunQuantityReached(Produto product)
+	{
+		if (product.getQuantidadeEstoque() != null && product.getQuantidadeMinima() != null
+				&& product.getQuantidadeEstoque() <= product.getQuantidadeMinima())
+		{
+			User currentUser = this.userService.getCurrentUser();
+			Locale locale = Locale.forLanguageTag(currentUser.getLangKey());
+			String titleNotification = this.messageSource.getMessage("notification.productMinimunQuantityReached",
+					new Object[] { product.getCodigo(), product.getQuantidadeMinima().toString() }, locale);
+			this.notificationService.generateNotifications(titleNotification);
 		}
 	}
 

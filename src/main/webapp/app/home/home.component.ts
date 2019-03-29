@@ -5,6 +5,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 
 import { Account, LoginModalService, Principal } from '../shared';
 import { PedidoService } from '../entities/pedido/pedido.service';
+import { NotificacaoService } from '../entities/notificacao/notificacao.service';
 
 @Component({
     selector: 'jhi-home',
@@ -19,12 +20,14 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     quantidadePedidosStatusRascunho: number;
     quantidadePedidosSeraoFechados10Dias: number;
+    private listNotificacao: any[];
 
     constructor(
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: JhiEventManager,
-        private pedidoService: PedidoService
+        private pedidoService: PedidoService,
+        private notificacaoService: NotificacaoService
     ) {
     }
 
@@ -34,6 +37,7 @@ export class HomeComponent implements OnInit {
             this.account = account;
             this.obterQuantidadePedidoStatusRascunho();
             this.obterQuantidadePedidoSeraoFechados10Dias();
+            this.getListNotificacao();
         });
         this.registerAuthenticationSuccess();
     }
@@ -44,6 +48,7 @@ export class HomeComponent implements OnInit {
                 this.account = account;
                 this.obterQuantidadePedidoStatusRascunho();
                 this.obterQuantidadePedidoSeraoFechados10Dias();
+                this.getListNotificacao();
             });
         });
     }
@@ -66,5 +71,19 @@ export class HomeComponent implements OnInit {
         this.pedidoService.obterQuantidadePedidoSeraoFechados10Dias().subscribe((quantidade: number) => {
             this.quantidadePedidosSeraoFechados10Dias = quantidade;
         });
+    }
+
+    getListNotificacao () {
+        this.notificacaoService.query({sort: ["dataCriacao, desc"]}).subscribe((response) => {
+            if (response.body != null && response.body != undefined) {
+                this.listNotificacao = response.body;
+            }else {
+                this.listNotificacao = [];
+            }
+        });
+    }
+
+    async onReadNotificacao (listNotifications) {
+        return this.notificacaoService.setReadNotifications(listNotifications);
     }
 }

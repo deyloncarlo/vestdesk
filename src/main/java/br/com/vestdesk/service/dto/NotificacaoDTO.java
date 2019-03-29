@@ -1,6 +1,7 @@
 package br.com.vestdesk.service.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class NotificacaoDTO implements Serializable
@@ -8,7 +9,7 @@ public class NotificacaoDTO implements Serializable
 	private Long id;
 	private String textoNotificacao;
 	private Boolean visualizado;
-	private UserDTO usuario;
+	private LocalDate dataCriacao;
 
 	public Long getId()
 	{
@@ -40,16 +41,6 @@ public class NotificacaoDTO implements Serializable
 		this.visualizado = visualizado;
 	}
 
-	public UserDTO getUsuario()
-	{
-		return this.usuario;
-	}
-
-	public void setUsuario(UserDTO usuario)
-	{
-		this.usuario = usuario;
-	}
-
 	@Override
 	public boolean equals(Object o)
 	{
@@ -68,5 +59,15 @@ public class NotificacaoDTO implements Serializable
 			return false;
 		}
 		return Objects.equals(getId(), clienteDTO.getId());
+	}
+
+	public LocalDate getDataCriacao()
+	{
+		return this.dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDate dataCriacao)
+	{
+		this.dataCriacao = dataCriacao;
 	}
 }

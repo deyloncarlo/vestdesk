@@ -50,6 +50,7 @@
         </p>
     </div> -->
 </div>
-<div class="row" style="margin-top: 50px;">
-    <item-viewer class="col-md-6"></item-viewer>
+<div class="row" style="margin-top: 50px;" *ngIf="isAuthenticated()" [hidden]="listNotificacao == undefine">
+    <item-viewer [list]="listNotificacao" [onItemClickFunction]="onReadNotificacao.bind(this)"
+        [attributeToDisplay]="'textoNotificacao'" class="col-md-6" [attributeToSetRead]="'visualizado'"></item-viewer>
 </div>

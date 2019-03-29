@@ -244,6 +244,12 @@ public class UserService
 		return SecurityUtils.getCurrentUserLogin().flatMap(this.userRepository::findOneWithAuthoritiesByLogin);
 	}
 
+	@Transactional(readOnly = true)
+	public User getCurrentUser()
+	{
+		return SecurityUtils.getCurrentUserLogin().flatMap(this.userRepository::findOneByLogin).get();
+	}
+
 	/**
 	 * Persistent Token are used for providing automatic authentication, they
 	 * should be automatically deleted after 30 days.
@@ -286,6 +292,11 @@ public class UserService
 	public List<String> getAuthorities()
 	{
 		return this.authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+	}
+
+	public List<User> getAllActivesUser()
+	{
+		return this.userRepository.findAll();
 	}
 
 }

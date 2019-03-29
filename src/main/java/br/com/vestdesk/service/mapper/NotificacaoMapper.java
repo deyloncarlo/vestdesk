@@ -14,13 +14,9 @@ public interface NotificacaoMapper
 
 	List<Notificacao> toEntity(List<NotificacaoDTO> listaNotificacaoDTO);
 
-	// Cor toEntityMin(CorMinDTO corMinDto);
-
-	NotificacaoDTO toDto(Notificacao cor);
+	NotificacaoDTO toDto(Notificacao notificacao);
 
 	List<NotificacaoDTO> toListDto(List<Notificacao> listaNotificacao);
-
-	// CorMinDTO toMinDto(Cor cor);
 
 	default Notificacao fromId(Long id)
 	{

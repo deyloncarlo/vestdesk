@@ -10,14 +10,35 @@
 }
 
 .painel-item-list {
-    height: 500px;
+    max-height: 500px;
     padding: 10px;
     overflow-y: auto;
 }
 
 .item-list {
-    min-height: 50px;
     padding: 15px;
-    margin-top: 5px;
     background-color: #e8e8e8;
+    max-height: 75px;
+}
+
+.item-list:hover {
+    background-color: #ccc;
+    padding: 20px;
+    border-radius: 10px 0px 10px 10px;
+    cursor: pointer;
+}
+
+.item-viewer-not-read {
+    font-weight: 900 !important;
+}
+
+.item-viewer-not-read i {
+    color: red !important;
+}
+
+.item-list-head {
+    background-color: #e8e8e8;
+    margin-top: 5px;
+    border-radius: 10px 10px 0px 0px;
+    padding: 5px;
 }

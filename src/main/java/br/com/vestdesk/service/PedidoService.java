@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -16,6 +17,7 @@ import javax.persistence.criteria.Root;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.vestdesk.domain.ConfiguracaoLayout;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
+import br.com.vestdesk.domain.User;
 import br.com.vestdesk.domain.VendaAcumulada;
 import br.com.vestdesk.domain.enumeration.StatusPedido;
 import br.com.vestdesk.domain.enumeration.StatusPedidoItem;
@@ -55,11 +58,18 @@ public class PedidoService
 
 	private final ConfiguracaoLayoutService configuracaoLayoutService;
 
+	private final UserService userService;
+
+	private final MessageSource messageSource;
+
+	private final NotificacaoService notificationService;
+
 	private EntityManager em;
 
 	public PedidoService(PedidoRepository pedidoRepository, PedidoMapper pedidoMapper,
 			PedidoItemService pedidoItemService, ConfiguracaoLayoutService configuracaoLayoutService, EntityManager em,
-			VendaAcumuladaService vendaAcumuladaService)
+			VendaAcumuladaService vendaAcumuladaService, UserService userService, MessageSource messageSource,
+			NotificacaoService notificationService)
 	{
 		this.pedidoRepository = pedidoRepository;
 		this.pedidoMapper = pedidoMapper;
@@ -67,40 +77,43 @@ public class PedidoService
 		this.configuracaoLayoutService = configuracaoLayoutService;
 		this.em = em;
 		this.vendaAcumuladaService = vendaAcumuladaService;
+		this.userService = userService;
+		this.messageSource = messageSource;
+		this.notificationService = notificationService;
 	}
 
 	/**
 	 * Save a pedido.
 	 *
-	 * @param pedidoDTO the entity to save
+	 * @param orderDTO the entity to save
 	 * @return the persisted entity
 	 * @throws Exception
 	 */
-	public PedidoDTO save(PedidoDTO pedidoDTO) throws Exception
+	public PedidoDTO save(PedidoDTO orderDTO) throws Exception
 	{
-		this.log.debug("Request to save Pedido : {}", pedidoDTO);
-		Pedido pedido = this.pedidoMapper.toEntity(pedidoDTO);
-		Set<PedidoItem> listaPedidoItem = new HashSet<>(pedido.getListaPedidoItem());
-		Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>(pedido.getListaConfiguracaoLayout());
+		this.log.debug("Request to save Pedido : {}", orderDTO);
+		Pedido order = this.pedidoMapper.toEntity(orderDTO);
+		Set<PedidoItem> listaPedidoItem = new HashSet<>(order.getListaPedidoItem());
+		Set<ConfiguracaoLayout> listaConfiguracaoLayout = new HashSet<>(order.getListaConfiguracaoLayout());
 		boolean atualizarEstoque = false;
-
-		if (pedido.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && pedido.getDataConclusao() == null)
+		Pedido orderFromDatabase = null;
+		if (order.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && order.getDataConclusao() == null)
 		{
-			pedido.setDataConclusao(LocalDate.now());
+			order.setDataConclusao(LocalDate.now());
 			atualizarEstoque = true;
 
 		}
-		else if (pedido.getStatusPedido().equals(StatusPedido.CONCLUIDO))
+		else if (order.getStatusPedido().equals(StatusPedido.CONCLUIDO))
 		{
-			pedido.setDataFim(LocalDate.now());
+			order.setDataFim(LocalDate.now());
 		}
-		if (pedido.getId() != null)
+		if (order.getId() != null)
 		{
-			Pedido pedidoEncontrado = this.pedidoRepository.findOne(pedido.getId());
+			orderFromDatabase = this.pedidoRepository.findOne(order.getId());
 			Set<PedidoItem> listaPedidoItemRemovido = new HashSet<>();
 			Set<ConfiguracaoLayout> listaConfiguracaoLayoutRemovido = new HashSet<>();
 
-			for (PedidoItem pedidoItem : pedidoEncontrado.getListaPedidoItem())
+			for (PedidoItem pedidoItem : orderFromDatabase.getListaPedidoItem())
 			{
 				if (!listaPedidoItem.contains(pedidoItem))
 				{
@@ -110,7 +123,7 @@ public class PedidoService
 
 			this.pedidoItemService.delete(listaPedidoItemRemovido);
 
-			for (ConfiguracaoLayout configuracaoLayout : pedidoEncontrado.getListaConfiguracaoLayout())
+			for (ConfiguracaoLayout configuracaoLayout : orderFromDatabase.getListaConfiguracaoLayout())
 			{
 				if (!listaConfiguracaoLayout.contains(configuracaoLayout))
 				{
@@ -121,25 +134,53 @@ public class PedidoService
 		}
 		else
 		{
-			pedido.setDataCriacao(LocalDate.now());
+			order.setDataCriacao(LocalDate.now());
 		}
 		this.configuracaoLayoutService.save(listaConfiguracaoLayout);
-		pedido.getListaConfiguracaoLayout().clear();
-		pedido.getListaConfiguracaoLayout().addAll(listaConfiguracaoLayout);
+		order.getListaConfiguracaoLayout().clear();
+		order.getListaConfiguracaoLayout().addAll(listaConfiguracaoLayout);
 
-		if (pedido.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && concluirPedido(listaPedidoItem))
+		if (order.getStatusPedido().equals(StatusPedido.EM_ANDAMENTO) && concluirPedido(listaPedidoItem))
 		{
-			pedido.setStatusPedido(StatusPedido.CONCLUIDO);
+			order.setStatusPedido(StatusPedido.CONCLUIDO);
 		}
 
-		pedido = this.pedidoRepository.save(pedido);
+		throwNotificationIfOrderStatusChange(orderDTO, orderFromDatabase);
+		order = this.pedidoRepository.save(order);
+		throwNotificationIfNewOrder(order, orderDTO);
 
-		this.pedidoItemService.save(listaPedidoItem, pedido, atualizarEstoque);
+		this.pedidoItemService.save(listaPedidoItem, order, atualizarEstoque);
 		if (atualizarEstoque)
 		{
-			atualizarVendaAcumulada(pedido, listaPedidoItem);
+			atualizarVendaAcumulada(order, listaPedidoItem);
 		}
-		return this.pedidoMapper.toDto(pedido);
+
+		return this.pedidoMapper.toDto(order);
+	}
+
+	private void throwNotificationIfOrderStatusChange(PedidoDTO orderDTO, Pedido orderFromDatabase)
+	{
+		if (!orderFromDatabase.getStatusPedido().equals(orderDTO.getStatusPedido()))
+		{
+			User currentUser = this.userService.getCurrentUser();
+			Locale locale = Locale.forLanguageTag(currentUser.getLangKey());
+			String titleNotification = this.messageSource.getMessage("notification.orderStatusChanged",
+					new Object[] { orderFromDatabase.getId().toString(), orderDTO.getStatusPedido().toString() },
+					locale);
+			this.notificationService.generateNotifications(titleNotification);
+		}
+	}
+
+	private void throwNotificationIfNewOrder(Pedido order, PedidoDTO orderDTO)
+	{
+		if (orderDTO.getId() == null)
+		{
+			User currentUser = this.userService.getCurrentUser();
+			Locale locale = Locale.forLanguageTag(currentUser.getLangKey());
+			String titleNotification = this.messageSource.getMessage("notification.newOrder",
+					new Object[] { order.getId().toString(), orderDTO.getStatusPedido().toString() }, locale);
+			this.notificationService.generateNotifications(titleNotification);
+		}
 	}
 
 	private void atualizarVendaAcumulada(Pedido pedido, Set<PedidoItem> listaPedidoItem)
