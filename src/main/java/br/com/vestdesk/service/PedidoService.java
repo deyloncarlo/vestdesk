@@ -160,7 +160,7 @@ public class PedidoService
 
 	private void throwNotificationIfOrderStatusChange(Pedido order, Pedido orderFromDatabase)
 	{
-		if (!orderFromDatabase.getStatusPedido().equals(order.getStatusPedido()))
+		if (orderFromDatabase != null && !orderFromDatabase.getStatusPedido().equals(order.getStatusPedido()))
 		{
 			User currentUser = this.userService.getCurrentUser();
 			Locale locale = Locale.forLanguageTag(currentUser.getLangKey());

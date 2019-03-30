@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
             }else {
                 this.listNotificacao = [];
             }
-            setTimeout(this.getListNotificacao.bind(this), 5000);
+            setTimeout(this.getListNotificacao.bind(this), 3000);
         });
     }
 

@@ -17,6 +17,7 @@ import { ProdutoInputComponent } from "../produto/produto-input.component";
 import { LayoutPopupService, Layout } from "../layout";
 import { LayoutInputComponent } from "../layout/layout-input.component";
 import { ENUM } from "../../shared/enum"
+import { text } from "@angular/core/src/render3/instructions";
 
 @Component({
     selector: 'jhi-pedido-dialog',
@@ -86,12 +87,6 @@ export class PedidoDialogComponent implements OnInit {
             .subscribe((res: HttpResponse<Cor[]>) => { this.listaCor = res.body; }, (res: HttpErrorResponse) => this.onError(res.message));
 
         this.produto = new Produto();
-        if (this.pedido.cliente == null) {
-            this.clienteTextoLivre = true;
-            this.pedido.cliente = new Cliente();
-        } else {
-            this.clienteTextoLivre = false;
-        }
         if (this.pedido.layout == null) {
             this.pedido.layout = new Layout();
         }
@@ -102,8 +97,10 @@ export class PedidoDialogComponent implements OnInit {
             this.pedido.listaPedidoItem = [];
         }
         if (!this.pedido.id) {
+            this.clienteTextoLivre = this.pedido.cliente == null || this.pedido.cliente == undefined ? true : false; 
             this.pedido.tipoPedido = TipoPedido.VENDA;
         } else {
+            this.clienteTextoLivre = true;
             this.pedido.listaPedidoItem.forEach((pedidoItem) => {
                 if (this.valorVenda[pedidoItem.produto.modelo] == null || this.valorVenda[pedidoItem.produto.modelo] == "") {
                     this.valorVenda[pedidoItem.produto.modelo] = pedidoItem.valor;
@@ -129,7 +126,7 @@ export class PedidoDialogComponent implements OnInit {
 
     save(content) {
 
-        if (!this.pedido.cliente.id && !this.pedido.nomeCliente) {
+        if (!this.pedido.nomeCliente && this.pedido.cliente == null || (this.pedido.cliente!= null && !this.pedido.cliente.id)) {
             this.clienteNaoSelecionado = true;
             setTimeout(() => this.clienteNaoSelecionado = false, 3000);
             return;
@@ -163,6 +160,7 @@ export class PedidoDialogComponent implements OnInit {
 
     selecionarClienteTextoLivre(textoClienteLivre) {
         this.clienteTextoLivre = textoClienteLivre;
+        this.pedido.cliente = textoClienteLivre ? null : new Cliente();
     }
 
     limparListaPedidoItem() {
@@ -250,7 +248,7 @@ export class PedidoDialogComponent implements OnInit {
         pedidoItem.clienteCamisa = this.clienteCamisa;
         pedidoItem.nomeRoupa = this.nomeRoupa;
         pedidoItem.produto = p_produto;
-        pedidoItem.primeiroPagamento = this.primeiroPagamento;
+        pedidoItem.primeiroPagamento = this.primeiroPagamento ? this.primeiroPagamento : 0;
         pedidoItem.formaPrimeiroPagamento = this.formaPrimeiroPagamento;
         pedidoItem.valor = this.valorVenda[pedidoItem.produto.modelo];
         return pedidoItem;
@@ -389,6 +387,17 @@ export class PedidoDialogComponent implements OnInit {
             list.sort((p1: PedidoItem, p2: PedidoItem): number => {
                 return p1.clienteCamisa.localeCompare(p2.clienteCamisa);
             });
+        }
+    }
+
+    onObservacaoChange (pedidoItem) {
+        let observacao = pedidoItem.observacao;
+        if (observacao) {
+            pedidoItem.observacao = null;
+            let index = this.pedido.listaPedidoItem.indexOf(pedidoItem);
+            if (index != -1) {
+                this.pedido.listaPedidoItem[index].observacao = observacao;
+            }
         }
     }
 

@@ -91,7 +91,7 @@ export class NavbarComponent implements OnInit {
                 if (response != null) {
                     this.amountUnreadNotification = response;
                 }
-                setTimeout(this.getAmountUnreadNotification.bind(this), 5000);
+                setTimeout(this.getAmountUnreadNotification.bind(this), 3000);
             });
         } else {
             setTimeout(this.getAmountUnreadNotification.bind(this), 1000);

@@ -68,7 +68,10 @@ export class PedidoComponent implements OnInit, OnDestroy {
         if (!this.statusPedido) {
             this.statusPedido = null;
         }
+        this.filterRequest();
+    }
 
+    filterRequest() {
         this.pedidoService.query({
             page: this.page,
             size: this.itemsPerPage,
@@ -85,21 +88,22 @@ export class PedidoComponent implements OnInit, OnDestroy {
     reset() {
         this.page = 0;
         this.pedidos = [];
-        this.loadAll();
+        this.filterRequest();
     }
 
     loadPage(page) {
         this.page = page;
-        this.loadAll();
+        this.filterRequest();
     }
     ngOnInit() {
         this.obterParamentrosUrl();
-        // this.loadAll();
         this.filtrar();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
         this.registerChangeInPedidos();
+        //Cleaning the URL params
+        this.fechaEm10Dias = false;
     }
 
     ngOnDestroy() {

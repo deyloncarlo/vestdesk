@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" [hidden]="clienteTextoLivre == true">
+                        <div class="col-md-6" *ngIf="clienteTextoLivre != true">
                             <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
                             <div class="row">
                                 <div class="col-md-10">
@@ -373,8 +373,10 @@
                                         {{pedidoItem.quantidade}}
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="observacao + {{indice}}" id="field_observacao + {{indice}}" [(ngModel)]="pedidoItem.observacao"
-                                        />
+                                        <input type="text" class="form-control" name="observacao_{{indice}}" 
+                                        [(ngModel)]="pedidoItem.observacao"
+                                        (focusout)="onObservacaoChange(pedidoItem)"
+                                        [ngModelOptions]="{ standalone: true }"/>
                                     </td>
                                     <td style="font-weight: bold; color: green">
                                         {{pedidoItem.primeiroPagamento | currency:'BRL':true}}
@@ -432,6 +434,7 @@
             <span class="fa fa-ban"></span>&nbsp;
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
+        {{editForm.form.invalid}} - {{ isSaving}} - {{pedido.statusPedido == 'CONCLUIDO'}}
         <button type="submit" [disabled]="editForm.form.invalid || isSaving || pedido.statusPedido == 'CONCLUIDO'" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;
             <span jhiTranslate="entity.action.save">Save</span>
