@@ -4,7 +4,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiLanguageService } from 'ng-jhipster';
 
 import { ProfileService } from '../profiles/profile.service';
-import { JhiLanguageHelper, Principal, LoginModalService, LoginService } from '../../shared';
+import { JhiLanguageHelper, Principal, LoginModalService, LoginService, User } from '../../shared';
 
 import { VERSION } from '../../app.constants';
 import { NotificacaoService } from '../../entities/notificacao/notificacao.service';
@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
     modalRef: NgbModalRef;
     version: string;
     private amountUnreadNotification: Number;
+    private loginName: string;
 
 
     constructor(
@@ -51,10 +52,11 @@ export class NavbarComponent implements OnInit {
         });
 
         this.getAmountUnreadNotification();
+        this.getUserInfo();
     }
 
     changeLanguage(languageKey: string) {
-      this.languageService.changeLanguage(languageKey);
+        this.languageService.changeLanguage(languageKey);
     }
 
     collapseNavbar() {
@@ -83,7 +85,7 @@ export class NavbarComponent implements OnInit {
         return this.isAuthenticated() ? this.principal.getImageUrl() : null;
     }
 
-    getAmountUnreadNotification () {
+    getAmountUnreadNotification() {
         if (this.isAuthenticated()) {
             this.notificacaoService.getAmountOfUnreadNotifications().subscribe((response) => {
                 if (response != null) {
@@ -91,8 +93,22 @@ export class NavbarComponent implements OnInit {
                 }
                 setTimeout(this.getAmountUnreadNotification.bind(this), 5000);
             });
-        }else {
+        } else {
             setTimeout(this.getAmountUnreadNotification.bind(this), 1000);
+        }
+    }
+
+    getUserInfo() {
+        if (this.loginName == null || this.loginName == undefined) {
+            setTimeout(() => {
+                if (this.principal.isAuthenticated()) {
+                    this.principal.identity().then((response) => {
+                        this.loginName = response.login;
+                    });
+                } else {
+                    this.getUserInfo();
+                }
+            });
         }
     }
 }
