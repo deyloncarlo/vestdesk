@@ -434,7 +434,6 @@
             <span class="fa fa-ban"></span>&nbsp;
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        {{editForm.form.invalid}} - {{ isSaving}} - {{pedido.statusPedido == 'CONCLUIDO'}}
         <button type="submit" [disabled]="editForm.form.invalid || isSaving || pedido.statusPedido == 'CONCLUIDO'" class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;
             <span jhiTranslate="entity.action.save">Save</span>

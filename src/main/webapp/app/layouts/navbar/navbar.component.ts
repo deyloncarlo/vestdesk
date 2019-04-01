@@ -23,8 +23,8 @@ export class NavbarComponent implements OnInit {
     swaggerEnabled: boolean;
     modalRef: NgbModalRef;
     version: string;
-    private amountUnreadNotification: Number;
-    private loginName: string;
+    amountUnreadNotification: Number;
+    loginName: string;
 
 
     constructor(

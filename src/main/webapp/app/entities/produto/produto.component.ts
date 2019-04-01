@@ -14,9 +14,9 @@ import { EVENT_MANAGER_BROADCAST } from "../../app.constants";
 })
 export class ProdutoComponent implements OnInit, OnDestroy {
 
-    private filterSettings: any;
-    private fieldList: any[];
-    private filterData: {};
+    filterSettings: any;
+    fieldList: any[];
+    filterData: {};
     produtos: Produto[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -73,7 +73,7 @@ export class ProdutoComponent implements OnInit, OnDestroy {
         );
     }
 
-    private filter(event) {
+    filter(event) {
         this.reset();
     }
 

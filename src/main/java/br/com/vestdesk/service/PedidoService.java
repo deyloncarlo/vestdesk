@@ -339,25 +339,43 @@ public class PedidoService
 		this.log.debug("Request to delete Pedido : {}", id);
 
 		Pedido pedidoEncontrado = this.pedidoRepository.findOne(id);
+		List<VendaAcumulada> listaVendaAcumulada = new ArrayList<>();
+		List<VendaAcumulada> listaVendaProduzido = new ArrayList<>();
 
-		List<VendaAcumulada> listaVendaAcumulada = this.vendaAcumuladaService
-				.obterPorListaPedidoItemAcumulado(pedidoEncontrado.getListaPedidoItem());
-		List<VendaAcumulada> listaVendaProduzido = this.vendaAcumuladaService
-				.obterPorListaPedidoItemProduzido(pedidoEncontrado.getListaPedidoItem());
+		if (!pedidoEncontrado.getListaPedidoItem().isEmpty())
+		{
+			listaVendaAcumulada = this.vendaAcumuladaService
+					.obterPorListaPedidoItemAcumulado(pedidoEncontrado.getListaPedidoItem());
+		}
+
+		if (!pedidoEncontrado.getListaPedidoItem().isEmpty())
+		{
+			listaVendaProduzido = this.vendaAcumuladaService
+					.obterPorListaPedidoItemProduzido(pedidoEncontrado.getListaPedidoItem());
+		}
 
 		for (VendaAcumulada vendaAcumulada : listaVendaAcumulada)
 		{
-			vendaAcumulada.getListaPedidoItemAcumulado().removeAll(pedidoEncontrado.getListaPedidoItem());
+			if (!pedidoEncontrado.getListaPedidoItem().isEmpty())
+			{
+				vendaAcumulada.getListaPedidoItemAcumulado().removeAll(pedidoEncontrado.getListaPedidoItem());
+			}
 			this.vendaAcumuladaService.save(vendaAcumulada);
 		}
 
 		for (VendaAcumulada vendaAcumulada : listaVendaProduzido)
 		{
-			vendaAcumulada.getListaPedidoItemProduzido().removeAll(pedidoEncontrado.getListaPedidoItem());
+			if (!pedidoEncontrado.getListaPedidoItem().isEmpty())
+			{
+				vendaAcumulada.getListaPedidoItemProduzido().removeAll(pedidoEncontrado.getListaPedidoItem());
+			}
 			this.vendaAcumuladaService.save(vendaAcumulada);
 		}
 
-		this.pedidoItemService.delete(pedidoEncontrado.getListaPedidoItem());
+		if (!pedidoEncontrado.getListaPedidoItem().isEmpty())
+		{
+			this.pedidoItemService.delete(pedidoEncontrado.getListaPedidoItem());
+		}
 
 		this.pedidoRepository.delete(id);
 	}

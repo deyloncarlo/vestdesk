@@ -62,7 +62,7 @@ export class FilterForm implements OnInit, OnDestroy {
         this.toggledChange.emit(this.filterData);
     }
     
-    private filter () {
+    filter () {
         this.filterCallback.emit();
     }
 }
