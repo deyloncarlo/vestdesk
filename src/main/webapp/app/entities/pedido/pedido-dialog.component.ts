@@ -137,6 +137,7 @@ export class PedidoDialogComponent implements OnInit {
                 this.pedido.statusPedido = result;
                 this.salvar();
             }, (reason) => {
+                this.isSaving = false;
             });
         } else {
             this.salvar();

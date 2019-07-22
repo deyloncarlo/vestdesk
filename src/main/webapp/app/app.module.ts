@@ -10,6 +10,7 @@ import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interc
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
 import { VestdeskSharedModule, UserRouteAccessService } from './shared';
+import { VestdeskReportModule } from './report/report.module';
 import { VestdeskAppRoutingModule } from './app-routing.module';
 import { VestdeskHomeModule } from './home/home.module';
 import { VestdeskAdminModule } from './admin/admin.module';
@@ -36,6 +37,7 @@ import {
         VestdeskAppRoutingModule,
         Ng2Webstorage.forRoot({ prefix: 'jhi', separator: '-' }),
         VestdeskSharedModule,
+        VestdeskReportModule,
         VestdeskHomeModule,
         VestdeskAdminModule,
         VestdeskAccountModule,
