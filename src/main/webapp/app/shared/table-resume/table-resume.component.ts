@@ -25,9 +25,7 @@ export class TableResume implements OnInit, OnDestroy{
     ngOnInit() {
         this.verticalTotal = [];
         this.horizontalTotal = [];
-        debugger
         this.dataList.forEach((data) => {
-            debugger
             if (this.verticalTotal[data.produto.tamanho] == null) {
                 this.verticalTotal[data.produto.tamanho] = 0;
                 this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];

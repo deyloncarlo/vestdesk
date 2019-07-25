@@ -60,7 +60,11 @@ public class NotificacaoService
 
 		Predicate datePredicate = criteriaBuilder.greaterThanOrEqualTo(root.get("dataCriacao"),
 				LocalDateTime.now().minusDays(1));
-		criteria.where(userPredicate, datePredicate)
+		Predicate unreadPredicate = criteriaBuilder.equal(root.get("visualizado"), false);
+
+		Predicate datePredicateOrUnreadPredicate = criteriaBuilder.or(datePredicate, unreadPredicate);
+
+		criteria.where(userPredicate, datePredicateOrUnreadPredicate)
 				.orderBy(Arrays.asList(criteriaBuilder.desc(root.get("dataCriacao"))));
 		List<Notificacao> listNotificacao = this.em.createQuery(criteria).getResultList();
 		Page<Notificacao> page = new PageImpl<>(listNotificacao, pageable, listNotificacao.size());

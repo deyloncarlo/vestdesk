@@ -4,69 +4,16 @@
     </h2>
     <jhi-alert></jhi-alert>
 
+    <filter-form [settings]="filterSettings" [fieldList]="fieldList" (toggledChange)="filterData=$event"
+        (filterCallback)="filter($event)"></filter-form>
+
     <div class="row">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div *ngFor="let modelo of listaPorModelo">
                 <table-resume [resumeTitle]="modelo.nomeModelo" [columnList]="listaTamanho" [rowHeader]="listaCor"
-                    [dataList]="modelo.array" [cellFunctionTemplate]="ordemProducao"
-                    [atributeToDisplay]="'amount'"></table-resume>
+                    [dataList]="modelo.array" [cellFunctionTemplate]="ordemProducao" [atributeToDisplay]="'amount'">
+                </table-resume>
             </div>
         </div>
-        <!-- <div class="col-md-2 text-center" style="border-left: 1px solid #ccc;">
-            <h1>Em Produção</h1>
-            <div style="overflow-y: auto;">
-                <div *ngFor="let emProducao of vendaAcumuladaEmProducao" class="emproducao-resume">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12" style="font-family: 16px; font-weight: bold; margin-bottom: 10px;">
-                                {{emProducao.produto.modelo}}
-                                {{emProducao.produto.cor.nome}}
-                                {{emProducao.produto.tamanho}}
-                            </div>
-                            <div class="col-md-12" style="margin-bottom: 10px;">
-                                Quantidade: {{emProducao.quantidadeAcumulada}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <button type="button" class="btn btn-primary btn-block"
-                                (click)="concluir(concluirProducao, emProducao)">Concluir</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
     </div>
-
-    <ng-template #ordemProducao let-d="dismiss" let-c="close">
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Produzir</h4>
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p> Tem certeza ? </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="c('SIM')">Sim</button>
-            <button type="button" class="btn btn-primary" (click)="c('NAO')">Não</button>
-        </div>
-    </ng-template>
-
-    <ng-template #concluirProducao let-d="dismiss" let-c="close">
-        <div class="modal-header">
-            <h4 class="modal-title" id="modal-basic-title">Concluir</h4>
-            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p> Tem certeza que deseja concluir ? Assim que for concluído, a quantidade será adicionada no estoque. </p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-success" (click)="c('SIM')">Sim</button>
-            <button type="button" class="btn btn-primary" (click)="c('NAO')">Não</button>
-        </div>
-    </ng-template>
-
 </div>

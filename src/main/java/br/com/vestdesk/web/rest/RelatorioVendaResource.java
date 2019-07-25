@@ -1,5 +1,6 @@
 package br.com.vestdesk.web.rest;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -48,10 +50,14 @@ public class RelatorioVendaResource
 	 */
 	@GetMapping("/relatorio-venda")
 	@Timed
-	public ResponseEntity<List<RelatorioVendaItemDTO>> getAllSelledItens(Pageable pageable)
+	public ResponseEntity<List<RelatorioVendaItemDTO>> getAllSelledItens(Pageable pageable,
+			@RequestParam(name = "responsableName", required = false) String responsableName,
+			@RequestParam(name = "startDateFilter", required = false) LocalDate startDateFilter,
+			@RequestParam(name = "endDateFilter", required = false) LocalDate endDateFilter)
 	{
 
-		Page<RelatorioVendaItemDTO> page = this.pedidoItemService.getRelatorioVenda(pageable);
+		Page<RelatorioVendaItemDTO> page = this.pedidoItemService.getRelatorioVenda(pageable, responsableName,
+				startDateFilter, endDateFilter);
 		// this.log.debug("REST request to get a page of QuantidadeTamanhos");
 		// Page<QuantidadeTamanhoDTO> page =
 		// quantidadeTamanhoService.findAll(pageable);

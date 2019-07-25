@@ -1,5 +1,6 @@
 package br.com.vestdesk.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.google.common.base.Strings;
 
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
@@ -80,14 +83,34 @@ public class PedidoItemService
 	 * Get all the pedidoItems.
 	 *
 	 * @param pageable the pagination information
+	 * @param responsableName
+	 * @param endDateFilter
+	 * @param startDateFilter
 	 * @return the list of entities
 	 */
-	public Page<RelatorioVendaItemDTO> getRelatorioVenda(Pageable pageable)
+	public Page<RelatorioVendaItemDTO> getRelatorioVenda(Pageable pageable, String responsableName,
+			LocalDate startDateFilter, LocalDate endDateFilter)
 	{
-		Query query = this.em.createQuery("SELECT pedidoItem FROM PedidoItem pedidoItem"
-				+ " LEFT JOIN FETCH pedidoItem.produto produto" + " LEFT JOIN FETCH produto.cor cor"
-				+ " LEFT JOIN FETCH pedidoItem.pedido pedido" + " where pedido.statusPedido != 'RASCUNHO'");
 
+		String queryString = "SELECT pedidoItem FROM PedidoItem pedidoItem"
+				+ " LEFT JOIN FETCH pedidoItem.produto produto" + " LEFT JOIN FETCH produto.cor cor"
+				+ " LEFT JOIN FETCH pedidoItem.pedido pedido" + " where pedido.statusPedido != 'RASCUNHO'"
+				+ " and pedido.dataCriacao >= :startDateFilter and pedido.dataCriacao <= :endDateFilter";
+
+		if (!Strings.isNullOrEmpty(responsableName))
+		{
+			queryString += " and LOWER(pedido.nomeResponsavel) = :responsableName";
+		}
+
+		Query query = this.em.createQuery(queryString);
+
+		query.setParameter("startDateFilter", startDateFilter);
+		query.setParameter("endDateFilter", endDateFilter);
+
+		if (!Strings.isNullOrEmpty(responsableName))
+		{
+			query.setParameter("responsableName", responsableName.toLowerCase());
+		}
 		// CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
 		// CriteriaQuery<PedidoItem> criteria =
 		// criteriaBuilder.createQuery(PedidoItem.class);

@@ -17,6 +17,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class RelatorioVendaComponent implements OnInit, OnDestroy {
 
+
+    filterSettings: any;
+    fieldList: any[];
+    filterData: {};
+
     relatorioVenda: RelatorioVenda[];
     currentAccount: any;
     eventSubscriber: Subscription;
@@ -91,11 +96,60 @@ export class RelatorioVendaComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     ngOnInit() {
-        this.loadAll();
+        // this.loadAll();
+        this.configureFilterForm();
         this.principal.identity().then((account) => {
             this.currentAccount = account;
         });
         this.registerChangeInRelatorioVenda();
+    }
+
+    private configureFilterForm() {
+        this.filterData = {};
+
+        this.filterSettings = {
+        };
+
+        this.fieldList = [
+            {
+                name: "responsableName",
+                type: "text",
+                label: "report.relatorioVenda.responsableName"
+            },
+            {
+                name: "startDateFilter",
+                type: "date",
+                label: "report.relatorioVenda.startDateFilter",
+                required: true
+            },
+            {
+                name: "endDateFilter",
+                type: "date",
+                label: "report.relatorioVenda.endDateFilter",
+                required: true
+            }
+        ]
+    }
+
+
+    filter(event) {
+        this.listaPorModelo = [];
+        this.listaCor = [];
+        this.relatorioVenda = [];
+        this.vendaAcumuladaEmProducao = [];
+        this.corService.query({}).subscribe(
+            (res: HttpResponse<Cor[]>) => {
+                for (let i = 0; i < res.body.length; i++) {
+                    this.listaCor.push(res.body[i]);
+                }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+
+        this.relatorioVendaService.query(this.filterData).subscribe(
+            (res: HttpResponse<RelatorioVenda[]>) => this.onSuccess(res.body, res.headers),
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 
     obterRelatorioVenda() {
@@ -121,14 +175,14 @@ export class RelatorioVendaComponent implements OnInit, OnDestroy {
         }
     }
 
-    concluir (template, vendaAcumulada) {
-        this.ngbModal.open(template).result.then((result)=> {
+    concluir(template, vendaAcumulada) {
+        this.ngbModal.open(template).result.then((result) => {
             if (result == "SIM") {
                 this.subscribeToSaveResponse(this.relatorioVendaService.concluir(vendaAcumulada));
             }
         }, (reason) => {
         });
-    } 
+    }
 
     public subscribeToSaveResponse(result: Observable<HttpResponse<RelatorioVenda>>) {
         result.subscribe((res: HttpResponse<RelatorioVenda>) =>
@@ -164,6 +218,11 @@ export class RelatorioVendaComponent implements OnInit, OnDestroy {
     private onSuccess(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
+        debugger
+        if (this.relatorioVenda.length > 0) {
+            this.relatorioVenda = [];
+            this.listaPorModelo = [];
+        }
         for (let i = 0; i < data.length; i++) {
             this.relatorioVenda.push(data[i]);
         }
@@ -171,7 +230,7 @@ export class RelatorioVendaComponent implements OnInit, OnDestroy {
         this.obterRelatorioVenda();
     }
 
-    onSuccessEmProducao (data, headers) {
+    onSuccessEmProducao(data, headers) {
         this.links = this.parseLinks.parse(headers.get('link'));
         this.totalItems = headers.get('X-Total-Count');
         for (let i = 0; i < data.length; i++) {

@@ -1,27 +1,36 @@
-<div class="container-fluid">
-    <div class="row">
-        <div *ngFor="let field of fieldList" class="col-md-4">
+<form #filterForm="ngForm" name="filterForm" role="from">
+    <div class="container-fluid">
+        <div class="row">
+            <div *ngFor="let field of fieldList" class="col-md-4">
 
-            <div *ngIf="field.type == 'text'">
                 <label for="field.name">{{field.label | translate}}</label>
-                <input [(ngModel)]="filterData[field.name]" (keyup)="onFieldChange(field)" [name]="field.name"
-                    type="text" class="form-control">
+                <div *ngIf="field.type == 'text'">
+                    <input [(ngModel)]="filterData[field.name]" (keyup)="onFieldChange(field)" [name]="field.name"
+                        type="text" class="form-control">
+                </div>
+
+                <div *ngIf="field.type == 'select' && field.enumName != null">
+                    <select [(ngModel)]="filterData[field.name]" (change)="onFieldChange(field)" [name]="field.name"
+                        class="form-control">
+                        <option value=""></option>
+                        <option *ngFor="let option of enumList[field.enumName]" [ngValue]="option">{{option}}</option>
+                    </select>
+                </div>
+
+                <div *ngIf="field.type == 'date'">
+                    <input [(ngModel)]="filterData[field.name]" type="date" class="form-control" [name]="field.name"
+                        [required]="field.required" />
+                </div>
+
             </div>
-
-            <div *ngIf="field.type == 'select' && field.enumName != null">
-                <label for="field.name">{{field.label | translate}}</label>
-                <select [(ngModel)]="filterData[field.name]" (change)="onFieldChange(field)" [name]="field.name" class="form-control">
-                    <option value=""></option>
-                    <option *ngFor="let option of enumList[field.enumName]" [ngValue]="option">{{option}}</option>
-                </select>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 text-center">
+                <button (click)="filter()" [hidden]="this.settings.hideFilterButton" type="button"
+                    class="btn btn-primary col-md-2 filter-form-button" [disabled]="filterForm.form.invalid">
+                    {{'global.filterForm.filterButton' | translate}}
+                </button>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-10 offset-md-1 text-center">
-            <button (click)="filter()" [hidden]="this.settings.hideFilterButton" type="button" class="btn btn-primary col-md-2">
-                {{'global.filterForm.filterButton' | translate}}
-            </button>
-        </div>
-    </div>
-</div>
+</form>

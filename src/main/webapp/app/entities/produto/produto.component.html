@@ -9,7 +9,6 @@
         </button>
     </h2>
     <jhi-alert></jhi-alert>
-    FilterData: {{filterData}}
     <filter-form [settings]="filterSettings" [fieldList]="fieldList" (toggledChange)="filterData=$event"
         (filterCallback)="filter($event)"></filter-form>
     <br/>
