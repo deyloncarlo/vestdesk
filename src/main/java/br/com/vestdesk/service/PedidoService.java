@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -24,6 +25,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Strings;
+
+import br.com.vestdesk.domain.Cliente;
 import br.com.vestdesk.domain.ConfiguracaoLayout;
 import br.com.vestdesk.domain.Pedido;
 import br.com.vestdesk.domain.PedidoItem;
@@ -251,11 +255,14 @@ public class PedidoService
 	 *
 	 * @param pageable the pagination information
 	 * @param id
+	 * @param nomeResponsavel
+	 * @param nomeCliente
 	 * @param tipoPedido
 	 * @return the list of entities
 	 */
 	@Transactional(readOnly = true)
-	public Page<PedidoGridDTO> findAll(Pageable pageable, Long id, String statusPedido, boolean fechaEm10Dias)
+	public Page<PedidoGridDTO> findAll(Pageable pageable, Long id, String statusPedido, boolean fechaEm10Dias,
+			String nomeResponsavel, String nomeCliente)
 	{
 
 		CriteriaBuilder criteriaBuilder = this.em.getCriteriaBuilder();
@@ -279,6 +286,19 @@ public class PedidoService
 
 			Predicate predicate2 = criteriaBuilder.equal(root.get("statusPedido"), StatusPedido.EM_ANDAMENTO);
 			predicates.add(predicate2);
+		}
+		if (nomeResponsavel != null)
+		{
+			predicates.add(criteriaBuilder.equal(root.get("nomeResponsavel"), nomeResponsavel));
+		}
+		if (!Strings.isNullOrEmpty(nomeCliente))
+		{
+			Join<Pedido, Cliente> joinPedidoCliente = root.join("cliente");
+
+			Predicate nome1 = criteriaBuilder.like(root.get("nomeCliente"), "%" + nomeCliente + "%");
+			Predicate nome2 = criteriaBuilder.like(joinPedidoCliente.<String>get("nome"), "%" + nomeCliente + "%");
+			Predicate predicateNomeCliente = criteriaBuilder.or(nome1, nome2);
+			predicates.add(predicateNomeCliente);
 		}
 		criteria.where(criteriaBuilder.and(predicates.toArray(new Predicate[] {})));
 		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();

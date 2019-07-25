@@ -37,13 +37,13 @@ public class ClienteService
 
 	private final ClienteMapper clienteMapper;
 
-	private EntityManager em;
+	private final EntityManager em;
 
-	public ClienteService(ClienteMapper clienteMapper, ClienteRepository clienteRepository, EntityManager em)
+	public ClienteService(EntityManager em, ClienteMapper clienteMapper, ClienteRepository clienteRepository)
 	{
 		this.clienteRepository = clienteRepository;
 		this.clienteMapper = clienteMapper;
-		this.em = this.em;
+		this.em = em;
 	}
 
 	/**

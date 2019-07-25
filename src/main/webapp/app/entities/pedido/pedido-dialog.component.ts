@@ -96,7 +96,7 @@ export class PedidoDialogComponent implements OnInit {
         if (!this.pedido.listaPedidoItem) {
             this.pedido.listaPedidoItem = [];
         }
-        if (!this.pedido.id) {
+        if (this.pedido.id != null) {
             this.clienteTextoLivre = this.pedido.cliente == null || this.pedido.cliente == undefined ? true : false; 
             this.pedido.tipoPedido = TipoPedido.VENDA;
         } else {

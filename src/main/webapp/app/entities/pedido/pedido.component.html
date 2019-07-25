@@ -1,7 +1,8 @@
 <div>
     <h2>
         <span jhiTranslate="vestdeskApp.pedido.home.title">Pedidos</span>
-        <button class="btn btn-primary float-right jh-create-entity create-pedido" [routerLink]="['/', { outlets: { popup: ['pedido-new'] } }]">
+        <button class="btn btn-primary float-right jh-create-entity create-pedido"
+            [routerLink]="['/', { outlets: { popup: ['pedido-new'] } }]">
             <span class="fa fa-plus"></span>
             <span jhiTranslate="vestdeskApp.pedido.home.createLabel">
                 Create new Pedido
@@ -15,11 +16,24 @@
             <input type="number" class="form-control" name="pedido_id" id="field_id" [(ngModel)]="id" />
         </div>
         <div class="col-md-4">
-            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido" for="field_tipoPedido">Status Pedido
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente"
+                for="field_cliente">Cliente</label>
+            <input type="text" class="form-control" name="nomeCliente" id="field_cliente"
+                [(ngModel)]="nomeCliente" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido"
+                for="field_tipoPedido">Status Pedido
             </label>
             <select-field [enum]="'StatusPedido'" [model]="statusPedido" (toggledChange)="statusPedido=$event">
 
             </select-field>
+        </div>
+        <div class="col-md-4">
+            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeResponsavel"
+                for="field_tipoPedido">Nome do Responsável
+            </label>
+            <input type="text" class="form-control" name="nomeResponsavel" [(ngModel)]="nomeResponsavel" />
         </div>
     </div>
     <div class="row">
@@ -27,7 +41,7 @@
             <button class="btn btn-primary" (click)="filtrar()">Pesquisar</button>
         </div>
     </div>
-    <br/>
+    <br />
     <div class="table-responsive" *ngIf="pedidos">
         <table class="table table-striped">
             <thead>
@@ -47,6 +61,10 @@
                         <span jhiTranslate="vestdeskApp.pedido.statusPedido">Status Pedido</span>
                         <span class="fa fa-sort"></span>
                     </th>
+                    <th jhiSortBy="nomeResponsavel">
+                        <span jhiTranslate="vestdeskApp.pedido.nomeResponsavel">Nome Responsavel</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
                     <th jhiSortBy="dataPrevisao">
                         <span jhiTranslate="vestdeskApp.pedido.dataPrevisao">Data Previsão</span>
                         <span class="fa fa-sort"></span>
@@ -58,8 +76,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']" [infiniteScrollDistance]="2"
-                    [infiniteScrollThrottle]="1">
+            <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']"
+                [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1">
                 <tr *ngFor="let pedido of pedidos ;trackBy: trackId">
                     <td>
                         {{pedido.id}}
@@ -69,16 +87,19 @@
                     </td>
                     <td jhiTranslate="{{'vestdeskApp.TipoPedido.' + pedido.tipoPedido}}">{{pedido.tipoPedido}}</td>
                     <td>{{pedido.statusPedido}} </td>
+                    <td>{{pedido.nomeResponsavel == null ? '' : pedido.nomeResponsavel}} </td>
                     <td>{{pedido.dataPrevisao | date:'shortDate'}}</td>
                     <td>{{pedido.dataCriacao | date:'shortDate'}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit" [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/edit'} }]" replaceUrl="true" queryParamsHandling="merge"
-                                class="btn btn-primary btn-sm">
+                            <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/edit'} }]"
+                                replaceUrl="true" queryParamsHandling="merge" class="btn btn-primary btn-sm">
                                 <span class="fa fa-pencil"></span>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                             </button>
-                            <button [disabled]="pedido.statusPedido == 'CONCLUIDO'" type="submit" [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/delete'} }]"
+                            <button [disabled]="pedido.statusPedido == 'CONCLUIDO'" type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'pedido/'+ pedido.id + '/delete'} }]"
                                 replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
                                 <span class="fa fa-remove"></span>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>

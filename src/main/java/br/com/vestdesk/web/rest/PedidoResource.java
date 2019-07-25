@@ -111,7 +111,9 @@ public class PedidoResource
 	public ResponseEntity<List<PedidoGridDTO>> getAllPedidos(Pageable pageable,
 			@RequestParam(name = "id", required = false) String id,
 			@RequestParam(name = "statusPedido", required = false) String statusPedido,
-			@RequestParam(name = "fechaEm10Dias", required = false) boolean fechaEm10Dias)
+			@RequestParam(name = "fechaEm10Dias", required = false) boolean fechaEm10Dias,
+			@RequestParam(name = "nomeResponsavel", required = false) String nomeResponsavel,
+			@RequestParam(name = "nomeCliente", required = false) String nomeCliente)
 	{
 		this.log.debug("REST request to get a page of Pedidos");
 		Long v_id = null;
@@ -129,7 +131,18 @@ public class PedidoResource
 			statusPedido = null;
 		}
 
-		Page<PedidoGridDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido, fechaEm10Dias);
+		if (nomeResponsavel == null || nomeResponsavel.equals("null"))
+		{
+			nomeResponsavel = null;
+		}
+
+		if (nomeCliente == null || nomeCliente.equals("null"))
+		{
+			nomeCliente = null;
+		}
+
+		Page<PedidoGridDTO> page = this.pedidoService.findAll(pageable, v_id, statusPedido, fechaEm10Dias,
+				nomeResponsavel, nomeCliente);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/pedidos");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}

@@ -29,6 +29,8 @@ export class PedidoComponent implements OnInit, OnDestroy {
     id: number;
     statusPedido: StatusPedido;
     fechaEm10Dias: boolean;
+    nomeResponsavel: string;
+    nomeCliente: string;
 
     constructor(
         private pedidoService: PedidoService,
@@ -68,6 +70,12 @@ export class PedidoComponent implements OnInit, OnDestroy {
         if (!this.statusPedido) {
             this.statusPedido = null;
         }
+        if (!this.nomeResponsavel) {
+            this.nomeResponsavel = null;
+        }
+        if (!this.nomeCliente) {
+            this.nomeCliente = null;
+        }
         this.filterRequest();
     }
 
@@ -78,7 +86,9 @@ export class PedidoComponent implements OnInit, OnDestroy {
             sort: this.sort(),
             id: this.id,
             statusPedido: this.statusPedido,
-            fechaEm10Dias: this.fechaEm10Dias
+            fechaEm10Dias: this.fechaEm10Dias,
+            nomeResponsavel: this.nomeResponsavel,
+            nomeCliente: this.nomeCliente
         }).subscribe(
             (res: HttpResponse<Pedido[]>) => this.onSuccess(res.body, res.headers),
             (res: HttpErrorResponse) => this.onError(res.message)
