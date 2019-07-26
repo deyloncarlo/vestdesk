@@ -99,13 +99,11 @@ export class PedidoDialogComponent implements OnInit {
         if (this.pedido.id != null) {
             this.clienteTextoLivre = this.pedido.cliente == null || this.pedido.cliente == undefined ? true : false; 
             this.pedido.tipoPedido = TipoPedido.VENDA;
+            this.configureResumeTable();
         } else {
             this.clienteTextoLivre = true;
-            this.pedido.listaPedidoItem.forEach((pedidoItem) => {
-                if (this.valorVenda[pedidoItem.produto.modelo] == null || this.valorVenda[pedidoItem.produto.modelo] == "") {
-                    this.valorVenda[pedidoItem.produto.modelo] = pedidoItem.valor;
-                }
-            });
+            this.configureResumeTable();
+            this.pedido.tipoPedido = TipoPedido.VENDA;
         }
         this.atualizarTotal();
         this.esconderCampos = false;
@@ -113,6 +111,14 @@ export class PedidoDialogComponent implements OnInit {
             height: '350px'
         };
         // this.pedido.dataPrevisao = { day: this.calendar.getToday().day, month: this.calendar.getToday().month + 1, year: this.calendar.getToday().year };
+    }
+
+    configureResumeTable() {
+        this.pedido.listaPedidoItem.forEach((pedidoItem) => {
+            if (this.valorVenda[pedidoItem.produto.modelo] == null || this.valorVenda[pedidoItem.produto.modelo] == "") {
+                this.valorVenda[pedidoItem.produto.modelo] = pedidoItem.valor;
+            }
+        });
     }
 
     clear(content) {

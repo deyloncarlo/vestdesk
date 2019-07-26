@@ -49,7 +49,7 @@ dependencyManagement {
 defaultTasks 'bootRun'
 
 group = 'br.com.vestdesk'
-version = '2.0.0-SNAPSHOT'
+version = '3.0.0-SNAPSHOT'
 
 description = ''
 

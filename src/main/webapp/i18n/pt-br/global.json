@@ -147,6 +147,7 @@
     },
     "report": {
         "relatorioVenda": {
+            "title": "Relatório Venda",
             "responsableName": "Nome Responsável",
             "startDateFilter": "Data Início",
             "endDateFilter": "Data Fim"
