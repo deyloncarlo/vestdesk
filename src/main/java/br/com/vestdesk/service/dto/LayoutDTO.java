@@ -19,9 +19,13 @@ public class LayoutDTO implements Serializable
 	@NotNull
 	private String nome;
 
-	@NotNull
+	// @NotNull
+	// @Lob
+	// private byte[] imagem;
+
 	@Lob
-	private byte[] imagem;
+	private byte[] optimizedImage;
+
 	private String imagemContentType;
 
 	private Modelo modelo;
@@ -46,15 +50,15 @@ public class LayoutDTO implements Serializable
 		this.nome = nome;
 	}
 
-	public byte[] getImagem()
-	{
-		return this.imagem;
-	}
-
-	public void setImagem(byte[] imagem)
-	{
-		this.imagem = imagem;
-	}
+	// public byte[] getImagem()
+	// {
+	// return this.imagem;
+	// }
+	//
+	// public void setImagem(byte[] imagem)
+	// {
+	// this.imagem = imagem;
+	// }
 
 	public String getImagemContentType()
 	{
@@ -95,7 +99,7 @@ public class LayoutDTO implements Serializable
 	@Override
 	public String toString()
 	{
-		return "LayoutDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + ", imagem='" + getImagem() + "'" + "}";
+		return "LayoutDTO{" + "id=" + getId() + ", nome='" + getNome() + "'" + "}";
 	}
 
 	public Modelo getModelo()
@@ -106,5 +110,15 @@ public class LayoutDTO implements Serializable
 	public void setModelo(Modelo modelo)
 	{
 		this.modelo = modelo;
+	}
+
+	public byte[] getOptimizedImage()
+	{
+		return this.optimizedImage;
+	}
+
+	public void setOptimizedImage(byte[] optimizedImage)
+	{
+		this.optimizedImage = optimizedImage;
 	}
 }

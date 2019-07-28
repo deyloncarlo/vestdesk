@@ -28,15 +28,17 @@
 
                     <div style="display: inline-block" class="col-md-4" *ngFor="let layout of layouts ;trackBy: trackId">
                         <div class="col-md-12">
-                            <img [src]="'data:image/jpg;base64,' + layout.imagem" alt="" class="img-fluid">
+                            <!-- <img [src]="'data:image/jpg;base64,' + layout.imagem" alt="" class="img-fluid"> -->
+                            <img [src]="'data:image/jpg;base64,' + layout.optimizedImage" alt="" class="img-fluid">
                         </div>
                         <div class="col-md-12 text-center">
                             <!-- <a [routerLink]="['../layout', layout.id ]">{{layout.id}}</a> -->
                             <label for="nome"><b>Nome:</b></label>
                             {{layout.nome}}
                             <br>
-                            <span *ngIf="layout.imagem">{{layout.imagemContentType}}, {{byteSize(layout.imagem)}}</span>
-                            <a *ngIf="layout.imagem" (click)="openFile(layout.imagemContentType, layout.imagem)" jhiTranslate="entity.action.open">open</a>
+                            <!-- <span *ngIf="layout.imagem">{{layout.imagemContentType}}, {{byteSize(layout.imagem)}}</span> -->
+                            <span *ngIf="layout.optimizedImage">{{layout.imagemContentType}}, {{byteSize(layout.optimizedImage)}}</span>
+                            <a *ngIf="layout.optimizedImage" (click)="openFile(layout.imagemContentType, layout.optimizedImage)" jhiTranslate="entity.action.open">open</a>
                         </div>
                         <div class="btn-group col-md-12">
                             <!-- <button type="submit"

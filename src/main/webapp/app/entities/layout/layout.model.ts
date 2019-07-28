@@ -10,7 +10,8 @@ export class Layout implements BaseEntity {
         public imagemContentType?: string,
         public imagem?: any,
         public configuracaoLayout?: ConfiguracaoLayout,
-        public modelo?: Modelo
+        public modelo?: Modelo,
+        public optimizedImage?: any
     ) {
     }
 }

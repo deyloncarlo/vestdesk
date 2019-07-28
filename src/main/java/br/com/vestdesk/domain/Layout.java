@@ -40,6 +40,13 @@ public class Layout implements Serializable
 	@Column(name = "imagem", nullable = false)
 	private byte[] imagem;
 
+	@Lob
+	@Column(name = "optimized_imagem")
+	private byte[] optimizedImage;
+
+	@Column(name = "optimized")
+	private Boolean isOptimized;
+
 	@Column(name = "imagem_content_type", nullable = false)
 	private String imagemContentType;
 
@@ -161,5 +168,25 @@ public class Layout implements Serializable
 	public void setListaConfiguracaoLayout(Set<ConfiguracaoLayout> listaConfiguracaoLayout)
 	{
 		this.listaConfiguracaoLayout = listaConfiguracaoLayout;
+	}
+
+	public byte[] getOptimizedImage()
+	{
+		return this.optimizedImage;
+	}
+
+	public void setOptimizedImage(byte[] optimizedImage)
+	{
+		this.optimizedImage = optimizedImage;
+	}
+
+	public Boolean getIsOptimized()
+	{
+		return this.isOptimized;
+	}
+
+	public void setIsOptimized(Boolean isOptimized)
+	{
+		this.isOptimized = isOptimized;
 	}
 }

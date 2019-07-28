@@ -17,6 +17,7 @@ import br.com.vestdesk.domain.Layout;
 import br.com.vestdesk.repository.LayoutRepository;
 import br.com.vestdesk.service.dto.LayoutDTO;
 import br.com.vestdesk.service.mapper.LayoutMapper;
+import br.com.vestdesk.util.ImageUtil;
 
 /**
  * Service Interface for managing Layout.
@@ -50,6 +51,10 @@ public class LayoutService
 	public LayoutDTO save(LayoutDTO layoutDTO)
 	{
 		Layout layout = this.layoutMapper.toEntity(layoutDTO);
+		byte[] optimizedImage = ImageUtil.optimizeImage(layout.getImagem(),
+				layout.getImagemContentType().split("/")[0]);
+		layout.setOptimizedImage(optimizedImage);
+		layout.setIsOptimized(true);
 		layout = this.layoutRepository.save(layout);
 		return this.layoutMapper.toDto(layout);
 	}
@@ -70,12 +75,29 @@ public class LayoutService
 
 		Query query = this.em.createQuery("SELECT layout FROM Layout layout WHERE nome LIKE :nomeLayout");
 		query.setParameter("nomeLayout", "%" + nome + "%");
+		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
+		query.setFirstResult(primeiroRegistro);
+		query.setMaxResults(pageable.getPageSize());
 
 		List<Layout> listaLayout = query.getResultList();
 		Page<Layout> page = new PageImpl<>(listaLayout, pageable, listaLayout.size());
 
 		this.log.debug("Request to get all Produtos");
 		return page.map(this.layoutMapper::toDto);
+	}
+
+	/**
+	 * Get all the layouts.
+	 *
+	 * @return the list of entities
+	 */
+	public List<Layout> findAll()
+	{
+		Query query = this.em.createQuery("SELECT layout FROM Layout layout");
+
+		List<Layout> listaLayout = query.getResultList();
+
+		return listaLayout;
 	}
 
 	/**
@@ -112,5 +134,11 @@ public class LayoutService
 		{
 			throw new RuntimeException("error.layout.existemPedidosReferenciandoEsteLayout");
 		}
+	}
+
+	public void save(Layout layout)
+	{
+		layout = this.layoutRepository.save(layout);
+
 	}
 }
