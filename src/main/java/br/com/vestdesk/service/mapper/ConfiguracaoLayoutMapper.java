@@ -10,7 +10,7 @@ import br.com.vestdesk.service.dto.ConfiguracaoLayoutDTO;
 /**
  * Mapper for the entity ConfiguracaoLayout and its DTO ConfiguracaoLayoutDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = { LayoutMapper.class })
 public interface ConfiguracaoLayoutMapper
 {
 

@@ -150,7 +150,8 @@ export class LayoutInputComponent implements OnInit, OnDestroy {
         layout.configuracaoLayout = new ConfiguracaoLayout();
         layout.configuracaoLayout.layout = new Layout();
         layout.configuracaoLayout.layout.id = layout.id;
-        layout.configuracaoLayout.layout.imagem = layout.imagem;
+        layout.configuracaoLayout.layout.optimizedImage = layout.optimizedImage;
+        layout.configuracaoLayout.layout.imagemContentType = layout.imagemContentType;
         this.selecionados.push(layout.configuracaoLayout);
     }
 

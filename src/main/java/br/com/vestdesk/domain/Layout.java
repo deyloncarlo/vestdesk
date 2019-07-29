@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.vestdesk.domain.enumeration.Modelo;
 
 /**
@@ -38,6 +40,7 @@ public class Layout implements Serializable
 	@NotNull
 	@Lob
 	@Column(name = "imagem", nullable = false)
+	@JsonIgnore
 	private byte[] imagem;
 
 	@Lob

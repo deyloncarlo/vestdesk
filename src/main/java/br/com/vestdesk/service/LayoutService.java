@@ -52,7 +52,7 @@ public class LayoutService
 	{
 		Layout layout = this.layoutMapper.toEntity(layoutDTO);
 		byte[] optimizedImage = ImageUtil.optimizeImage(layout.getImagem(),
-				layout.getImagemContentType().split("/")[0]);
+				layout.getImagemContentType().split("/")[1]);
 		layout.setOptimizedImage(optimizedImage);
 		layout.setIsOptimized(true);
 		layout = this.layoutRepository.save(layout);
@@ -73,17 +73,18 @@ public class LayoutService
 			nome = "";
 		}
 
-		Query query = this.em.createQuery("SELECT layout FROM Layout layout WHERE nome LIKE :nomeLayout");
+		Query query = this.em.createQuery(
+				"SELECT new br.com.vestdesk.service.dto.LayoutDTO(id, nome, optimizedImage, imagemContentType, modelo) FROM Layout layout WHERE nome LIKE :nomeLayout");
 		query.setParameter("nomeLayout", "%" + nome + "%");
 		int primeiroRegistro = pageable.getPageNumber() * pageable.getPageSize();
 		query.setFirstResult(primeiroRegistro);
 		query.setMaxResults(pageable.getPageSize());
 
-		List<Layout> listaLayout = query.getResultList();
-		Page<Layout> page = new PageImpl<>(listaLayout, pageable, listaLayout.size());
+		List<LayoutDTO> listaLayout = query.getResultList();
+		Page<LayoutDTO> page = new PageImpl<>(listaLayout, pageable, listaLayout.size());
 
 		this.log.debug("Request to get all Produtos");
-		return page.map(this.layoutMapper::toDto);
+		return page;
 	}
 
 	/**

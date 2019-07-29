@@ -20,8 +20,8 @@ public class LayoutDTO implements Serializable
 	private String nome;
 
 	// @NotNull
-	// @Lob
-	// private byte[] imagem;
+	@Lob
+	private byte[] imagem;
 
 	@Lob
 	private byte[] optimizedImage;
@@ -29,6 +29,21 @@ public class LayoutDTO implements Serializable
 	private String imagemContentType;
 
 	private Modelo modelo;
+
+	public LayoutDTO()
+	{
+
+	}
+
+	public LayoutDTO(Long id, String nome, byte[] optimizedImage, String imagemContentType, Modelo modelo)
+	{
+
+		this.id = id;
+		this.nome = nome;
+		this.optimizedImage = optimizedImage;
+		this.imagemContentType = imagemContentType;
+		this.modelo = modelo;
+	}
 
 	public Long getId()
 	{
@@ -50,15 +65,15 @@ public class LayoutDTO implements Serializable
 		this.nome = nome;
 	}
 
-	// public byte[] getImagem()
-	// {
-	// return this.imagem;
-	// }
-	//
-	// public void setImagem(byte[] imagem)
-	// {
-	// this.imagem = imagem;
-	// }
+	public byte[] getImagem()
+	{
+		return this.imagem;
+	}
+
+	public void setImagem(byte[] imagem)
+	{
+		this.imagem = imagem;
+	}
 
 	public String getImagemContentType()
 	{

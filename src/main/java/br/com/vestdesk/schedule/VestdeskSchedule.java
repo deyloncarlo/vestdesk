@@ -3,7 +3,6 @@ package br.com.vestdesk.schedule;
 import java.util.List;
 
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import br.com.vestdesk.domain.Layout;
@@ -22,7 +21,7 @@ public class VestdeskSchedule
 		this.layoutService = layoutService;
 	}
 
-	@Scheduled(cron = "50 * * * * *")
+	// @Scheduled(cron = "50 * * * * *")
 	public void optimizeLayoutImages()
 	{
 		List<Layout> layoutList = this.layoutService.findAll();
@@ -35,6 +34,7 @@ public class VestdeskSchedule
 						layout.getImagemContentType().split("/")[1]);
 				layout.setOptimizedImage(optimizedImage);
 				layout.setIsOptimized(true);
+				this.layoutService.save(layout);
 			}
 		}
 

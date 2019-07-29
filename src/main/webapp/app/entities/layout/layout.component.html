@@ -29,7 +29,7 @@
                     <div style="display: inline-block" class="col-md-4" *ngFor="let layout of layouts ;trackBy: trackId">
                         <div class="col-md-12">
                             <!-- <img [src]="'data:image/jpg;base64,' + layout.imagem" alt="" class="img-fluid"> -->
-                            <img [src]="'data:image/jpg;base64,' + layout.optimizedImage" alt="" class="img-fluid">
+                            <img [src]="'data:' + layout.imagemContentType + ';base64,' + layout.optimizedImage" alt="" class="img-fluid">
                         </div>
                         <div class="col-md-12 text-center">
                             <!-- <a [routerLink]="['../layout', layout.id ]">{{layout.id}}</a> -->
