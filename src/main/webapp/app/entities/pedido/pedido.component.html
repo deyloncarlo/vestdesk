@@ -46,6 +46,10 @@
         <table class="table table-striped">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
+                    <th jhiSortBy="nomeResponsavel">
+                        <span jhiTranslate="vestdeskApp.pedido.nomeResponsavel">Nome Responsavel</span>
+                        <span class="fa fa-sort"></span>
+                    </th>
                     <th jhiSortBy="id">
                         <span jhiTranslate="global.field.id">ID</span>
                         <span class="fa fa-sort"></span>
@@ -59,10 +63,6 @@
                     </th>
                     <th jhiSortBy="statusPedido">
                         <span jhiTranslate="vestdeskApp.pedido.statusPedido">Status Pedido</span>
-                        <span class="fa fa-sort"></span>
-                    </th>
-                    <th jhiSortBy="nomeResponsavel">
-                        <span jhiTranslate="vestdeskApp.pedido.nomeResponsavel">Nome Responsavel</span>
                         <span class="fa fa-sort"></span>
                     </th>
                     <th jhiSortBy="dataPrevisao">
@@ -79,6 +79,7 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page > links['last']"
                 [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1">
                 <tr *ngFor="let pedido of pedidos ;trackBy: trackId">
+                    <td>{{pedido.nomeResponsavel == null ? '' : pedido.nomeResponsavel}} </td>
                     <td>
                         {{pedido.id}}
                     </td>
@@ -87,7 +88,6 @@
                     </td>
                     <td jhiTranslate="{{'vestdeskApp.TipoPedido.' + pedido.tipoPedido}}">{{pedido.tipoPedido}}</td>
                     <td>{{pedido.statusPedido}} </td>
-                    <td>{{pedido.nomeResponsavel == null ? '' : pedido.nomeResponsavel}} </td>
                     <td>{{pedido.dataPrevisao | date:'shortDate'}}</td>
                     <td>{{pedido.dataCriacao | date:'shortDate'}}</td>
                     <td class="text-right">

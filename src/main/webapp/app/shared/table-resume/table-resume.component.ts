@@ -18,6 +18,7 @@ export class TableResume implements OnInit, OnDestroy{
     @Output() cellFunction = new EventEmitter<AnimationKeyframe>();
     verticalTotal: any[];
     horizontalTotal: any[];
+    somVerticalTotal: number = 0;
 
     constructor(private ngbModal: NgbModal) {
     }
@@ -29,8 +30,10 @@ export class TableResume implements OnInit, OnDestroy{
             if (this.verticalTotal[data.produto.tamanho] == null) {
                 this.verticalTotal[data.produto.tamanho] = 0;
                 this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];
+                this.somVerticalTotal += data[this.atributeToDisplay];
             }else {
                 this.verticalTotal[data.produto.tamanho] += data[this.atributeToDisplay];
+                this.somVerticalTotal += data[this.atributeToDisplay];
             }
 
             if (this.horizontalTotal[data.produto.cor.id] == null) {
@@ -54,6 +57,14 @@ export class TableResume implements OnInit, OnDestroy{
             }, (reason) => {
             });
         }
+    }
+
+    subTotal (array) {
+        debugger
+        if (array && array.lenght > 0) {
+            return array.reduce((a,b) => {return a+b}, 0);
+        }
+        return "";
     }
 
 }

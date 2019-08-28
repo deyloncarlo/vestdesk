@@ -1,7 +1,9 @@
 <form name="editForm" role="form" novalidate (ngSubmit)="save(statusPedido)" #editForm="ngForm">
     <div class="modal-header">
-        <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or edit a Pedido</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear(usurioFechandoTela)">&times;</button>
+        <h4 class="modal-title" id="myPedidoLabel" jhiTranslate="vestdeskApp.pedido.home.createOrEditLabel">Create or
+            edit a Pedido</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+            (click)="clear(usurioFechandoTela)">&times;</button>
     </div>
     <div class="modal-body" style="height: 600px; overflow-y: auto;">
         <jhi-alert-error></jhi-alert-error>
@@ -16,80 +18,98 @@
                             <div class="row">
                                 <div class="col-md-1">
                                     <label for="">Cliente livre</label>
-                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente1" (click)="selecionarClienteTextoLivre(true)" [checked]="clienteTextoLivre == true"
-                                    />
+                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente1"
+                                        (click)="selecionarClienteTextoLivre(true)"
+                                        [checked]="clienteTextoLivre == true" />
                                 </div>
                                 <div class="col-md-2">
                                     <label for="">Selecionar Cliente</label>
-                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente2" (click)="selecionarClienteTextoLivre(false)" [checked]="clienteTextoLivre == false"
-                                    />
+                                    <input type="checkbox" name="tipoSelecaoCliente" id="tipoSelecaoCliente2"
+                                        (click)="selecionarClienteTextoLivre(false)"
+                                        [checked]="clienteTextoLivre == false" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6" [hidden]="clienteTextoLivre == false">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente"
+                                for="field_cliente">Cliente</label>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input type="text" class="form-control" name="nomeCliente" id="field_cliente" [(ngModel)]="pedido.nomeCliente" />
+                                    <input type="text" class="form-control" name="nomeCliente" id="field_cliente"
+                                        [(ngModel)]="pedido.nomeCliente" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6" *ngIf="clienteTextoLivre != true">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente" for="field_cliente">Cliente</label>
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cliente"
+                                for="field_cliente">Cliente</label>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente" [(ngModel)]="pedido.cliente.nome" onkeypress="return false;"
-                                        disabled />
+                                    <input type="text" class="form-control" name="cliente_nome" id="field_cliente"
+                                        [(ngModel)]="pedido.cliente.nome" onkeypress="return false;" disabled />
                                 </div>
-                                <button type="button" class="btn btn-primary col-md-2" (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
+                                <button type="button" class="btn btn-primary col-md-2"
+                                    (click)="selecionarCliente(pedido.cliente)">Selecionar</button>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.layout" for="field_layout">Layout</label>
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.layout"
+                                for="field_layout">Layout</label>
                             <div class="row">
                                 <div class="col-md-10">
-                                    <input type="text" class="form-control" name="pedido_layout" id="field_layout" [(ngModel)]="pedido.listaConfiguracaoLayout.length"
-                                        disabled />
+                                    <input type="text" class="form-control" name="pedido_layout" id="field_layout"
+                                        [(ngModel)]="pedido.listaConfiguracaoLayout.length" disabled />
                                 </div>
-                                <button type="button" class="btn btn-primary col-md-2" (click)="selecionarLayout(pedido.layout)">Selecionar</button>
+                                <button type="button" class="btn btn-primary col-md-2"
+                                    (click)="selecionarLayout(pedido.layout)">Selecionar</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeResponsavel" for="field_nomeResonsavel">Nome Responsável
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeResponsavel"
+                                for="field_nomeResonsavel">Nome Responsável
                             </label>
-                            <input type="text" class="form-control" name="nomeResponsavel" id="field_nomeResonsavel" [(ngModel)]="pedido.nomeResponsavel"
-                                required />
-                            <div [hidden]="!(editForm.controls.nomeResponsavel?.dirty && editForm.controls.nomeResponsavel?.invalid)">
-                                <small class="form-text text-danger" [hidden]="!editForm.controls.nome?.errors?.required" jhiTranslate="entity.validation.required">
+                            <input type="text" class="form-control" name="nomeResponsavel" id="field_nomeResonsavel"
+                                [(ngModel)]="pedido.nomeResponsavel" required />
+                            <div
+                                [hidden]="!(editForm.controls.nomeResponsavel?.dirty && editForm.controls.nomeResponsavel?.invalid)">
+                                <small class="form-text text-danger"
+                                    [hidden]="!editForm.controls.nome?.errors?.required"
+                                    jhiTranslate="entity.validation.required">
                                     This field is required.
                                 </small>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido" for="field_tipoPedido">Tipo Pedido
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tipoPedido"
+                                for="field_tipoPedido">Tipo Pedido
                             </label>
-                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido" id="field_tipoPedido" (change)="limparListaPedidoItem()"
-                                required disabled>
+                            <select class="form-control" name="tipoPedido" [(ngModel)]="pedido.tipoPedido"
+                                id="field_tipoPedido" (change)="limparListaPedidoItem()" required disabled>
                                 <option value="PRODUCAO">{{'vestdeskApp.TipoPedido.PRODUCAO' | translate}}</option>
                                 <option value="VENDA">{{'vestdeskApp.TipoPedido.VENDA' | translate}}</option>
                             </select>
-                            <div [hidden]="!(editForm.controls.tipoPedido?.dirty && editForm.controls.tipoPedido?.invalid)">
-                                <small class="form-text text-danger" [hidden]="!editForm.controls.tipoPedido?.errors?.required" jhiTranslate="entity.validation.required">
+                            <div
+                                [hidden]="!(editForm.controls.tipoPedido?.dirty && editForm.controls.tipoPedido?.invalid)">
+                                <small class="form-text text-danger"
+                                    [hidden]="!editForm.controls.tipoPedido?.errors?.required"
+                                    jhiTranslate="entity.validation.required">
                                     This field is required.
                                 </small>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataPrevisao" for="field_dataPrevisao">Data Previsão
+                            <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.dataPrevisao"
+                                for="field_dataPrevisao">Data Previsão
                             </label>
                             <div class="input-group">
-                                <input id="field_dataPrevisao" type="date" class="form-control" name="dataPrevisao" [(ngModel)]="pedido.dataPrevisao" />
+                                <input id="field_dataPrevisao" type="date" class="form-control" name="dataPrevisao"
+                                    [(ngModel)]="pedido.dataPrevisao" />
                                 <!-- <span class="input-group-append">
                                     <button type="button" class="btn btn-secondary" (click)="dataPrevisaoDp.toggle()">
                                         <i class="fa fa-calendar"></i>
@@ -99,7 +119,7 @@
                         </div>
 
                         <!-- Exibindo Layouts -->
-                        
+
                         <div class="col-md-12">
                             <div class="container-fluid pedido-resumo">
                                 <div class="row">
@@ -110,7 +130,8 @@
                                                     <thead>
                                                         <tr>
                                                             <th></th>
-                                                            <th *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                            <th *ngFor="let tipo of listaEnum.Modelo;"
+                                                                [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
                                                                 {{tipo}}
                                                             </th>
                                                         </tr>
@@ -118,7 +139,8 @@
                                                     <tbody>
                                                         <tr>
                                                             <td style="font-weight: bold; width: 20px">Valor (R$)</td>
-                                                            <td *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                            <td *ngFor="let tipo of listaEnum.Modelo;"
+                                                                [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
                                                                 {{valorVenda[tipo] | currency:'BRL':true}}
                                                             </td>
                                                         </tr>
@@ -126,7 +148,8 @@
                                                             <td style="font-weight: bold; width: 20px">
                                                                 Quantidade
                                                             </td>
-                                                            <td *ngFor="let tipo of listaEnum.Modelo;" [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
+                                                            <td *ngFor="let tipo of listaEnum.Modelo;"
+                                                                [hidden]="valorVenda[tipo] == null || valorVenda[tipo] == ''">
                                                                 {{getAmountByModelo(tipo)}}
                                                             </td>
                                                         </tr>
@@ -136,38 +159,45 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12" style="font-weight: bold">
-                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.statusPedido">
+                                                <label class="form-control-label"
+                                                    jhiTranslate="vestdeskApp.pedido.statusPedido">
                                                 </label>: {{pedido.statusPedido}}
                                             </div>
                                             <div class="col-md-12" style="font-weight: bold">
-                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
+                                                <label class="form-control-label"
+                                                    jhiTranslate="vestdeskApp.pedido.valorTotalPedido">
                                                 </label>: {{valorTotalPedido | currency:'BRL':true}}
                                             </div>
                                             <div class="col-md-12" style="font-weight: bold">
-                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
+                                                <label class="form-control-label"
+                                                    jhiTranslate="vestdeskApp.pedido.valorRestantePedido">
                                                 </label>: {{valorRestantePedido | currency:'BRL':true}}
                                             </div>
                                             <div class="col-md-12" style="font-weight: bold">
-                                                <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorTotalRecebido">
+                                                <label class="form-control-label"
+                                                    jhiTranslate="vestdeskApp.pedido.valorTotalRecebido">
                                                 </label>: {{valorTotalRecebido | currency:'BRL':true}}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5" >
+                                    <div class="col-md-5">
                                         <div class="row">
-                                            <label style="font-weight: bold" class="form-control-label" jhiTranslate="vestdeskApp.pedido.layoutSelecionado"></label>
+                                            <label style="font-weight: bold" class="form-control-label"
+                                                jhiTranslate="vestdeskApp.pedido.layoutSelecionado"></label>
                                         </div>
                                         <div class="row" style="overflow-x: auto; width: 600px; padding: 5px;">
                                             <div style="display: inline-flex;">
-                                                <div style="margin-right: 5px;" *ngFor="let configuracaoLayout of pedido.listaConfiguracaoLayout">
+                                                <div style="margin-right: 5px;"
+                                                    *ngFor="let configuracaoLayout of pedido.listaConfiguracaoLayout">
                                                     <div>
-                                                        <img [src]="'data:' + configuracaoLayout.layout.imagemContentType + ';base64,' + configuracaoLayout.layout.optimizedImage" height="215px;" alt="">
+                                                        <img [src]="'data:' + configuracaoLayout.layout.imagemContentType + ';base64,' + configuracaoLayout.layout.optimizedImage"
+                                                            height="215px;" alt="">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,88 +210,118 @@
                             <div class="row">
                                 <div class="container-fluid">
                                     <div class="pull-left" (click)="esconder()">
-                                        <i [ngClass]="{false: 'fa fa-chevron-up', true:'fa fa-chevron-down'}[esconderCampos]" aria-hidden="true"></i>
+                                        <i [ngClass]="{false: 'fa fa-chevron-up', true:'fa fa-chevron-down'}[esconderCampos]"
+                                            aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
                             <div [hidden]="esconderCampos">
 
-                                <ngb-alert *ngIf="produtoNaoEncontrado" [type]="'danger'" (close)="produtoNaoEncontrado = false">
+                                <ngb-alert *ngIf="produtoNaoEncontrado" [type]="'danger'"
+                                    (close)="produtoNaoEncontrado = false">
                                     Produto não encontrado.
                                 </ngb-alert>
                                 <!-- PRODUTO -->
                                 <div class="row" [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
                                     <div class="col-md-6">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.clienteCamisa" for="field_clienteCamisa">Cliente Camisa</label>
-                                        <input type="text" class="form-control" name="clienteCamisa" id="field_clienteCamisa" [(ngModel)]="clienteCamisa" />
+                                        <label class="form-control-label"
+                                            jhiTranslate="vestdeskApp.pedido.clienteCamisa"
+                                            for="field_clienteCamisa">Cliente Camisa</label>
+                                        <input type="text" class="form-control" name="clienteCamisa"
+                                            id="field_clienteCamisa" [(ngModel)]="clienteCamisa" />
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa" for="field_nomeRoupa">Nome Roupa</label>
-                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa" [(ngModel)]="nomeRoupa" />
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.nomeRoupa"
+                                            for="field_nomeRoupa">Nome Roupa</label>
+                                        <input type="text" class="form-control" name="nomeRoupa" id="field_nomeRoupa"
+                                            [(ngModel)]="nomeRoupa" />
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone" for="field_telefone">Telefone</label>
-                                        <input type="text" class="form-control" name="telefone" id="field_telefone" [(ngModel)]="telefone" />
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.telefone"
+                                            for="field_telefone">Telefone</label>
+                                        <input type="text" class="form-control" name="telefone" id="field_telefone"
+                                            [(ngModel)]="telefone" />
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo" for="field_modelo">Modelo</label>
-                                        <select-field [enum]="'Modelo'" [model]="modelo" (toggledChange)="modelo=$event"></select-field>
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.modelo"
+                                            for="field_modelo">Modelo</label>
+                                        <select-field [enum]="'Modelo'" [model]="modelo"
+                                            (toggledChange)="modelo=$event"></select-field>
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho" for="field_tamanho">Tamanho</label>
-                                        <select-field [enum]="'Tamanho'" [model]="tamanho" (toggledChange)="tamanho=$event"></select-field>
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.tamanho"
+                                            for="field_tamanho">Tamanho</label>
+                                        <select-field [enum]="'Tamanho'" [model]="tamanho"
+                                            (toggledChange)="tamanho=$event"></select-field>
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor" for="field_cor">Cor</label>
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.cor"
+                                            for="field_cor">Cor</label>
                                         <select class="form-control" id="field_cor" name="cor" [(ngModel)]="cor">
                                             <option [ngValue]="null"></option>
                                             <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.quantidadeItem" for="field_quantidade">Quantidade</label>
-                                        <input type="number" class="form-control" name="pedido_quantidade" id="field_quantidade" [(ngModel)]="quantidade" />
+                                        <label class="form-control-label"
+                                            jhiTranslate="vestdeskApp.pedido.quantidadeItem"
+                                            for="field_quantidade">Quantidade</label>
+                                        <input type="number" class="form-control" name="pedido_quantidade"
+                                            id="field_quantidade" [(ngModel)]="quantidade" />
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorVenda" for="field_valorVenda">Valor Venda</label>
-                                        <input type="number" class="form-control" name="pedido_valorVenda" id="field_valorVenda" [(ngModel)]="valorVenda[modelo]"
-                                        (change)="atuliazandoValorVendaModelo()"
-                                        />
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.valorVenda"
+                                            for="field_valorVenda">Valor Venda</label>
+                                        <input type="number" class="form-control" name="pedido_valorVenda"
+                                            id="field_valorVenda" [(ngModel)]="valorVenda[modelo]"
+                                            (change)="atuliazandoValorVendaModelo()" />
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.primeiroPagamento" for="field_primeiroPagamento">Primeiro Pagamento</label>
-                                        <input type="number" class="form-control" name="pedido_primeiroPagamento" id="field_primeiroPagamento" [(ngModel)]="primeiroPagamento"
-                                        />
+                                        <label class="form-control-label"
+                                            jhiTranslate="vestdeskApp.pedido.primeiroPagamento"
+                                            for="field_primeiroPagamento">Primeiro Pagamento</label>
+                                        <input type="number" class="form-control" name="pedido_primeiroPagamento"
+                                            id="field_primeiroPagamento" [(ngModel)]="primeiroPagamento" />
                                     </div>
                                     <div class="col-md-3">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.formaPagamento" for="field_formaPagamento">Forma Pagamento</label>
-                                        <select-field [enum]="'FormaPagamento'" [model]="formaPrimeiroPagamento" (toggledChange)="formaPrimeiroPagamento=$event"></select-field>
+                                        <label class="form-control-label"
+                                            jhiTranslate="vestdeskApp.pedido.formaPagamento"
+                                            for="field_formaPagamento">Forma Pagamento</label>
+                                        <select-field [enum]="'FormaPagamento'" [model]="formaPrimeiroPagamento"
+                                            (toggledChange)="formaPrimeiroPagamento=$event"></select-field>
                                     </div>
                                 </div>
 
                                 <!-- VENDA -->
                                 <div class="row" [hidden]="pedido.tipoPedido != 'PRODUCAO' ">
                                     <div class="col-md-8">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.produto" for="field_produto">Produto</label>
+                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.produto"
+                                            for="field_produto">Produto</label>
                                         <div class="row">
                                             <div class="col-md-9">
-                                                <input type="text" class="form-control" name="pedido_produto" id="field_produto" [(ngModel)]="produto.descricao" disabled
-                                                />
+                                                <input type="text" class="form-control" name="pedido_produto"
+                                                    id="field_produto" [(ngModel)]="produto.descricao" disabled />
                                             </div>
-                                            <button type="button" class="btn btn-primary col-md-3" (click)="selecionarProduto(produto)">Selecionar</button>
+                                            <button type="button" class="btn btn-primary col-md-3"
+                                                (click)="selecionarProduto(produto)">Selecionar</button>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <label class="form-control-label" jhiTranslate="vestdeskApp.pedido.quantidadeItem" for="field_quantidade">Quantidade</label>
-                                        <input type="number" class="form-control" name="pedido_quantidade" id="field_quantidade" [(ngModel)]="quantidade" />
+                                        <label class="form-control-label"
+                                            jhiTranslate="vestdeskApp.pedido.quantidadeItem"
+                                            for="field_quantidade">Quantidade</label>
+                                        <input type="number" class="form-control" name="pedido_quantidade"
+                                            id="field_quantidade" [(ngModel)]="quantidade" />
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-12 text-center botao-central">
-                                        <button [disabled]="pedido.statusPedido == 'EM_ANDAMENTO' || pedido.statusPedido == 'CONCLUIDO'"
-                                         type="button" class="btn btn-primary" (click)="onClickInsert()">Inserir</button>
+                                        <button
+                                            [disabled]="pedido.statusPedido == 'EM_ANDAMENTO' || pedido.statusPedido == 'CONCLUIDO'"
+                                            type="button" class="btn btn-primary"
+                                            (click)="onClickInsert()">Inserir</button>
                                     </div>
                                 </div>
                             </div>
@@ -272,58 +332,82 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO'" 
-                                    [ngClass]="{false: '', true:'filtered'}[nameGridFilter != null && nameGridFilter != '']">
-                                        <a ngClass="fa fa-sort"aria-hidden="true" (click)="changeSort()"></a>
-                                        <div [hidden]="openedFilter !== 'NOME_CAMISA'" style="position: relative;">
+                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO'"
+                                        [ngClass]="{false: '', true:'filtered'}[nameClientGridFilter != null && nameClientGridFilter != '']">
+                                        <a ngClass="fa fa-sort" aria-hidden="true" (click)="changeSort()"></a>
+                                        <div [hidden]="openedFilter !== 'NOME_CLIENTE'" style="position: relative;">
                                             <div style="position: absolute;  left: 100%; top: 0; width: 200px;
                                             " (focusout)="onBlurFilter()">
-                                                <input #nameSearch name="nameGridFilter" type="text" class="col-md-12" [(ngModel)]="nameGridFilter">
+                                                <input #nameClientSearch name="nameClientGridFilter" type="text"
+                                                    class="col-md-12" [(ngModel)]="nameClientGridFilter">
                                             </div>
-                                        </div> 
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedido.clienteCamisa">Cliente Casmisa</span>
-                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('NOME_CAMISA')"></a>
+                                        <a class="fa fa-filter" aria-hidden="true"
+                                            (click)="onClickFilter('NOME_CLIENTE')"></a>
                                     </th>
-                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO' ">
+                                    <th [hidden]="pedido.tipoPedido == 'PRODUCAO' "
+                                        [ngClass]="{false: '', true:'filtered'}[nameGridFilter != null && nameGridFilter != '']">
+                                        <a ngClass="fa fa-sort" aria-hidden="true" (click)="changeSort()"></a>
+                                        <div [hidden]="openedFilter !== 'NOME_CAMISA'" style="position: relative;">
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                                " (focusout)="onBlurFilter()">
+                                                <input #nameSearch name="nameGridFilter" type="text" class="col-md-12"
+                                                    [(ngModel)]="nameGridFilter">
+                                            </div>
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.nomeRoupa">Nome</span>
+                                        <a class="fa fa-filter" aria-hidden="true"
+                                            (click)="onClickFilter('NOME_CAMISA')"></a>
                                     </th>
                                     <th>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.telefone">Telefone</span>
                                     </th>
-                                    <th [ngClass]="{false: '', true:'filtered'}[tamanhoGridFilter != null && tamanhoGridFilter != '']">
+                                    <th
+                                        [ngClass]="{false: '', true:'filtered'}[tamanhoGridFilter != null && tamanhoGridFilter != '']">
                                         <div [hidden]="openedFilter !== 'TAMANHO'" style="position: relative;">
-                                                <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
                                                     " (focusout)="onBlurFilter()">
-                                                <select #tamanhoSearch name="tamanhoGridFilter" [(ngModel)]="tamanhoGridFilter" style="width: 200px;">
-                                                        <option [ngValue]="null"></option>
-                                                        <option [ngValue]="tamanho" *ngFor="let tamanho of listaEnum.Tamanho;">{{tamanho}}</option>
+                                                <select #tamanhoSearch name="tamanhoGridFilter"
+                                                    [(ngModel)]="tamanhoGridFilter" style="width: 200px;">
+                                                    <option [ngValue]="null"></option>
+                                                    <option [ngValue]="tamanho"
+                                                        *ngFor="let tamanho of listaEnum.Tamanho;">{{tamanho}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.tamanho">Tamanho</span>
-                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('TAMANHO')"></a>
+                                        <a class="fa fa-filter" aria-hidden="true"
+                                            (click)="onClickFilter('TAMANHO')"></a>
                                     </th>
-                                    <th [ngClass]="{false: '', true:'filtered'}[modeloGridFilter != null && modeloGridFilter != '']">
+                                    <th
+                                        [ngClass]="{false: '', true:'filtered'}[modeloGridFilter != null && modeloGridFilter != '']">
                                         <div [hidden]="openedFilter !== 'MODELO'" style="position: relative;">
-                                                <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
                                                     " (focusout)="onBlurFilter()">
-                                                <select #modeloSearch name="modeloGridFilter" [(ngModel)]="modeloGridFilter" style="width: 200px;">
-                                                        <option [ngValue]="null"></option>
-                                                        <option [ngValue]="modelo" *ngFor="let modelo of listaEnum.Modelo;">{{modelo}}</option>
+                                                <select #modeloSearch name="modeloGridFilter"
+                                                    [(ngModel)]="modeloGridFilter" style="width: 200px;">
+                                                    <option [ngValue]="null"></option>
+                                                    <option [ngValue]="modelo" *ngFor="let modelo of listaEnum.Modelo;">
+                                                        {{modelo}}</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.modelo">Modelo</span>
-                                        <a class="fa fa-filter" aria-hidden="true" (click)="onClickFilter('MODELO')"></a>
+                                        <a class="fa fa-filter" aria-hidden="true"
+                                            (click)="onClickFilter('MODELO')"></a>
                                     </th>
-                                    <th [ngClass]="{false: '', true:'filtered'}[corGridFilter != null && corGridFilter != '']">
+                                    <th
+                                        [ngClass]="{false: '', true:'filtered'}[corGridFilter != null && corGridFilter != '']">
                                         <div [hidden]="openedFilter !== 'COR'" style="position: relative;">
                                             <div style="position: absolute;  left: 100%; top: 0; width: 200px;
                                                 " (focusout)="onBlurFilter()">
-                                            <select #corSearch name="corGridFilter" [(ngModel)]="corGridFilter" style="width: 200px;">
+                                                <select #corSearch name="corGridFilter" [(ngModel)]="corGridFilter"
+                                                    style="width: 200px;">
                                                     <option [ngValue]="null"></option>
-                                                    <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}</option>
-                                            </select>
+                                                    <option [ngValue]="cor" *ngFor="let cor of listaCor;">{{cor.nome}}
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                         <span jhiTranslate="vestdeskApp.pedidoItem.cor">Cor</span>
@@ -336,10 +420,25 @@
                                         <span jhiTranslate="vestdeskApp.pedido.observacao">Observação</span>
                                     </th>
                                     <th>
-                                        <span jhiTranslate="vestdeskApp.pedido.primeiroPagamento">Primeiro Pagamento</span>
+                                        <span jhiTranslate="vestdeskApp.pedido.primeiroPagamento">Primeiro
+                                            Pagamento</span>
                                     </th>
-                                    <th>
+                                    <th
+                                        [ngClass]="{false: '', true:'filtered'}[formaPagamentoGridFilter != null && formaPagamentoGridFilter != '']">
+                                        <div [hidden]="openedFilter !== 'FORMA_PAGAMENTO'" style="position: relative;">
+                                            <div style="position: absolute;  left: 100%; top: 0; width: 200px;
+                                                            " (focusout)="onBlurFilter()">
+                                                <select #formaPagamentoSearch name="formaPagamentoGridFilter"
+                                                    [(ngModel)]="formaPagamentoGridFilter" style="width: 200px;">
+                                                    <option [ngValue]="null"></option>
+                                                    <option [ngValue]="formaPagamento"
+                                                        *ngFor="let formaPagamento of listaEnum.FormaPagamento;">{{formaPagamento}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <span jhiTranslate="vestdeskApp.pedido.formaPagamento">Forma Pagamento</span>
+                                        <a class="fa fa-filter" aria-hidden="true"
+                                            (click)="onClickFilter('FORMA_PAGAMENTO')"></a>
                                     </th>
                                     <th>
                                         <span jhiTranslate="vestdeskApp.pedido.valorProduto">Valor Produto</span>
@@ -373,10 +472,10 @@
                                         {{pedidoItem.quantidade}}
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" name="observacao_{{indice}}" 
-                                        [(ngModel)]="pedidoItem.observacao"
-                                        (focusout)="onObservacaoChange(pedidoItem)"
-                                        [ngModelOptions]="{ standalone: true }"/>
+                                        <input type="text" class="form-control" name="observacao_{{indice}}"
+                                            [(ngModel)]="pedidoItem.observacao"
+                                            (focusout)="onObservacaoChange(pedidoItem)"
+                                            [ngModelOptions]="{ standalone: true }" />
                                     </td>
                                     <td style="font-weight: bold; color: green">
                                         {{pedidoItem.primeiroPagamento | currency:'BRL':true}}
@@ -390,12 +489,14 @@
                                     <td [ngClass]="{EM_PRODUCAO: 'EM_PRODUCAO', EM_SEPARACAO: 'EM_SEPARACAO',
                                         BORDADO: 'BORDADO', SILKANDO: 'SILKANDO', PRONTO: 'PRONTO',
                                         ENTREGUE: 'ENTREGUE'}[pedidoItem.status]">
-                                        <select-field [enum]="'StatusPedidoItem'" [model]="pedidoItem.status" (toggledChange)="pedidoItem.status=$event"
-                                        [fieldName]="indice"></select-field>
+                                        <select-field [enum]="'StatusPedidoItem'" [model]="pedidoItem.status"
+                                            (toggledChange)="pedidoItem.status=$event" [fieldName]="indice">
+                                        </select-field>
                                     </td>
                                     <td [hidden]="pedido.tipoPedido == 'PRODUCAO' " class="text-right">
                                         <div class="btn-group flex-btn-group-container">
-                                            <button type="button" (click)="removerPedidoItem(indice);" class="btn btn-danger btn-sm">
+                                            <button type="button" (click)="removerPedidoItem(indice);"
+                                                class="btn btn-danger btn-sm">
                                                 <span class="fa fa-trash"></span>
                                                 <!-- <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span> -->
                                             </button>
@@ -406,7 +507,8 @@
                         </table>
 
                         <div [hidden]="!(editForm.controls.produto?.dirty && editForm.controls.produto?.invalid)">
-                            <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required" jhiTranslate="entity.validation.required">
+                            <small class="form-text text-danger" [hidden]="!editForm.controls.produto?.errors?.required"
+                                jhiTranslate="entity.validation.required">
                                 This field is required.
                             </small>
                         </div>
@@ -434,7 +536,8 @@
             <span class="fa fa-ban"></span>&nbsp;
             <span jhiTranslate="entity.action.cancel">Cancel</span>
         </button>
-        <button type="submit" [disabled]="editForm.form.invalid || isSaving || pedido.statusPedido == 'CONCLUIDO'" class="btn btn-primary">
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving || pedido.statusPedido == 'CONCLUIDO'"
+            class="btn btn-primary">
             <span class="fa fa-save"></span>&nbsp;
             <span jhiTranslate="entity.action.save">Save</span>
         </button>

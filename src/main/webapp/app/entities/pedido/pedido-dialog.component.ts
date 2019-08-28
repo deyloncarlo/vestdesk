@@ -25,10 +25,12 @@ import { text } from "@angular/core/src/render3/instructions";
 })
 export class PedidoDialogComponent implements OnInit {
 
+    @ViewChild('nameClientSearch') nameClientSearch: ElementRef;
     @ViewChild('nameSearch') nameSearch: ElementRef;
     @ViewChild('corSearch') corSearch: ElementRef;
     @ViewChild('tamanhoSearch') tamanhoSearch: ElementRef;
     @ViewChild('modeloSearch') modeloSearch: ElementRef;
+    @ViewChild('formaPagamentoSearch') formaPagamentoSearch: ElementRef;
     listaCor: Cor[];
 
     pedido: Pedido;
@@ -58,10 +60,12 @@ export class PedidoDialogComponent implements OnInit {
     valorTotalRecebido: number;
 
     openedFilter: any;
+    nameClientGridFilter: any;
     nameGridFilter: any;
     corGridFilter: Cor;
     tamanhoGridFilter: Tamanho;
     modeloGridFilter: Modelo;
+    formaPagamentoGridFilter: FormaPagamento;
     sort: string;
 
     constructor(
@@ -342,10 +346,12 @@ export class PedidoDialogComponent implements OnInit {
     onClickFilter(filter) {
         this.openedFilter = filter;
         setTimeout(() => { // this will make the execution after the above boolean has changed
+            this.nameClientSearch.nativeElement.focus();
             this.nameSearch.nativeElement.focus();
             this.corSearch.nativeElement.focus();
             this.tamanhoSearch.nativeElement.focus();
             this.modeloSearch.nativeElement.focus();
+            this.formaPagamentoSearch.nativeElement.focus();
         }, 0);
     }
 
@@ -359,22 +365,32 @@ export class PedidoDialogComponent implements OnInit {
             let filter2 = true;
             let filter3 = true;
             let filter4 = true;
+            let filter5 = true;
+            let filter6 = true;
+            if (this.nameClientGridFilter != null && this.nameClientGridFilter != undefined) {
+                filter1 = pedidoItem.clienteCamisa.toLowerCase().includes(this.nameClientGridFilter.toLowerCase());
+            }
+            
             if (this.nameGridFilter != null && this.nameGridFilter != undefined) {
-                filter1 = pedidoItem.clienteCamisa.toLowerCase().includes(this.nameGridFilter.toLowerCase());
+                filter2 = pedidoItem.nomeRoupa.toLowerCase().includes(this.nameGridFilter.toLowerCase());
             }
 
             if (this.corGridFilter != null && this.corGridFilter != undefined) {
-                filter2 = pedidoItem.produto.cor.id == this.corGridFilter.id;
+                filter3 = pedidoItem.produto.cor.id == this.corGridFilter.id;
             }
 
             if (this.tamanhoGridFilter != null && this.tamanhoGridFilter != undefined) {
-                filter3 = pedidoItem.produto.tamanho == this.tamanhoGridFilter;
+                filter4 = pedidoItem.produto.tamanho == this.tamanhoGridFilter;
             }
 
             if (this.modeloGridFilter != null && this.modeloGridFilter != undefined) {
-                filter4 = pedidoItem.produto.modelo == this.modeloGridFilter;
+                filter5 = pedidoItem.produto.modelo == this.modeloGridFilter;
             }
-            return filter1 && filter2 && filter3 && filter4;
+
+            if (this.formaPagamentoGridFilter != null && this.formaPagamentoGridFilter != undefined) {
+                filter6 = pedidoItem.formaPrimeiroPagamento == this.formaPagamentoGridFilter;
+            }
+            return filter1 && filter2 && filter3 && filter4 && filter5 && filter6;
         });
 
         this.orderList(filtered);
